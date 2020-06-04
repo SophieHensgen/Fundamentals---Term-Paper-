@@ -17,6 +17,7 @@ library(rlist)
 library(pipeR)
 library(gtrendsR)
 library(lubridate)
+library(writexl)
 
 ```
 ## Theory and Hypotheses
@@ -300,7 +301,15 @@ Delisle tripple murder droppen -->> nicht genug daten
 Bart shooting evtl. rausnehmen --> sieht aus als hätte es sehr kleine Fallzahlen und einen seltsamen Verlauf
 Meteor shooting sieht komish aus --> evtl droppen wegen kleiner Fallzahl
 
+```{r}
+# Exporting data frame to excel in order to add further variables
 
+#Pfad Hannah
+write_xlsx(newtab,"C:\\Users\\hre\\Documents\\Uni_Mannheim\\FSS_2020\\Research_Methods_Fundamentals_of_Computing_and_Data_Display\\Paper\\Term-Paper-Fundamentals\\wikishootings.xlsx")
+
+#Pfad Sophie
+write_xlsx(newtab,"path to store the Excel file\\file name.xlsx")
+```
 
 
 ```{r}
