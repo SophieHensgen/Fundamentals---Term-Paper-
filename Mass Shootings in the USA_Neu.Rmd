@@ -286,6 +286,10 @@ newtab$SearchTerm <- gsub("Columbus nightclub shooting", "Columbus shooting", ne
 newtab$SearchTerm <- gsub("Hunting Trip ()", "Meteor shooting", newtab$SearchTerm, fixed = TRUE)
 newtab$SearchTerm <- gsub("Wesson family murders", "Fresno shooting", newtab$SearchTerm, fixed = TRUE)
 
+newtab <- newtab[format(newtab$Date,'%Y') != "2003", ]
+newtab <- newtab[format(newtab$Date,'%Y') != "2002", ]
+newtab <- newtab[format(newtab$Date,'%Y') != "2001", ]
+newtab <- newtab[format(newtab$Date,'%Y') != "2000", ]
 
 newtab
 
