@@ -24,6 +24,8 @@ library(lubridate)
 
 Test Git
 
+weiterer test
+
 
 
 More dead people --> more media attention --> higher attention in Google trends
