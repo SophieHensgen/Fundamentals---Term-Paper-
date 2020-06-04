@@ -246,7 +246,7 @@ newtab$SearchTerm <- gsub("	Charleston church shooting", "Charleston shooting", 
 
 newtab
 
-save(newtab, file="wikishootings.Rda")
+#save(newtab, file="wikishootings.Rda")
 
 ```
 
