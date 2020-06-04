@@ -21,6 +21,11 @@ library(lubridate)
 ```
 ## Theory and Hypotheses
 
+
+Test Git
+
+
+
 More dead people --> more media attention --> higher attention in Google trends
 
 newworthiness in den Medien
