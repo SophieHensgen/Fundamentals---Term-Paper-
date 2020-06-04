@@ -242,7 +242,16 @@ newtab$SearchTerm <- gsub("Colorado Springs Planned Parenthood shooting", "Plann
 newtab$SearchTerm <- gsub("Shooting of protesters at a Black Lives Matter protest", "Minneapolis shooting", newtab$SearchTerm, fixed = TRUE)
 newtab$SearchTerm <- gsub("Umpqua Community College shooting", "Roseburg shooting", newtab$SearchTerm, fixed = TRUE)
 newtab$SearchTerm <- gsub("Murders of Alison Parker and Adam Ward", "Roanoke shooting", newtab$SearchTerm, fixed = TRUE)
-newtab$SearchTerm <- gsub("	Charleston church shooting", "Charleston shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Charleston church shooting", "Charleston shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Rosemary Anderson High School shooting", "Portland shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Marysville Pilchuck High School shooting", "Marysville shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Isla Vista killings", "Isla Vista shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Ross Township Municipal Building shooting", "Ross Township shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("South Valley homicides", "South Valley shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Sandy Hook Elementary School ()", "Sandy Hook shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Clackamas Town Center shooting", "Clackamas shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Azana Spa shooting", "Brookfield shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Wisconsin Sikh temple shooting", "Oak Creek shooting", newtab$SearchTerm, fixed = TRUE)
 
 newtab
 
@@ -251,9 +260,6 @@ newtab
 ```
 
 
-
-
-Weitere Tests
 
 
 ```{r}
@@ -294,13 +300,6 @@ for (i in 1:nrow(newtab)){
 
 
 
-
-
-
-
-
-
-
 listshooting <- list()
 for (i in newtab$SearchTerm){
     for (k in newtab$TrendPeriod){
@@ -319,51 +318,14 @@ combineshootings
 
 ```
 
-Hier dran arbeiten dass ein column ein vektor darstellt und dann in einem Loop genutzt werden kann
-
-```{r}
-tab18 <- table[2]
-date <- as.vector(c("2019-12-10", "2019-12-6", "2019-12-5", "2019-11-19"))
-date <- as.Date(date, "%Y-%m-%d")
-
-pol <- as.vector(tab18['Date'])
-class(pol) 
-
-df <- data.frame()
-for (i in date){
-   df <- print(as.Date('i') - 2)
-}
-tab18$Date <- as.Date(tab18$Date)
-
-vector <- c()
-for(i in 1:ncol(tab18)){
-  d <- as.Date("i", format = "%Y-%m-%d")
-  vector <- c(vector, d)
-}
-vector
-
-tab18$Date <- as.Date( as.character(tab18$Date), format='%Y.%m.%d')
-
-tab18$Date <- as.Date(tab18$Date,format='%d.%m.%Y')
-
-tab18
-
-tab18 %>%
-   group_by(Deaths) %>%
-   mutate(Date=as.Date(Date, format = "%Y.%m.%d"))
-
-mutate(tab18, date= as.Date(Date, format= "%d.%m.%Y"))
-```
-Information on what is plotted on the y axis can be found here:
 
 
 
-```{r}
-shootings <- gtrends(c("Milwaukee shooting", "Grantsville shooting", "El Paso shooting", "Sandy Hook shooting"), geo = "US", time = "2012-01-01 2020-05-07", low_search_volume = T)
-plot(shootings)
-shootings
-```
 
+
+
+
+## Christophs Arbeit
 
 Information on what is plotted on the y axis can be found here:
 
@@ -400,45 +362,6 @@ glimpse(shootings)
 
 
 
-The resulting object is of class `gtrends`, for which the `gtrends` package provides a tailored plotting function.
-
-```{r}
-sandy <- gtrends(c("Sandy Hook shooting"), geo = "US", time = "2012-12-12 2012-12-30", low_search_volume = T)
-plot(sandy)
-sandy
-```
 
 
-Information on what is plotted on the y axis can be found here:
-
-https://support.google.com/trends/answer/4365533?hl=en
-
-A quick look at the structure of the `res` object.
-
-```{r}
-str(sandy)
-```
-
-
-
-```{r}
-sandy$interest_over_time
-```
-
-## tidyr
-
-We will use the `tidyr` package to tidy up this data set. In addition, we will need different piping operators from `magrittr`.
-
-```{r}
-# install.packages("tidyverse")
-library(tidyverse)
-library(magrittr)
-```
-
-First, we transform the `data.frame` into a `tibble`.
-
-```{r}
-sandy_time <- as_tibble(sandy$interest_over_time)
-glimpse(sandy)
-```
 
