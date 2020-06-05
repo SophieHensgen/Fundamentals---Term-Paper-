@@ -308,7 +308,7 @@ Meteor shooting sieht komish aus --> evtl droppen wegen kleiner Fallzahl
 #write_xlsx(newtab,"C:\\Users\\hre\\Documents\\Uni_Mannheim\\FSS_2020\\Research_Methods_Fundamentals_of_Computing_and_Data_Display\\Paper\\Term-Paper-Fundamentals\\wikishootings.xlsx")
 
 #Pfad Sophie
-write_xlsx(newtab,"/Users/sophiehensgen/Term-Paper-Fundamentals/Fundamentals---Term-Paper-/WikiShootingscomplete.xlsx")
+#write_xlsx(newtab,"/Users/sophiehensgen/Term-Paper-Fundamentals/Fundamentals---Term-Paper-/WikiShootingscomplete.xlsx")
 ```
 
 ```{r}
@@ -316,6 +316,7 @@ write_xlsx(newtab,"/Users/sophiehensgen/Term-Paper-Fundamentals/Fundamentals---T
 
 wikishooting <- read_excel("WikiShootingscomplete.xlsx")
 wikishooting
+
 ```
 
 ```{r}
@@ -359,7 +360,7 @@ Versuch eines Loop der einzelne outcomes speichert
 
 listshooting <- list()
 for (i in 1:nrow(wikishooting)){
-    x <- as.vector(wikishooting$Date[i])
+    x <- as.vector(wikishooting$SearchTerm[i])
     y <- as.vector(wikishooting$TrendPeriod[i])
     shooting <- gtrends(keyword = x, geo = "US", time = y, low_search_volume = T)
     iteration <- (1 + length(listshooting))
