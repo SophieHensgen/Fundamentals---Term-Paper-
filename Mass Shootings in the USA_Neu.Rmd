@@ -18,7 +18,11 @@ library(pipeR)
 library(gtrendsR)
 library(lubridate)
 library(writexl)
+<<<<<<< HEAD
 library(readxl)
+=======
+
+>>>>>>> eae9cfa0ac322788d8408d2157202c2409b96a11
 ```
 ## Theory and Hypotheses
 
@@ -195,7 +199,7 @@ Hannah: 11-15
 newtab$SearchTerm <- gsub("shootout", "shooting", newtab$Description, fixed = TRUE)
 newtab
 
-newtab <- newtab[, c("Date", "Prior", "After", "TrendPeriod", "SearchTerm", "Description", "Location", "Dead", "Injured", "Total", "Description")] 
+newtab <- newtab[, c("Date", "Prior", "After", "TrendPeriod", "SearchTerm", "Description", "Location", "Dead", "Injured", "Total")] 
 newtab
 
 number <- c("2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019")
@@ -253,17 +257,70 @@ newtab$SearchTerm <- gsub("Sandy Hook Elementary School ()", "Sandy Hook shootin
 newtab$SearchTerm <- gsub("Clackamas Town Center shooting", "Clackamas shooting", newtab$SearchTerm, fixed = TRUE)
 newtab$SearchTerm <- gsub("Azana Spa shooting", "Brookfield shooting", newtab$SearchTerm, fixed = TRUE)
 newtab$SearchTerm <- gsub("Wisconsin Sikh temple shooting", "Oak Creek shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Aurora Colorado movie theater shooting", "Aurora shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Seattle cafe shooting spree", "Seattle shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Chardon High School shooting", "Chardon School shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Southern California Edison shooting", "Edison shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Carson City IHOP shooting", "Carson shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Copley Township shooting", "Copley shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Grand Rapids mass murder", "Grand Rapids shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Safeway Shooting in Casas Adobes Arizona ()", "Tucson shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Hartford Beer Distributors shooting", "Manchester shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("University of Alabama in Huntsville shooting", "University of Alabama shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("ABB plant shooting", "St Louis shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Fort Hood Military Base shooting", "Fort Hood shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Shooting of Pittsburgh Police Officers", "Pittsburgh shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("New York immigration center shooting", "Binghampton shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Carthage nursing home shooting", "Carthage shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Geneva County massacre", "Geneva shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Covina massacre", "Covina shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Skagit County Shooting Spree ()", "Skagit Shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Northern Illinois University shooting", "Illinois shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Kirkwood City Council shooting", "Kirkwood shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Lane Bryant shooting", "Tinley Park shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Youth with a Mission and New Life Church shooting", "Colorado shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Westroads Mall shooting ()", "Omaha shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Crandon Wisconsin duplex shooting ()", "Crandon shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("West Nickel Mines School shooting", "Bart shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Seattle Jewish Federation shooting", "Seattle shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Capitol Hill massacre", "Seattle shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Goleta postal facility shooting", "Goleta shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Tacoma Mall shooting", "Tacoma shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Red Lake Indian Reservation shooting", "Red Lake shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Columbus nightclub shooting", "Columbus shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Hunting Trip ()", "Meteor shooting", newtab$SearchTerm, fixed = TRUE)
+newtab$SearchTerm <- gsub("Wesson family murders", "Fresno shooting", newtab$SearchTerm, fixed = TRUE)
+
+newtab <- newtab[format(newtab$Date,'%Y') != "2003", ]
+newtab <- newtab[format(newtab$Date,'%Y') != "2002", ]
+newtab <- newtab[format(newtab$Date,'%Y') != "2001", ]
+newtab <- newtab[format(newtab$Date,'%Y') != "2000", ]
 
 newtab
 
+<<<<<<< HEAD
 save(newtab, file="wikishootings.Rda")
 #write_xlsx(newtab,"/Users/sophiehensgen/Term-Paper-Fundamentals/Fundamentals---Term-Paper-/WikiShootings.xlsx")
 
 
+=======
+#save(newtab, file="wikishootings.Rda")
+>>>>>>> eae9cfa0ac322788d8408d2157202c2409b96a11
 
 ```
+Delisle tripple murder droppen -->> nicht genug daten
+Bart shooting evtl. rausnehmen --> sieht aus als hätte es sehr kleine Fallzahlen und einen seltsamen Verlauf
+Meteor shooting sieht komish aus --> evtl droppen wegen kleiner Fallzahl
 
+```{r}
+# Exporting data frame to excel in order to add further variables
 
+#Pfad Hannah
+write_xlsx(newtab,"C:\\Users\\hre\\Documents\\Uni_Mannheim\\FSS_2020\\Research_Methods_Fundamentals_of_Computing_and_Data_Display\\Paper\\Term-Paper-Fundamentals\\wikishootings.xlsx")
+
+#Pfad Sophie
+write_xlsx(newtab,"path to store the Excel file\\file name.xlsx")
+```
 
 
 ```{r}
