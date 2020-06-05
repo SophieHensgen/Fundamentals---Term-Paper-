@@ -336,6 +336,8 @@ wikishooting <- na.omit(wikishooting)
 # correcting Data types
 
 wikishooting$Ethnicity <- as.numeric(wikishooting$Ethnicity)
+
+wikishooting$TrendPeriod <- gsub("2008-12-22 2009-01-07", "2008-12-22 2009-01-21", wikishooting$TrendPeriod, fixed = TRUE)
 wikishooting
 
 ```
