@@ -17,7 +17,8 @@ library(rlist)
 library(pipeR)
 library(gtrendsR)
 library(lubridate)
-
+library(writexl)
+library(readxl)
 ```
 ## Theory and Hypotheses
 
@@ -256,6 +257,9 @@ newtab$SearchTerm <- gsub("Wisconsin Sikh temple shooting", "Oak Creek shooting"
 newtab
 
 save(newtab, file="wikishootings.Rda")
+#write_xlsx(newtab,"/Users/sophiehensgen/Term-Paper-Fundamentals/Fundamentals---Term-Paper-/WikiShootings.xlsx")
+
+
 
 ```
 
