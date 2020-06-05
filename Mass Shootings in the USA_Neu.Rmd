@@ -308,23 +308,45 @@ Meteor shooting sieht komish aus --> evtl droppen wegen kleiner Fallzahl
 #write_xlsx(newtab,"C:\\Users\\hre\\Documents\\Uni_Mannheim\\FSS_2020\\Research_Methods_Fundamentals_of_Computing_and_Data_Display\\Paper\\Term-Paper-Fundamentals\\wikishootings.xlsx")
 
 #Pfad Sophie
-#write_xlsx(newtab,"/Users/sophiehensgen/Term-Paper-Fundamentals/Fundamentals---Term-Paper-/WikiShootings.xlsx")
+write_xlsx(newtab,"/Users/sophiehensgen/Term-Paper-Fundamentals/Fundamentals---Term-Paper-/WikiShootingscomplete.xlsx")
 ```
-
 
 ```{r}
-?gtrends
+# Inporting excel Data 
+
+wikishooting <- read_excel("WikiShootingscomplete.xlsx")
+wikishooting
 ```
 
-In this notebook, we want to explore the search interest in crime related topics in Chicago, IL. In order to narrow our API query to a specific region, DMA codes can be used.
+```{r}
+# correcting Data types
 
-https://help.ooyala.com/video-platform/reference/dma_codes.html
+wikishooting[["Date"]] <- as.Date(wikishooting$Date, format = "%Y-%m-%d")
+wikishooting[["Prior"]] <- as.Date(wikishooting$Date, format = "%Y-%m-%d")
+wikishooting[["After"]] <- as.Date(wikishooting$Date, format = "%Y-%m-%d")
 
-The resulting object is of class `gtrends`, for which the `gtrends` package provides a tailored plotting function.
+wikishooting
 
+# dropping NAs
+
+wikishooting$Ethnicity[wikishooting$Ethnicity == "NA"] <- NA
+wikishooting <- na.omit(wikishooting)
+
+# correcting Data types
+
+wikishooting$Ethnicity <- as.numeric(wikishooting$Ethnicity)
+wikishooting
+
+```
+
+############################################################################################################################################
+############################################################################################################################################
+############################################################################################################################################
+
+## GTrend Data 
 
 Gtrends 
---> scraping von mehreren Namen auf einmal
+--> scraping von mehreren Namen auf einmal --> Text ob es mit einem funktioniert
 
 ```{r}
 shootings <- gtrends(c("Milwaukee shooting", "Grantsville shooting", "El Paso shooting"), geo = "US", time = "2012-01-01 2020-05-07", low_search_volume = T)
@@ -334,13 +356,11 @@ shootings
 
 Versuch eines Loop der einzelne outcomes speichert
 ```{r}
-tab18 <- table[2]
-shootnames <- c("Jersey City Shooting", "Naval Air Station Pensacola shooting", "Miramar shootout", "Fresno shooting")
 
 listshooting <- list()
-for (i in 1:nrow(newtab)){
-    x <- as.vector(newtab$Date[i])
-    y <- as.vector(newtab$TrendPeriod[i])
+for (i in 1:nrow(wikishooting)){
+    x <- as.vector(wikishooting$Date[i])
+    y <- as.vector(wikishooting$TrendPeriod[i])
     shooting <- gtrends(keyword = x, geo = "US", time = y, low_search_volume = T)
     iteration <- (1 + length(listshooting))
     listshooting[[iteration]] <- shooting
@@ -348,12 +368,12 @@ for (i in 1:nrow(newtab)){
 
 
 
-
+# Versuch das beide Variablen die selbe reihe ansprechen
 
 listshooting <- list()
-for (i in newtab$SearchTerm){
-    for (k in newtab$TrendPeriod){
-      if (nrow(i) == nrow(k)) {
+for (i in wikishooting$SearchTerm){
+    for (k in wikishooting$TrendPeriod){
+      if (i == k) {                       # platzhalter
     shooting <- gtrends(keyword = i, geo = "US", time = k, low_search_volume = T)
     print(shooting)
     listshooting <- append(listshooting, shooting)
@@ -361,54 +381,42 @@ for (i in newtab$SearchTerm){
     }
 }
 
-listshooting$interest_over_time
+# Beispiel wie man die einzelnen Tabellen verbindet
+massshooting <- rbind(listshooting[[1]], listshooting[[8]], listshooting[[15]], listshooting[[22]])
+massshooting
 
-combineshootings <- rbind(listshooting[[1]], listshooting[[8]], listshooting[[15]], listshooting[[22]])
-combineshootings
-
-```
-
-
-
-
-
-
-
-
-## Christophs Arbeit
-
-Information on what is plotted on the y axis can be found here:
-
-https://support.google.com/trends/answer/4365533?hl=en
-
-A quick look at the structure of the `res` object.
-
-```{r}
-str(shootings)
-```
-
-Seems like the first element of this list is a `data.frame` which holds the main results of the API query.
-
-```{r}
-shootings$interest_over_time
-```
-
-## tidyr
-
-We will use the `tidyr` package to tidy up this data set. In addition, we will need different piping operators from `magrittr`.
-
-```{r}
-# install.packages("tidyverse")
-library(tidyverse)
-library(magrittr)
 ```
 
 First, we transform the `data.frame` into a `tibble`.
 
 ```{r}
-shootings_time <- as_tibble(shootings$interest_over_time)
-glimpse(shootings)
+shootings_trend <- as_tibble(massshooting$interest_over_time)
+glimpse(shootings_trend)
 ```
+
+## Fragen: 
+   - Loop bezüglich der Gtrends, erste Versuche oben.
+   - Wie hinzufügen in eine Tabelle und zu der Wikishootingstabelle
+
+############################################################################################################################################
+############################################################################################################################################
+############################################################################################################################################
+
+## Data Analysis
+
+
+```{r}
+# Regression 
+
+lm(x ~ Dead + Injured + Ethnicity + Area + GunLaws, data = wikishooting, )
+```
+
+## Fragen: 
+   - Wie soll das y aussehen.
+   - Wie soll die Abnahme dargestellt/codiert werden?
+   - Welches Model ist hierfür am besten geeignet?
+   - Brauchen wir mehrere Modelle oder reicht eines?
+   - Kontrollvariablen - brauchen wir noch Weitere?
 
 
 
