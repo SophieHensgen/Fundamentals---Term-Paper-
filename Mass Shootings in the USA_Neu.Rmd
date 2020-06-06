@@ -40,6 +40,11 @@ newworthiness in den Medien
 
 evtl. newswothiness in Kombination mit inequality
 
+
+
+
+
+
 3. If the shooter is black, the shooting stayed longer
 in the trends.
 
@@ -395,6 +400,7 @@ First, we transform the `data.frame` into a `tibble`.
 ```{r}
 shootings_trend <- as_tibble(massshooting$interest_over_time)
 glimpse(shootings_trend)
+shootings_trend
 ```
 
 ## Fragen: 
