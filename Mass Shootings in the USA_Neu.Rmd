@@ -1,10 +1,13 @@
 ---
 title: "Mass Shootings in the USA"
 author: "Hannah Reitz & Sophie Hensgen"
-date: "5/14/2020"
-output: html_document
+date: "`r Sys.Date()`"
+output:
+  pdf_document:
+    toc: yes
+    df_print: kable
 ---
-Hallo Hannah
+
 ```{r}
 library(openxlsx)
 library(xml2)
@@ -21,18 +24,58 @@ library(writexl)
 library(readxl)
 
 ```
+
+Citation examples for in-text citations:
+
+Smith cited [@smith04].
+Smith cited without author [-@smith04].
+@smith04 cited in line.
+
+## Introduction
+
+Aufhänger: Many studies about media salience of mass shootings, but no research about how this media attention influences people's interest in certain events. 
+
+Based on previous definition of mass murder (citations from Duwe 2000, p.373) mass shootings in this paper are defined as "incidents in which four or more persons are murdered within a 24 hour period" [@Duwe2000, p. 323] with a weapon that can shoot (andere Formulierung?). 
+
 ## Theory and Hypotheses
 
+Kleine Einleitung in Literature Review:
 
-Test Git
+"Like acts of terrorism and mass murder, not all mass shootings receive equitable media coverage,
+despite the sensational nature of the phenomenon as a whole (Schildkraut 2014, 2016). Absent from
+the body of research, however, is an exploration as to why this coverage is disparate" Schildkraut 2018 p. 224
 
-weiterer test
+
+
+
+Wie können wir einen Graphen einbinden/erstellen der unsere Zusammenhänge illustriert: 
+
+Deaths/Injuries/Race of perpetrator/  ----->    The decline of the search interest
+Rich area/ Loose gun control                    in google trends is slower
+          I                                            /\
+           I                                          I
+            I                                        I
+             V                                      I
+        more media attention for a 
+        longer time span due to more  --->     More people notice the  
+        newsworthiness of event                event in media reports
 
 
 
 More dead people --> more media attention --> higher attention in Google trends
 
 newworthiness in den Medien
+
+Könntest du evtl. gebrauchen:
+"Because agenda-setting theory is applicable at both the issue and attribute levels,17
+media coverage of school shootings can be analyzed at these two levels as well.
+Although no particular theory was mentioned in it, a study examining the salience of
+fourteen school shooting incidents in network television news can be considered an
+example of issue agenda-setting research.18 By measuring the amount of news coverage
+of the incidents, the researchers showed that shooting incidents that resulted in
+more deaths or greater injuries were covered more. They also found that the amount
+of coverage was highly correlated across major television networks, demonstrating
+their “herd mentality.” Sung-Yeon Park (2012), p. 478
 
 1. The more people got injured, the longer the shooting stayed in the trends.
 
@@ -41,12 +84,17 @@ newworthiness in den Medien
 evtl. newswothiness in Kombination mit inequality
 
 
+Generally, research indicates that news coverage particularly is skewed toward stories about crime Schildkraut p. 223
 
+The first two hypotheses mainly focus on how certain crimes in this case mass shootings garner more attention from the media because they are more "newsworthy" [@someauthors]. We argued that the more people died or got injured during a mass shooting the more newsworthy the event is and the more the media reports about it. In turn this high media attention leads to an increase in public interest and the decline of search hits in Google trends on this mass shooting is less steep than for mass shootings that are not as newsworthy, do not get reported on as heavily and do not accumulate as much public interest. The next thraa hypotheses concentrate more on specific characteristics of mass shootings and how those could affect the decline of search hits on this event in Google Trends.
 
+First, the racial or ethnic identity of the perpetrator might be an important characteristic to consider as this could heavily shape the way media presents mass shootings and the ensuing public interest in the events. Mainstream media targets mostly the white middle class in th US as the goal is to reach a larch audience. Because of this most media outlets report from a white perspective and thus "non-whites are more likely to be portrayed in a negative light relative to whites" [@Callanan2012, p. 94]  [@Tukachinsky2015, p. 187; @Wheeler2017, p. 73]. Therefore, a selection bias in media reporting in relation to race exists. Previous studies show that race explains some of the selection bias in the media. If the perpetrator in a mass shooting is not white or from another ethnicity than the majority popultation, the media covers the the event more extensively [citations] Lundman
 
+In line with these findings, we suggest that as non-white violaters in mass shootings attract more attention from the media, this might lead to a higher interest in the event by the public. In light of the present study this higher interest in mass shootings commited by non-white violaters by the broad public may manifest in a decline in hits on Google that is less steep than for events with white shooters. Hence, we expect that if the shooter is non-white or has a migration background, the decline in the count of search hits on the event is less steep. 
 
-3. If the shooter is black, the shooting stayed longer
-in the trends.
+*H3: If the shooter is black or has a migration-background, the decline in the count of search hits on the event is less steep.*
+
+Another important characteristic to explaine why the public interest declines slower for some mass shootings but not for others is the affluence of the area in which the shooting happens. 
 
 4. Shootings in richer areas, stayed longer in the trends.
 
