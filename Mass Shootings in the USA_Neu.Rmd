@@ -22,6 +22,8 @@ library(gtrendsR)
 library(lubridate)
 library(writexl)
 library(readxl)
+library(tidyverse)
+library(magrittr)
 
 ```
 
@@ -108,7 +110,7 @@ In summary, most of the previous research on mass shootings mainly focused on ho
 ## Data from Wikipedia
 
 Erlärung welche Daten, wie gescrapt, wie sehen die Daten aus Deskription
-Tabelle mit für Missing, welche observations haben wir warum gedropped, wie viele observations verbleiben in unserem samle
+Tabelle mit für Missing, welche observations haben wir warum gedropped, wie viele observations verbleiben in unserem sample
 
 
 ```{r}
@@ -428,22 +430,20 @@ for (i in 1:nrow(wikishooting)){
 
 
 
-# Versuch das beide Variablen die selbe reihe ansprechen
-
-listshooting <- list()
-for (i in wikishooting$SearchTerm){
-    for (k in wikishooting$TrendPeriod){
-      if (i == k) {                       # platzhalter
-    shooting <- gtrends(keyword = i, geo = "US", time = k, low_search_volume = T)
-    print(shooting)
-    listshooting <- append(listshooting, shooting)
-    }
-    }
-}
-
 # Beispiel wie man die einzelnen Tabellen verbindet
-massshooting <- rbind(listshooting[[1]], listshooting[[8]], listshooting[[15]], listshooting[[22]])
+for (i in 1:length(listshooting)){
+    massshooting <- rbind(listshooting[[i]]$interest_over_time)
+}
 massshooting
+
+for (i in listshooting){
+    massshooting <- rbind(i)
+ }
+
+
+
+
+massshooting <- rbind(listshooting[[1]]$interest_over_time, listshooting[[8]]$interest_over_time, listshooting[[15]]$interest_over_time, listshooting[[22]]$interest_over_time)
 
 ```
 
