@@ -108,6 +108,7 @@ In summary, most of the previous research on mass shootings mainly focused on ho
 ## Data from Wikipedia
 
 Erlärung welche Daten, wie gescrapt, wie sehen die Daten aus Deskription
+Tabelle mit für Missing, welche observations haben wir warum gedropped, wie viele observations verbleiben in unserem samle
 
 
 ```{r}
