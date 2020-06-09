@@ -24,6 +24,7 @@ library(writexl)
 library(readxl)
 library(tidyverse)
 library(magrittr)
+library(broom)
 
 ```
 
@@ -406,9 +407,9 @@ Gtrends
 --> scraping von mehreren Namen auf einmal --> Text ob es mit einem funktioniert
 
 ```{r}
-shootings <- gtrends(c("Milwaukee shooting", "Grantsville shooting", "El Paso shooting"), geo = "US", time = "2012-01-01 2020-05-07", low_search_volume = T)
-plot(shootings)
-shootings
+#shootings <- gtrends(c("Milwaukee shooting", "Grantsville shooting", "El Paso shooting"), geo = "US", time = "2012-01-01 2020-05-07", low_search_volume = T)
+#plot(shootings)
+#shootings
 ```
 
 Versuch eines Loop der einzelne outcomes speichert
@@ -457,8 +458,7 @@ gtrends$keyword <- ifelse(gtrends$time == "2006-03-25 2006-04-08",
                              gsub("Seattle shooting", "Seattle shooting 1", gtrends$keyword, fixed = TRUE),
                              gtrends$keyword)
 
-gtrends$date <- gtrends[gtrends$date != "2009-01-08" || "2009-01-09",]
-
+gtrends <- gtrends[-c(271:284), ]
 
 gtrends
 ```
@@ -466,34 +466,40 @@ gtrends
 
 ```{r}
 
+gtrends$rownumber = 1:15
 
-for (i in gtrends$keyword) {
-gtrends[i] <- subset(gtrends, keyword == "i")
-gtrends[i] = 1:nrow(gtrends[i])
-reg <- lm(hits ~ rownumber, data = gtrends[i], )
-coef <- summary(reg)$coefficients[2]
-gtrends[i]$coef <- coef
-gtrends_Columbus <- rbind(gtrends_Columbus, gtrends[i])
-}
+gtrends$hits <- as.numeric(as.character(gtrends$hits))
+
+reg <-
+  gtrends %>%
+  group_by(keyword) %>%            # group by column z
+  do(tidy(lm(hits ~ rownumber, data=.)))
+
+reg 
+
+reg %>%
+  
+
+gtrends
 
 
 
 
+# Versuch Regression mit einer observation
 
+#gtrends_Columbus <- subset(gtrends, keyword == "Columbus shooting")
+#gtrends_Columbus
 
-gtrends_Columbus <- subset(gtrends, keyword == "Columbus shooting")
-gtrends_Columbus
+#gtrends_Columbus$rownumber = 1:nrow(gtrends_Columbus)
+#gtrends_Columbus
 
-gtrends_Columbus$rownumber = 1:nrow(gtrends_Columbus)
-gtrends_Columbus
+#reg <- lm(hits ~ rownumber, data = gtrends_Columbus, )
 
-reg <- lm(hits ~ rownumber, data = gtrends_Columbus, )
+#coef <- summary(reg)$coefficients[2]
+#coef
 
-coef <- summary(reg)$coefficients[2]
-coef
-
-gtrends_Columbus$coef = coef
-gtrends_Columbus
+#gtrends_Columbus$coef = coef
+#gtrends_Columbus
 ```
 
 
