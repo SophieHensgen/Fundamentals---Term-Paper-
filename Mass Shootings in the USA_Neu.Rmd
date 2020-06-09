@@ -393,6 +393,11 @@ wikishooting <- na.omit(wikishooting)
 wikishooting$Ethnicity <- as.numeric(wikishooting$Ethnicity)
 
 wikishooting$TrendPeriod <- gsub("2008-12-24 2009-01-07", "2008-12-24 2009-01-21", wikishooting$TrendPeriod, fixed = TRUE)
+
+wikishooting <-
+  wikishooting %>%
+  filter(SearchTerm != "Shooting of Haynie family")
+
 wikishooting
 
 ```
@@ -451,16 +456,66 @@ glimpse(gtrends)
 
 
 gtrends$keyword <- ifelse(gtrends$time == "2004-03-12 2004-03-26", 
-                             gsub("Fresno shooting", "Fresno shooting 1", gtrends$keyword, fixed = TRUE),
+                             gsub("Fresno shooting", "Fresno shooting 2004", gtrends$keyword, fixed = TRUE),
+                             gtrends$keyword)
+
+gtrends$keyword <- ifelse(gtrends$time == "2019-11-17 2019-12-01", 
+                             gsub("Fresno shooting", "Fresno shooting 2019", gtrends$keyword, fixed = TRUE),
                              gtrends$keyword)
 
 gtrends$keyword <- ifelse(gtrends$time == "2006-03-25 2006-04-08", 
-                             gsub("Seattle shooting", "Seattle shooting 1", gtrends$keyword, fixed = TRUE),
+                             gsub("Seattle shooting", "Seattle shooting March 2006", gtrends$keyword, fixed = TRUE),
                              gtrends$keyword)
+
+gtrends$keyword <- ifelse(gtrends$time == "2006-07-28 2006-08-11", 
+                             gsub("Seattle shooting", "Seattle shooting July 2006", gtrends$keyword, fixed = TRUE),
+                             gtrends$keyword)
+
+gtrends$keyword <- ifelse(gtrends$time == "2012-05-30 2012-06-13", 
+                             gsub("Seattle shooting", "Seattle shooting July 2012", gtrends$keyword, fixed = TRUE),
+                             gtrends$keyword)
+
+gtrends$keyword <- ifelse(gtrends$time == "2009-11-05 2009-11-19", 
+                             gsub("Fort Hood shooting", "Fort Hood shooting 2009", gtrends$keyword, fixed = TRUE),
+                             gtrends$keyword)
+
+gtrends$keyword <- ifelse(gtrends$time == "2014-04-02 2014-04-16", 
+                             gsub("Fort Hood shooting", "Fort Hood shooting 2014", gtrends$keyword, fixed = TRUE),
+                             gtrends$keyword)
+
+gtrends$keyword <- ifelse(gtrends$time == "2017-03-26 2017-04-09", 
+                             gsub("Cincinnati shooting", "Cincinnati shooting 2017", gtrends$keyword, fixed = TRUE),
+                             gtrends$keyword)
+
+gtrends$keyword <- ifelse(gtrends$time == "2018-09-06 2018-09-20", 
+                             gsub("Cincinnati shooting", "Cincinnati shooting 2018", gtrends$keyword, fixed = TRUE),
+                             gtrends$keyword)
+
+gtrends$keyword <- ifelse(gtrends$time == "2014-07-09 2014-07-23", 
+                             gsub("Harris County shooting", "Harris County shooting 2014", gtrends$keyword, fixed = TRUE),
+                             gtrends$keyword)
+
+gtrends$keyword <- ifelse(gtrends$time == "2015-08-08 2015-08-22", 
+                             gsub("Harris County shooting", "Harris County shooting 2015", gtrends$keyword, fixed = TRUE),
+                             gtrends$keyword)
+
+gtrends$keyword <- ifelse(gtrends$time == "2016-06-12 2016-06-26", 
+                             gsub("Orlando shooting", "Orlando shooting 2016", gtrends$keyword, fixed = TRUE),
+                             gtrends$keyword)
+
+gtrends$keyword <- ifelse(gtrends$time == "2017-06-05 2017-06-19", 
+                             gsub("Orlando shooting", "Orlando shooting 2017", gtrends$keyword, fixed = TRUE),
+                             gtrends$keyword)
+
+
+gtrends$hits <- gsub("<1", "0", gtrends$hits, fixed = TRUE)
+
 
 gtrends <- gtrends[-c(271:284), ]
 
 gtrends
+
+
 ```
 
 
@@ -477,12 +532,25 @@ reg <-
 
 reg 
 
-reg %>%
-  
+reg <- subset(reg, term=="rownumber")
+
+reg
+
+#write_xlsx(reg,"C:\\Users\\hre\\Documents\\Uni_Mannheim\\FSS_2020\\Research_Methods_Fundamentals_of_Computing_and_Data_Display\\Paper\\Term-Paper-Fundamentals\\Fundamentals---Term-Paper-\\reg.xlsx")
 
 gtrends
 
+wikishooting <-
+  wikishooting %>%
+  arrange(SearchTerm)
 
+wikishooting
+
+#write_xlsx(wikishooting,"C:\\Users\\hre\\Documents\\Uni_Mannheim\\FSS_2020\\Research_Methods_Fundamentals_of_Computing_and_Data_Display\\Paper\\Term-Paper-Fundamentals\\Fundamentals---Term-Paper-\\wikialph.xlsx")
+
+Final <- cbind(wikishooting, coef = reg$estimate) 
+
+Final
 
 
 # Versuch Regression mit einer observation
@@ -518,7 +586,27 @@ Wie sollten vllt. Gender of shooter kontrollieren. Frauen werden in den Medien m
 ```{r}
 # Regression 
 
-lm(x ~ Dead + Injured + Ethnicity + Area + GunLaws, data = wikishooting, )
+regdead = lm(coef ~ Dead, data = Final, )
+summary(regdead)
+
+reginjured = lm(coef ~ Injured, data = Final, )
+summary(reginjured)
+
+regeth = lm(coef ~ Ethnicity, data = Final, )
+summary(regeth)
+
+reggun = lm(coef ~ Gunlaws, data = Final, )
+summary(reggun)
+
+regarea = lm(coef ~ Area, data = Final, )
+summary(regarea)
+
+regtotal = lm(coef ~ Total, data = Final, )
+summary(regtotal)
+
+
+regfull = lm(coef ~ Dead + Injured + Ethnicity + Area + Gunlaws, data = Final, )
+summary(regfull)
 ```
 
 ## Fragen: 
