@@ -428,8 +428,10 @@ for (i in 1:nrow(wikishooting)){
 
 
 # Beispiel wie man die einzelnen Tabellen verbindet
-for (i in 1:length(listshooting)){
-    massshooting <- rbind(listshooting[[i]]$interest_over_time)
+massshooting <- listshooting[[1]]$interest_over_time
+for (i in 2:length(listshooting)){
+    shoot <- listshooting[[i]]$interest_over_time
+    massshooting <- rbind(massshooting, shoot)
 }
 massshooting
 
