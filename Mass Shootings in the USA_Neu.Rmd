@@ -1,9 +1,16 @@
 ---
 title: "Mass Shootings in the USA"
 author: "Hannah Reitz & Sophie Hensgen"
-date: "5/14/2020"
-output: html_document
+date: "`r Sys.Date()`"
+output:
+  pdf_document:
+    toc: yes
+    df_print: kable
 ---
+<<<<<<< HEAD
+=======
+
+>>>>>>> b3128fc97f83b5794da9d717040230ccdcccaf21
 ```{r}
 library(openxlsx)
 library(xml2)
@@ -18,14 +25,45 @@ library(gtrendsR)
 library(lubridate)
 library(writexl)
 library(readxl)
+library(tidyverse)
+library(magrittr)
 
 ```
+
+Citation examples for in-text citations:
+
+Smith cited [@smith04].
+Smith cited without author [-@smith04].
+@smith04 cited in line.
+
+## Introduction
+
+Aufhänger: Many studies about media salience of mass shootings, but no research about how this media attention influences peoples' interest in certain events. 
+
+Based on previous definition of mass murder (citations from Duwe 2000, p.373) mass shootings in this paper are defined as "incidents in which four or more persons are murdered within a 24 hour period" [@Duwe2000, p. 323] with a gun.
+
 ## Theory and Hypotheses
 
+Kleine Einleitung in Literature Review:
 
-Test Git
+"Like acts of terrorism and mass murder, not all mass shootings receive equitable media coverage,
+despite the sensational nature of the phenomenon as a whole (Schildkraut 2014, 2016). Absent from
+the body of research, however, is an exploration as to why this coverage is disparate" Schildkraut 2018 p. 224
 
-weiterer test
+
+
+
+Wie können wir einen Graphen einbinden/erstellen der unsere Zusammenhänge illustriert: 
+
+Deaths/Injuries/Race of perpetrator/  ----->    The decline of the search interest
+Rich area/ Loose gun control                    in google trends is slower
+          I                                            /\
+           I                                          I
+            I                                        I
+             V                                      I
+        more media attention for a 
+        longer time span due to more  --->     More people notice the  
+        newsworthiness of event                event in media reports
 
 
 
@@ -33,24 +71,49 @@ More dead people --> more media attention --> higher attention in Google trends
 
 newworthiness in den Medien
 
+Könntest du evtl. gebrauchen:
+"Because agenda-setting theory is applicable at both the issue and attribute levels,17
+media coverage of school shootings can be analyzed at these two levels as well.
+Although no particular theory was mentioned in it, a study examining the salience of
+fourteen school shooting incidents in network television news can be considered an
+example of issue agenda-setting research.18 By measuring the amount of news coverage
+of the incidents, the researchers showed that shooting incidents that resulted in
+more deaths or greater injuries were covered more. They also found that the amount
+of coverage was highly correlated across major television networks, demonstrating
+their “herd mentality.” Sung-Yeon Park (2012), p. 478
+
 1. The more people got injured, the longer the shooting stayed in the trends.
 
 2. The more deaths, the longer the shooting stayed in the trends.
 
 evtl. newswothiness in Kombination mit inequality
 
-3. If the shooter is black, the shooting stayed longer
-in the trends.
 
-4. Shootings in richer areas, stayed longer in the trends.
+Generally, research indicates that news coverage particularly is skewed toward stories about crime Schildkraut p. 223
 
+The first two hypotheses mainly focus on how certain crimes in this case mass shootings garner more attention from the media because they are more "newsworthy" [@someauthors]. We argued that the more people died or got injured during a mass shooting the more newsworthy the event is and the more the media reports about it. In turn this high media attention leads to an increase in public interest and the decline of search hits in Google trends on this mass shooting is less steep than for mass shootings that are not as newsworthy, do not get reported on as heavily and do not accumulate as much public interest. The next three hypotheses concentrate more on specific characteristics of mass shootings and how those could affect the decline of the relative count of search hits on this event in Google.
 
-5. In states with looser gun control, shootings stayed longer in the trends
+First, the racial or ethnic identity of the perpetrator might be an important characteristic to consider as this could heavily shape the way media presents mass shootings and the ensuing public interest in the events. Mainstream media targets mostly the white middle class in th US as the goal is to reach a larch audience. Because of this most media outlets report from a white perspective and thus "non-whites are more likely to be portrayed in a negative light relative to whites" [@Callanan2012, p. 94]  [@Tukachinsky2015, p. 187; @Wheeler2017, p. 73]. Therefore, a selection bias in media reporting in relation to race exists. Previous studies show that race explains some of the selection bias in the media. If the perpetrator in a mass shooting is not white or from another ethnicity than the majority population, the media covers the event more extensively [citations] Lundman
+
+In line with these findings, we suggest that as non-white violators in mass shootings attract more attention from the media, this might lead to a higher interest in the event by the public. In light of the present study this higher interest in mass shootings committed by non-white violators by the broad public may manifest in a decline in hits on Google that is less steep than for events with white shooters. Hence, we expect that if the shooter is non-white or has a migration background, the decline in the relative count of search hits on the event is less steep. The third hypothesis, therefore, is:
+
+*H3: If the shooter is black or has a migration-background, the decline in the relative count of search hits on the event is less steep.*
+
+Another important characteristic to explain why the public interest declines slower for some mass shootings but not for others is the affluence of the area in which the shooting happens. There is not much research on the relationship between the Affluence of the area in which a mass shooting takes place and the media coverage it receives yet. However, the study by [-@Schildkraut2018, p. 235] shows that  shootings that happen in more affluent communities receive more attention from newspapers. Accordingly, we assume that mass shootings in more affluent communities are more  newsworthy and thus draw more media attention. Subsequently, the public interest in these shootings is greater and the reduction of the relative search hit count is less steep than for shootings that happen in less affluent communities. Therefore, the fourth hypothesis is:
+
+*H4: The more affluent a community a mass shooting happens in is, the shallower is the reduction of the relative search hit count.*
+
+As for the last hypothesis there is sparse research on how the gun laws of the state a mass shooting happens in influence its newsworthiness, media coverage and how this might affect the public interest. We expect that if a mass shooting happens in a state with weak gun laws the issue of gun control becomes more salient. Subsequently in light of this public discussion the event becomes more newsworthy and the media covers the shooting more heavily. Because of this, the public interest in the mass shooting rises and the relative count of the search hits on Google declines slower. Hence, the fifth hypothesis is:
+
+*H5: If the state a mass shooting happens in has weak gun laws, the relative count of the search hits on Google declines slower.*
+
+In summary, most of the previous research on mass shootings mainly focused on how certain characteristics of shootings affect its newsworthiness and its coverage in the media. Our contribution to this literature is to consider how certain characteristics of mass shootings could influence the public interest in form of the temporal decline in the relative count of search hits on this event on Google (bessere Formulierung?). Additionally we also consider characteristics of mass shootings previous studies have not considered. The focus of past research was mainly on the impact the count of dead and injured persons as well as the race of the perpetrator have on the media reporting. We also take into account how the affluence of the community where a shooting happens and the strength of the gun laws in the sate a shooting takes place affect the public interest in the event. 
 
 
 ## Data from Wikipedia
 
 Erlärung welche Daten, wie gescrapt, wie sehen die Daten aus Deskription
+Tabelle mit für Missing, welche observations haben wir warum gedropped, wie viele observations verbleiben in unserem sample
 
 
 ```{r}
@@ -332,6 +395,8 @@ wikishooting <- na.omit(wikishooting)
 # correcting Data types
 
 wikishooting$Ethnicity <- as.numeric(wikishooting$Ethnicity)
+
+wikishooting$TrendPeriod <- gsub("2008-12-22 2009-01-07", "2008-12-22 2009-01-21", wikishooting$TrendPeriod, fixed = TRUE)
 wikishooting
 
 ```
@@ -365,22 +430,20 @@ for (i in 1:nrow(wikishooting)){
 
 
 
-# Versuch das beide Variablen die selbe reihe ansprechen
-
-listshooting <- list()
-for (i in wikishooting$SearchTerm){
-    for (k in wikishooting$TrendPeriod){
-      if (i == k) {                       # platzhalter
-    shooting <- gtrends(keyword = i, geo = "US", time = k, low_search_volume = T)
-    print(shooting)
-    listshooting <- append(listshooting, shooting)
-    }
-    }
-}
-
 # Beispiel wie man die einzelnen Tabellen verbindet
-massshooting <- rbind(listshooting[[1]], listshooting[[8]], listshooting[[15]], listshooting[[22]])
+for (i in 1:length(listshooting)){
+    massshooting <- rbind(listshooting[[i]]$interest_over_time)
+}
 massshooting
+
+for (i in listshooting){
+    massshooting <- rbind(i)
+ }
+
+
+
+
+massshooting <- rbind(listshooting[[1]]$interest_over_time, listshooting[[8]]$interest_over_time, listshooting[[15]]$interest_over_time, listshooting[[22]]$interest_over_time)
 
 ```
 
@@ -389,6 +452,7 @@ First, we transform the `data.frame` into a `tibble`.
 ```{r}
 shootings_trend <- as_tibble(massshooting$interest_over_time)
 glimpse(shootings_trend)
+shootings_trend
 ```
 
 ## Fragen: 
@@ -400,7 +464,7 @@ glimpse(shootings_trend)
 ############################################################################################################################################
 
 ## Data Analysis
-
+Wie sollten vllt. Gender of shooter kontrollieren. Frauen werden in den Medien mehr beachtet --> Könnte zu einer Verzerrung der Ergebnisse führen.
 
 ```{r}
 # Regression 
