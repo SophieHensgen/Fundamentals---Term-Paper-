@@ -624,10 +624,11 @@ library(stargazer)
 
 ```{r, results='asis'}
 # PDF Table of regressions
-stargazer::stargazer(regdead, reginjured, regeth, reggun, regarea, regfull, title   = "These are awesome results!", 
+stargazer::stargazer(regdead, reginjured, regeth, reggun, regarea, regfull, 
+                     title   = "These are awesome results!", 
                      covariate.labels = c("Dead", "Injured", "Ethnicity","Area", "Gunlaws"), 
                      dep.var.labels   = "decrease of interest", 
-                     keep.stat = "adj.rsq", "n",
+                     keep.stat = c("adj.rsq", "n"),
                      flip = TRUE)
                      
 ```
