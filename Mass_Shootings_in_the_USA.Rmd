@@ -135,27 +135,14 @@ Tabelle mit für Missing, welche observations haben wir warum gedropped, wie vie
 url <- "https://en.wikipedia.org/wiki/List_of_mass_shootings_in_the_United_States"
 t <- read_html(url)
 table <- t %>% html_nodes("#mw-content-text > div > table") %>% html_table(trim=T)
-
-table
-
 ```
 
-hier Tabellen zusammensetzten
-
-erstes klappt, danach gibt es ein problem mit incompatiblen types. 
-Ich glaube wir müssen die buchstaben aus injured rausholen damit wir es in einen integer umändern können
-
-To Do:
-
-- gsub loop --> alle alle nicht zahlen rausziehen
-- alle mutaten damit alle integer sein 
-- wenn das gemacht alle joinen zu einer großen tabelle
-- in excel Extra Variablen hinzufügen
-- Datum in Zahlen ändern
-- zwei neue variablen, eine zwei Tage vor dem Event und 14 Tage danach
-- Description den Namen herausnehmen
+```{r, include = FALSE}
+table
+```
 
 ```{r, include = FALSE}
+### Data editing
 
 # Removing unnecessary expressions
 
@@ -193,25 +180,6 @@ for (i in 1:10) {
 }
 
 
-#####################################
-# Date formatting not working
-#dates <- table[[1]]$Date
-#betterDates <- as.Date(dates,
-#format = "%m %d %Y")
-
-#table[[1]]
-
-#for (i in 1:10) {
-  #parse_date_time2("table[[i]]$Date", orders = "mdy")
-  #as_date(table[[i]]$Date, tz = NULL, format = NULL)
-  #as_date(table[[i]]$Date, origin = lubridate::origin)
-  #c(as_date(table[[i]]$Date), as.Date(table[[i]]$Date))
-#  date <- as.Date(table[[i]]$Date, format = "%B %d, %Y")
-#}
-
-#table[[1]]
-####################################################
-
 # Joining all tables to one data frame
 
 newtab <- table[[1]]
@@ -222,7 +190,7 @@ for (i in 1:10) {
 
 newtab
 
-# Works for simple dates, need to think about how we handle timespans --> at the moment converting them gives NAs
+# Change Date structure
 
 str(newtab$Date)
 
@@ -233,8 +201,7 @@ for (i in 1:10) {
 
 newtab
 
-
-#Deleting the useless part of description --> possibly need to remove year as nobody googles the year when event is happening
+#Extract only the name of the shooting of off the Description, delete everything else
 
 newtab$Description <- sub(":.*$", "", newtab$Description)
 newtab
@@ -242,20 +209,28 @@ newtab
 
 
 ```{r, include = FALSE}
+
+# save Date as date format
+
 lct <- Sys.getlocale("LC_TIME"); Sys.setlocale("LC_TIME", "C")
 newtab[["Date"]] <- as.Date(newtab$Date, format = "%B-%d-%Y")
 newtab
 
+# Create new Variable for the Timespan
+
 newtab$After <- newtab$Date + 14
 newtab
 
+# delete NAs
+
 newtab <- na.omit(newtab)
 
+# Correct the order of the variables
 
-#colnames(newtab)
 newtab <- newtab[, c("Date", "After", "Location", "Dead", "Injured", "Total", "Description")] 
 newtab
 
+# Create a new Variable for the Timespan --> TrendPeriod
 newtab$TrendPeriod <- paste(newtab$Date, newtab$After)
 newtab
 
@@ -268,11 +243,15 @@ Sophie: 6-10 subben
 Hannah: 11-15 
 
 ```{r, include = FALSE}
+### Data Editing 
 
 newtab$SearchTerm <- gsub("shootout", "shooting", newtab$Description, fixed = TRUE)
 
+# Correct the order of the variables
+
 newtab <- newtab[, c("Date", "After", "TrendPeriod", "SearchTerm", "Description", "Location", "Dead", "Injured", "Total")] 
 
+# delete the number in the searchterm
 number <- c("2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019")
 
 as.character(number)
@@ -280,6 +259,8 @@ as.character(number)
 for (i in number){
    newtab$SearchTerm <- gsub(i , "", newtab$SearchTerm, fixed = TRUE)
 }
+
+# Change SearchTerm so that it does find the most Hits
 
 newtab$SearchTerm <- gsub(" at Charlotte", "", newtab$SearchTerm, fixed = TRUE)
 newtab$SearchTerm <- gsub("January ", "", newtab$SearchTerm, fixed = TRUE)
@@ -393,6 +374,8 @@ wikishooting
 ```
 
 ```{r, include = FALSE}
+### Data edditing
+
 # correcting Data types
 
 wikishooting[["Date"]] <- as.Date(wikishooting$Date, format = "%Y-%m-%d")
@@ -411,6 +394,7 @@ wikishooting$Ethnicity <- as.numeric(wikishooting$Ethnicity)
 
 wikishooting$TrendPeriod <- gsub("2008-12-24 2009-01-07", "2008-12-24 2009-01-21", wikishooting$TrendPeriod, fixed = TRUE)
 
+# Drop Haynie family as it does not give any results/hits
 wikishooting <-
   wikishooting %>%
   filter(SearchTerm != "Shooting of Haynie family")
@@ -425,18 +409,9 @@ wikishooting
 
 ## Data from GTrends
 
-Gtrends 
---> scraping von mehreren Namen auf einmal --> Text ob es mit einem funktioniert
 
-```{r}
-#shootings <- gtrends(c("Milwaukee shooting", "Grantsville shooting", "El Paso shooting"), geo = "US", time = "2012-01-01 2020-05-07", low_search_volume = T)
-#plot(shootings)
-#shootings
-```
-
-Versuch eines Loop der einzelne outcomes speichert
-```{r, results="hide"}
-
+```{r, include = FALSE}
+#Versuch eines Loop der einzelne outcomes speichert
 
 #listshooting <- list()
 #for (i in 1:nrow(wikishooting)){
@@ -450,6 +425,7 @@ Versuch eines Loop der einzelne outcomes speichert
 
 
 # Beispiel wie man die einzelnen Tabellen verbindet
+
 #massshooting <- listshooting[[1]]$interest_over_time
 #for (i in 2:length(listshooting)){
 #    shoot <- listshooting[[i]]$interest_over_time
@@ -468,6 +444,10 @@ gtrends
 First, we transform the `data.frame` into a `tibble`.
 
 ```{r, include = FALSE}
+### Data editing
+
+# Some shootings have the same search term, so we add here the Date in order to recognize them latter on
+
 gtrends <- as_tibble(gtrends)
 glimpse(gtrends)
 
@@ -524,9 +504,11 @@ gtrends$keyword <- ifelse(gtrends$time == "2017-06-05 2017-06-19",
                              gsub("Orlando shooting", "Orlando shooting 2017", gtrends$keyword, fixed = TRUE),
                              gtrends$keyword)
 
+# change smaller than 1 to 0 to make sure, that we do not get any NAs because of them
 
 gtrends$hits <- gsub("<1", "0", gtrends$hits, fixed = TRUE)
 
+# covina Shooting had to have a larger Time period, here we correct it. So does it fits with the others
 
 gtrends <- gtrends[-c(271:284), ]
 
@@ -537,11 +519,13 @@ gtrends
 
 
 ```{r, include = FALSE}
-
+# give every shooting a countdown with 1 to 15, for each day we inspect
 gtrends$rownumber = 1:15
 
+# save the hits as numeric values
 gtrends$hits <- as.numeric(as.character(gtrends$hits))
 
+# regression for each mass shooting 
 reg <-
   gtrends %>%
   group_by(keyword) %>%            # group by column z
@@ -549,6 +533,7 @@ reg <-
 
 reg 
 
+# subset the reg
 reg <- subset(reg, term=="rownumber")
 
 reg
@@ -568,23 +553,6 @@ wikishooting
 Final <- cbind(wikishooting, coef = reg$estimate) 
 
 Final
-
-
-# Versuch Regression mit einer observation
-
-#gtrends_Columbus <- subset(gtrends, keyword == "Columbus shooting")
-#gtrends_Columbus
-
-#gtrends_Columbus$rownumber = 1:nrow(gtrends_Columbus)
-#gtrends_Columbus
-
-#reg <- lm(hits ~ rownumber, data = gtrends_Columbus, )
-
-#coef <- summary(reg)$coefficients[2]
-#coef
-
-#gtrends_Columbus$coef = coef
-#gtrends_Columbus
 ```
 
 
@@ -625,67 +593,45 @@ Sophie: Plot Regressionsgeraden des vollen Modells
 Hannah: Coefplot oder Marginsplot für volles Modell
 ############################################
 
-```{r}
+```{r, include = FALSE}
 # Regression 
 
-regdead = lm(coef ~ Dead, data = Final, )
+regdead <- lm(coef ~ Dead, data = Final, )
 summary(regdead)
 
 reginjured = lm(coef ~ Injured, data = Final, )
 summary(reginjured)
 
-regeth = lm(coef ~ Ethnicity, data = Final, )
+regeth <- lm(coef ~ Ethnicity, data = Final, )
 summary(regeth)
 
-reggun = lm(coef ~ Gunlaws, data = Final, )
+reggun <- lm(coef ~ Gunlaws, data = Final, )
 summary(reggun)
 
-regarea = lm(coef ~ Area, data = Final, )
+regarea <- lm(coef ~ Area, data = Final, )
 summary(regarea)
 
-regtotal = lm(coef ~ Total, data = Final, )
+regtotal <- lm(coef ~ Total, data = Final, )
 summary(regtotal)
-
 
 regfull = lm(coef ~ Dead + Injured + Ethnicity + Area + Gunlaws, data = Final, )
 summary(regfull)
 
-library(lattice)
-library(MASS)
-require(memisc)
-library(pander)
-#regtable <- mtable('Model 1' = regdead,
-#            'Model 2' = reginjured,
-#            'Model 3' = regfull,
-#            summary.stats = c('R-squared','F','p','N'))
-
-pander(regfull)
 #install.packages("stargazer") 
 library(stargazer)
-regdead <- lm(coef ~ Dead, data = Final, )
-regfull <- lm(coef ~ Dead + Injured + Ethnicity + Area + Gunlaws, data = Final, )
 
 ```
 
 ```{r, results='asis'}
-# If output: pdf_document
-#stargazer(regdead, regfull, type = "text", 
- #         title            = "These are awesome results!",
-  #        covariate.labels = c("Dead", "Injured", "Ethnicity",
-   #                            "Area", "Gunlaws"),
-    #      dep.var.labels   = "decrease of interest", 
-     #     float.env = "sidewaystable", 
-      #    keep.stat = "adj.rsq")
-
+# PDF Table of regressions
 stargazer::stargazer(regdead, reginjured, regeth, reggun, regarea, regfull, title   = "These are awesome results!", 
                      covariate.labels = c("Dead", "Injured", "Ethnicity","Area", "Gunlaws"), 
                      dep.var.labels   = "decrease of interest", 
                      keep.stat = "adj.rsq", "n",
                      flip = TRUE)
                      
-#, float.env = "sidewaystable", keep.stat = "adj.rsq", title = "Table with stargazer")
-
 ```
+
 
 
 
@@ -694,12 +640,15 @@ Hannah Ab Regression Table
 
 
 
-```{r,results='asis'}
 
-#regdead <- lm(coef ~ Dead, data = Final, )
-#report_regression(regdead)
 
-```
+
+
+
+Hannah Ab Regression Table 
+
+
+
 
 # Conclusion 
 Hannah
