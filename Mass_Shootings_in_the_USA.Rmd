@@ -8,6 +8,7 @@ output:
   pdf_document:
     toc: yes
     df_print: kable
+always_allow_html: true
 #bibliography: Mass_Shootings.bibtex
 ---
 lala
@@ -31,7 +32,12 @@ library(broom)
 library(knitr)
 library(ggplot2)
 library(ggpubr)
+library(ggiraph)
+library(devtools)
+library(ggiraphExtra)
+library(systemfonts)
 
+# devtools::install_github('davidgohel/ggiraph')
 ```
 
 dfjhv
@@ -671,11 +677,37 @@ Wie sollten vllt. Gender of shooter kontrollieren. Frauen werden in den Medien m
 Sophie: Scatterplot von unabhängigen Variablen und der Abnahme für jede IV --> evtl. geom point + geom smooth
 ############################################################
 
+```{r echo=FALSE}
+ggplot(Final) +
+  geom_point(aes(x = coef , y = Dead, color = Area)) +
+  geom_smooth(aes(x = coef, y = Dead))
+
+ggplot(Final) +
+  geom_point(aes(x = coef , y = Dead, color = Gunlaws)) +
+  geom_smooth(aes(x = coef, y = Dead))
+
+ggplot(Final) +
+  geom_point(aes(x = coef , y = Dead, color = Ethnicity)) +
+  geom_smooth(aes(x = coef, y = Dead))
+
+
+ggplot(Final) +
+  geom_point(aes(x = coef , y = Injured, color = Area)) +
+  geom_smooth(aes(x = coef, y = Injured))
+
+ggplot(Final) +
+  geom_point(aes(x = coef , y = Injured, color = Gunlaws)) +
+  geom_smooth(aes(x = coef, y = Injured))
+
+ggplot(Final) +
+  geom_point(aes(x = coef , y = Injured, color = Ethnicity)) +
+  geom_smooth(aes(x = coef, y = Injured))
+```
+
+
 Regressionstabelle aufhübschen + alle Modelle inkludieren
 #####################################################
 
-Sophie: Plot Regressionsgeraden des vollen Modells
-##########################################
 
 Hannah: Coefplot oder Marginsplot für volles Modell
 ############################################
@@ -698,9 +730,6 @@ summary(reggun)
 regarea <- lm(coef ~ Area, data = Final, )
 summary(regarea)
 
-regtotal <- lm(coef ~ Total, data = Final, )
-summary(regtotal)
-
 regfull = lm(coef ~ Dead + Injured + Ethnicity + Area + Gunlaws, data = Final, )
 summary(regfull)
 
@@ -718,6 +747,55 @@ stargazer::stargazer(regdead, reginjured, regeth, reggun, regarea, regfull,
                      keep.stat = c("adj.rsq", "n"),
                      flip = TRUE)
                      
+```
+
+Sophie: Plot Regressionsgeraden des vollen Modells
+##########################################
+
+```{r echo=FALSE}
+# Regression with Deads
+
+#With interactive to TRUE we can observe single observations and get more information
+
+#Gun Laws
+regmixG <- lm(coef ~ Dead + Gunlaws, data = Final, )
+summary(regmixG)
+
+ggPredict(regmixG,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
+
+#Area
+regmixA <- lm(coef ~ Dead + Area, data = Final, )
+summary(regmixA)
+
+ggPredict(regmixA,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
+
+#Ethnicity
+regmixE <- lm(coef ~ Dead + Ethnicity, data = Final, )
+summary(regmixE)
+
+ggPredict(regmixE,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
+
+
+#Regression with Injured
+
+#Gun Laws
+regmixGU <- lm(coef ~ Injured + Gunlaws, data = Final, )
+summary(regmixGU)
+
+ggPredict(regmixGU,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
+
+#Area
+regmixAR <- lm(coef ~ Injured + Area, data = Final, )
+summary(regmixAR)
+
+ggPredict(regmixAR,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
+
+#Ethnicity
+regmixET <- lm(coef ~ Injured + Ethnicity, data = Final, )
+summary(regmixET)
+
+ggPredict(regmixET,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
+
 ```
 
 
