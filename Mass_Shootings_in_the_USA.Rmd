@@ -29,6 +29,8 @@ library(tidyverse)
 library(magrittr)
 library(broom)
 library(knitr)
+library(ggplot2)
+library(ggpubr)
 
 ```
 
@@ -574,6 +576,91 @@ Sophie
 ############################################################################################################################################
 
 # Results
+
+```{r}
+
+# Converting variables needed for bar plots into character vectors
+
+Final$Ethnicity <- as.character(Final$Ethnicity)
+
+Final$Area <- as.character(Final$Area)
+
+Final$Gunlaws <- as.character(Final$Gunlaws)
+Final
+
+# Boxplots of metric variables (Dead, Injured)
+
+boxdead <- 
+  ggplot(Final) +
+  labs(title = "Boxplot of the Number of Dead Persons", x = "", y = "Number of Dead Persons") +
+  geom_boxplot(mapping = aes(x = "Dead", y = Dead)) +
+  theme(
+  axis.text.y = element_blank(),
+  axis.ticks.y = element_blank()) +
+  scale_y_continuous(breaks=seq(0,60,5)) +
+  coord_flip()
+boxdead
+
+boxinjured <- 
+  ggplot(Final) +
+  labs(title = "Boxplot of the Number of Injured Persons", x = "", y = "Number of Injured Persons") +
+  geom_boxplot(mapping = aes(x = "Injured", y = Injured)) +
+  theme(
+  axis.text.y = element_blank(),
+  axis.ticks.y = element_blank()) +
+  scale_y_continuous(breaks=seq(0,500,20)) +
+  coord_flip()
+boxinjured
+
+#Versuch
+#histdead <- ggplot(Final) +
+#  geom_histogram(mapping = aes(x = Dead), binwidth = 1)
+
+#histdead
+
+# Bar plots of all categorical variables (Ethincity, Area, Gunlaws)
+
+## Ethnicity
+bareth <- ggplot(Final, aes(x = Ethnicity)) + # include percent
+  labs(title = "Frequencies by Ethnicity", x = "Ethnicity", y = "Count") +
+  geom_bar() +
+  scale_x_discrete(labels=c("0" =  "Black or Other Ethnicity", "1" = "White American")) +
+  scale_y_continuous(breaks=seq(0,120,20), limit = c(0, 120)) +
+  geom_text(stat='count', aes(label=..count..), vjust=-0.5) 
+  #geom_text(aes(label=paste0(round(Ethnicity*100,1),"%"),  y=pc))
+  #geom_text(aes(label = ..prop..), stat= "count", vjust = -.5)
+bareth
+
+## Area
+bararea <- ggplot(Final, aes(x = Area)) + # include percent
+  labs(title = "Frequencies by Affluence of Community", x = "Affluence of Community", y = "Count") +
+  geom_bar()  +
+  scale_x_discrete(labels=c("0" =  "Low Income Community", "1" = "High Income Community")) +
+  scale_y_continuous(breaks=seq(0,120,20), limit = c(0, 120)) +
+  geom_text(stat='count', aes(label=..count..), vjust=-0.5) 
+  #geom_text(aes(label=paste0(round(Ethnicity*100,1),"%"),  y=pc))
+  #geom_text(aes(label = ..prop..), stat= "count", vjust = -.5)
+bararea
+
+## Gunlaws
+bargun <- ggplot(Final, aes(x = Gunlaws)) + # include percent
+  labs(title = "Frequencies by Gun Law Strength", x = "Gun Law Strength", y = "Count") +
+  geom_bar()  +
+  scale_x_discrete(labels=c("0" =  "Weak Gun Laws", "1" = "Strong Gun Laws")) +
+  scale_y_continuous(breaks=seq(0,120,20), limit = c(0, 120)) +
+  geom_text(stat='count', aes(label=..count..), vjust=-0.5) 
+  #geom_text(aes(label=paste0(round(Ethnicity*100,1),"%"),  y=pc))
+  #geom_text(aes(label = ..prop..), stat= "count", vjust = -.5)
+bargun
+
+
+ggarrange(bareth, bararea, bargun + rremove("x.text"), 
+          #labels = c("A", "B", "C"),
+          ncol = 2, nrow = 2)
+
+
+```
+
 
 Hannah: Descriptives: Barplots of variables mit facet wrap wewe
 ##########################################################
