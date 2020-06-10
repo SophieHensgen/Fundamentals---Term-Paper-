@@ -7,7 +7,6 @@ output:
     toc: yes
     df_print: kable
 ---
-
 ```{r}
 library(openxlsx)
 library(xml2)
@@ -24,7 +23,6 @@ library(writexl)
 library(readxl)
 library(tidyverse)
 library(magrittr)
-library(broom)
 
 ```
 
@@ -237,6 +235,7 @@ lct <- Sys.getlocale("LC_TIME"); Sys.setlocale("LC_TIME", "C")
 newtab[["Date"]] <- as.Date(newtab$Date, format = "%B-%d-%Y")
 newtab
 
+newtab$Prior <- newtab$Date - 2
 newtab$After <- newtab$Date + 14
 newtab
 
@@ -244,10 +243,10 @@ newtab <- na.omit(newtab)
 
 
 #colnames(newtab)
-newtab <- newtab[, c("Date", "After", "Location", "Dead", "Injured", "Total", "Description")] 
+newtab <- newtab[, c("Date", "Prior", "After", "Location", "Dead", "Injured", "Total", "Description")] 
 newtab
 
-newtab$TrendPeriod <- paste(newtab$Date, newtab$After)
+newtab$TrendPeriod <- paste(newtab$Prior, newtab$After)
 newtab
 
 ```
@@ -262,7 +261,7 @@ Hannah: 11-15
 
 newtab$SearchTerm <- gsub("shootout", "shooting", newtab$Description, fixed = TRUE)
 
-newtab <- newtab[, c("Date", "After", "TrendPeriod", "SearchTerm", "Description", "Location", "Dead", "Injured", "Total")] 
+newtab <- newtab[, c("Date", "Prior", "After", "TrendPeriod", "SearchTerm", "Description", "Location", "Dead", "Injured", "Total")] 
 
 number <- c("2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019")
 
@@ -369,7 +368,7 @@ Meteor shooting sieht komish aus --> evtl droppen wegen kleiner Fallzahl
 # Exporting data frame to excel in order to add further variables
 
 #Pfad Hannah
-#write_xlsx(newtab,"C:\\Users\\hre\\Documents\\Uni_Mannheim\\FSS_2020\\Research_Methods_Fundamentals_of_Computing_and_Data_Display\\Paper\\Term-Paper-Fundamentals\\Fundamentals---Term-Paper-\\wikishootings2.xlsx")
+#write_xlsx(newtab,"C:\\Users\\hre\\Documents\\Uni_Mannheim\\FSS_2020\\Research_Methods_Fundamentals_of_Computing_and_Data_Display\\Paper\\Term-Paper-Fundamentals\\wikishootings.xlsx")
 
 #Pfad Sophie
 #write_xlsx(newtab,"/Users/sophiehensgen/Term-Paper-Fundamentals/Fundamentals---Term-Paper-/WikiShootingscomplete.xlsx")
@@ -378,7 +377,7 @@ Meteor shooting sieht komish aus --> evtl droppen wegen kleiner Fallzahl
 ```{r}
 # Inporting excel Data 
 
-wikishooting <- read_excel("WikiShootings_final.xlsx")
+wikishooting <- read_excel("WikiShootingscomplete.xlsx")
 wikishooting
 
 ```
@@ -387,6 +386,7 @@ wikishooting
 # correcting Data types
 
 wikishooting[["Date"]] <- as.Date(wikishooting$Date, format = "%Y-%m-%d")
+wikishooting[["Prior"]] <- as.Date(wikishooting$Date, format = "%Y-%m-%d")
 wikishooting[["After"]] <- as.Date(wikishooting$Date, format = "%Y-%m-%d")
 
 wikishooting
@@ -400,12 +400,7 @@ wikishooting <- na.omit(wikishooting)
 
 wikishooting$Ethnicity <- as.numeric(wikishooting$Ethnicity)
 
-wikishooting$TrendPeriod <- gsub("2008-12-24 2009-01-07", "2008-12-24 2009-01-21", wikishooting$TrendPeriod, fixed = TRUE)
-
-wikishooting <-
-  wikishooting %>%
-  filter(SearchTerm != "Shooting of Haynie family")
-
+wikishooting$TrendPeriod <- gsub("2008-12-22 2009-01-07", "2008-12-22 2009-01-21", wikishooting$TrendPeriod, fixed = TRUE)
 wikishooting
 
 ```
@@ -420,165 +415,58 @@ Gtrends
 --> scraping von mehreren Namen auf einmal --> Text ob es mit einem funktioniert
 
 ```{r}
-#shootings <- gtrends(c("Milwaukee shooting", "Grantsville shooting", "El Paso shooting"), geo = "US", time = "2012-01-01 2020-05-07", low_search_volume = T)
-#plot(shootings)
-#shootings
+shootings <- gtrends(c("Milwaukee shooting", "Grantsville shooting", "El Paso shooting"), geo = "US", time = "2012-01-01 2020-05-07", low_search_volume = T)
+plot(shootings)
+shootings
 ```
 
 Versuch eines Loop der einzelne outcomes speichert
 ```{r}
 
-
-#listshooting <- list()
-#for (i in 1:nrow(wikishooting)){
-#    x <- as.vector(wikishooting$SearchTerm[i])
-#    y <- as.vector(wikishooting$TrendPeriod[i])
-#    shooting <- gtrends(keyword = x, geo = "US", time = y, low_search_volume = T)
-#    iteration <- (1 + length(listshooting))
-#    listshooting[[iteration]] <- shooting
-# }
+listshooting <- list()
+for (i in 1:nrow(wikishooting)){
+    x <- as.vector(wikishooting$SearchTerm[i])
+    y <- as.vector(wikishooting$TrendPeriod[i])
+    shooting <- gtrends(keyword = x, geo = "US", time = y, low_search_volume = T)
+    iteration <- (1 + length(listshooting))
+    listshooting[[iteration]] <- shooting
+ }
 
 
 
 # Beispiel wie man die einzelnen Tabellen verbindet
-#massshooting <- listshooting[[1]]$interest_over_time
-#for (i in 2:length(listshooting)){
-#    shoot <- listshooting[[i]]$interest_over_time
-#    massshooting <- rbind(massshooting, shoot)
-#}
-#massshooting
+massshooting <- listshooting[[1]]$interest_over_time
+for (i in 2:length(listshooting)){
+    shoot <- listshooting[[i]]$interest_over_time
+    massshooting <- rbind(massshooting, shoot)
+}
+massshooting
 
-#saveRDS(massshooting, "massshooting.rds")
+for (i in listshooting){
+    massshooting <- rbind(i)
+ }
 
-# Load the city object as city
-gtrends <- readRDS("massshooting.rds")
-gtrends
+final <- dataframe()
+for (i in gtrends$keyword) {
+   gtrends_[i] <- subset(gtrends, keyword == "i")
+   gtrends_[i] = 1:nrow8gtrends_[1]
+   reg <- lm(hits ~ rownumber, data = gtrends-[1], )
+   coef <- summary(reg)$coefficients[2]
+   gtrends_[i]$coef <- coef
+   final <- rbind(final, gtrends_[i])
+}
+
+massshooting <- rbind(listshooting[[1]]$interest_over_time, listshooting[[8]]$interest_over_time, listshooting[[15]]$interest_over_time, listshooting[[22]]$interest_over_time)
 
 ```
 
 First, we transform the `data.frame` into a `tibble`.
 
 ```{r}
-gtrends <- as_tibble(gtrends)
-glimpse(gtrends)
-
-
-gtrends$keyword <- ifelse(gtrends$time == "2004-03-12 2004-03-26", 
-                             gsub("Fresno shooting", "Fresno shooting 2004", gtrends$keyword, fixed = TRUE),
-                             gtrends$keyword)
-
-gtrends$keyword <- ifelse(gtrends$time == "2019-11-17 2019-12-01", 
-                             gsub("Fresno shooting", "Fresno shooting 2019", gtrends$keyword, fixed = TRUE),
-                             gtrends$keyword)
-
-gtrends$keyword <- ifelse(gtrends$time == "2006-03-25 2006-04-08", 
-                             gsub("Seattle shooting", "Seattle shooting March 2006", gtrends$keyword, fixed = TRUE),
-                             gtrends$keyword)
-
-gtrends$keyword <- ifelse(gtrends$time == "2006-07-28 2006-08-11", 
-                             gsub("Seattle shooting", "Seattle shooting July 2006", gtrends$keyword, fixed = TRUE),
-                             gtrends$keyword)
-
-gtrends$keyword <- ifelse(gtrends$time == "2012-05-30 2012-06-13", 
-                             gsub("Seattle shooting", "Seattle shooting July 2012", gtrends$keyword, fixed = TRUE),
-                             gtrends$keyword)
-
-gtrends$keyword <- ifelse(gtrends$time == "2009-11-05 2009-11-19", 
-                             gsub("Fort Hood shooting", "Fort Hood shooting 2009", gtrends$keyword, fixed = TRUE),
-                             gtrends$keyword)
-
-gtrends$keyword <- ifelse(gtrends$time == "2014-04-02 2014-04-16", 
-                             gsub("Fort Hood shooting", "Fort Hood shooting 2014", gtrends$keyword, fixed = TRUE),
-                             gtrends$keyword)
-
-gtrends$keyword <- ifelse(gtrends$time == "2017-03-26 2017-04-09", 
-                             gsub("Cincinnati shooting", "Cincinnati shooting 2017", gtrends$keyword, fixed = TRUE),
-                             gtrends$keyword)
-
-gtrends$keyword <- ifelse(gtrends$time == "2018-09-06 2018-09-20", 
-                             gsub("Cincinnati shooting", "Cincinnati shooting 2018", gtrends$keyword, fixed = TRUE),
-                             gtrends$keyword)
-
-gtrends$keyword <- ifelse(gtrends$time == "2014-07-09 2014-07-23", 
-                             gsub("Harris County shooting", "Harris County shooting 2014", gtrends$keyword, fixed = TRUE),
-                             gtrends$keyword)
-
-gtrends$keyword <- ifelse(gtrends$time == "2015-08-08 2015-08-22", 
-                             gsub("Harris County shooting", "Harris County shooting 2015", gtrends$keyword, fixed = TRUE),
-                             gtrends$keyword)
-
-gtrends$keyword <- ifelse(gtrends$time == "2016-06-12 2016-06-26", 
-                             gsub("Orlando shooting", "Orlando shooting 2016", gtrends$keyword, fixed = TRUE),
-                             gtrends$keyword)
-
-gtrends$keyword <- ifelse(gtrends$time == "2017-06-05 2017-06-19", 
-                             gsub("Orlando shooting", "Orlando shooting 2017", gtrends$keyword, fixed = TRUE),
-                             gtrends$keyword)
-
-
-gtrends$hits <- gsub("<1", "0", gtrends$hits, fixed = TRUE)
-
-
-gtrends <- gtrends[-c(271:284), ]
-
-gtrends
-
-
+shootings_trend <- as_tibble(massshooting$interest_over_time)
+glimpse(shootings_trend)
+shootings_trend
 ```
-
-
-```{r}
-
-gtrends$rownumber = 1:15
-
-gtrends$hits <- as.numeric(as.character(gtrends$hits))
-
-reg <-
-  gtrends %>%
-  group_by(keyword) %>%            # group by column z
-  do(tidy(lm(hits ~ rownumber, data=.)))
-
-reg 
-
-reg <- subset(reg, term=="rownumber")
-
-reg
-
-#write_xlsx(reg,"C:\\Users\\hre\\Documents\\Uni_Mannheim\\FSS_2020\\Research_Methods_Fundamentals_of_Computing_and_Data_Display\\Paper\\Term-Paper-Fundamentals\\Fundamentals---Term-Paper-\\reg.xlsx")
-
-gtrends
-
-wikishooting <-
-  wikishooting %>%
-  arrange(SearchTerm)
-
-wikishooting
-
-#write_xlsx(wikishooting,"C:\\Users\\hre\\Documents\\Uni_Mannheim\\FSS_2020\\Research_Methods_Fundamentals_of_Computing_and_Data_Display\\Paper\\Term-Paper-Fundamentals\\Fundamentals---Term-Paper-\\wikialph.xlsx")
-
-Final <- cbind(wikishooting, coef = reg$estimate) 
-
-Final
-
-
-# Versuch Regression mit einer observation
-
-#gtrends_Columbus <- subset(gtrends, keyword == "Columbus shooting")
-#gtrends_Columbus
-
-#gtrends_Columbus$rownumber = 1:nrow(gtrends_Columbus)
-#gtrends_Columbus
-
-#reg <- lm(hits ~ rownumber, data = gtrends_Columbus, )
-
-#coef <- summary(reg)$coefficients[2]
-#coef
-
-#gtrends_Columbus$coef = coef
-#gtrends_Columbus
-```
-
-
 
 ## Fragen: 
    - Loop bezüglich der Gtrends, erste Versuche oben.
@@ -594,27 +482,7 @@ Wie sollten vllt. Gender of shooter kontrollieren. Frauen werden in den Medien m
 ```{r}
 # Regression 
 
-regdead = lm(coef ~ Dead, data = Final, )
-summary(regdead)
-
-reginjured = lm(coef ~ Injured, data = Final, )
-summary(reginjured)
-
-regeth = lm(coef ~ Ethnicity, data = Final, )
-summary(regeth)
-
-reggun = lm(coef ~ Gunlaws, data = Final, )
-summary(reggun)
-
-regarea = lm(coef ~ Area, data = Final, )
-summary(regarea)
-
-regtotal = lm(coef ~ Total, data = Final, )
-summary(regtotal)
-
-
-regfull = lm(coef ~ Dead + Injured + Ethnicity + Area + Gunlaws, data = Final, )
-summary(regfull)
+lm(x ~ Dead + Injured + Ethnicity + Area + GunLaws, data = wikishooting, )
 ```
 
 ## Fragen: 
