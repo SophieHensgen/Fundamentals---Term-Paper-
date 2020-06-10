@@ -607,7 +607,7 @@ Sophie
 
 # Results
 
-Hannah: Descriptives: Barplots of variables mit facet wrap we
+Hannah: Descriptives: Barplots of variables mit facet wrap wewe
 ##########################################################
 
 
