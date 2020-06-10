@@ -1,14 +1,17 @@
 ---
 title: "Mass Shootings in the USA"
 author: "Hannah Reitz & Sophie Hensgen"
+header-includes:
+    - \usepackage{setspace}\doublespacing
 date: "`r Sys.Date()`"
 output:
   pdf_document:
     toc: yes
     df_print: kable
+#bibliography: Mass_Shootings.bibtex
 ---
 lala
-```{r}
+```{r, include = FALSE}
 library(openxlsx)
 library(xml2)
 library(rvest)
@@ -36,13 +39,15 @@ Smith cited [@smith04].
 Smith cited without author [-@smith04].
 @smith04 cited in line.
 
-## Introduction
+# Introduction
 
 Aufhänger: Many studies about media salience of mass shootings, but no research about how this media attention influences peoples' interest in certain events. 
 
 Based on previous definition of mass murder (citations from Duwe 2000, p.373) mass shootings in this paper are defined as "incidents in which four or more persons are murdered within a 24 hour period" [@Duwe2000, p. 323] with a gun.
 
-## Theory and Hypotheses
+Sophie: Grafik von zwei Kurven, die möglichst unterschiedlich sind
+
+# Theory and Hypotheses
 
 Kleine Einleitung in Literature Review:
 
@@ -110,9 +115,11 @@ As for the last hypothesis there is sparse research on how the gun laws of the s
 In summary, most of the previous research on mass shootings mainly focused on how certain characteristics of shootings affect its newsworthiness and its coverage in the media. Our contribution to this literature is to consider how certain characteristics of mass shootings could influence the public interest in form of the temporal decline in the relative count of search hits on this event on Google (bessere Formulierung?). Additionally we also consider characteristics of mass shootings previous studies have not considered. The focus of past research was mainly on the impact the count of dead and injured persons as well as the race of the perpetrator have on the media reporting. We also take into account how the affluence of the community where a shooting happens and the strength of the gun laws in the state a shooting takes place affect the public interest in the event. 
 
 
-## Data from Wikipedia
+# Data and Variables
 
 In order to analyze our hypotheses we combine data from Wikipedia that includes general information on mass shotings in the US with Google Trends data on the relative number of searches on Google for each event. A regression of the independent variables stated in the hypotheses on the decline of the relative search hit count on Google is conducted. This process is explained in detail in the following.
+
+## Data from Wikipedia
 
 First, we scraped all tables from the Wikipedia page on mass shootings in the US which are available from 2000 to 2020 [@wiki] and cleaned the data from unnecessary information. Then the scraped tables were joined into one data set and all columns that include missings were dropped as we cannot include them in a regression. The resulting table includes information about the date, the location, the count of dead persons, the count of injured persons, the total number of dead and injured persons and a description for each massshooting. 
 
@@ -124,7 +131,7 @@ Erlärung welche Daten, wie gescrapt, wie sehen die Daten aus Deskription
 Tabelle mit für Missing, welche observations haben wir warum gedropped, wie viele observations verbleiben in unserem sample --> timeperiods droppen.
 
 
-```{r}
+```{r Scraping of Wikipedia tables, results="hide"}
 url <- "https://en.wikipedia.org/wiki/List_of_mass_shootings_in_the_United_States"
 t <- read_html(url)
 table <- t %>% html_nodes("#mw-content-text > div > table") %>% html_table(trim=T)
@@ -148,7 +155,7 @@ To Do:
 - zwei neue variablen, eine zwei Tage vor dem Event und 14 Tage danach
 - Description den Namen herausnehmen
 
-```{r}
+```{r, include = FALSE}
 
 # Removing unnecessary expressions
 
@@ -234,7 +241,7 @@ newtab
 ```
 
 
-```{r}
+```{r, include = FALSE}
 lct <- Sys.getlocale("LC_TIME"); Sys.setlocale("LC_TIME", "C")
 newtab[["Date"]] <- as.Date(newtab$Date, format = "%B-%d-%Y")
 newtab
@@ -260,7 +267,7 @@ Alle Events, die über Tage gehen gedropped
 Sophie: 6-10 subben
 Hannah: 11-15 
 
-```{r}
+```{r, include = FALSE}
 
 newtab$SearchTerm <- gsub("shootout", "shooting", newtab$Description, fixed = TRUE)
 
@@ -367,7 +374,7 @@ Delisle tripple murder droppen -->> nicht genug daten
 Bart shooting evtl. rausnehmen --> sieht aus als hätte es sehr kleine Fallzahlen und einen seltsamen Verlauf
 Meteor shooting sieht komish aus --> evtl droppen wegen kleiner Fallzahl
 
-```{r}
+```{r, include = FALSE}
 # Exporting data frame to excel in order to add further variables
 
 #Pfad Hannah
@@ -377,7 +384,7 @@ Meteor shooting sieht komish aus --> evtl droppen wegen kleiner Fallzahl
 #write_xlsx(newtab,"/Users/sophiehensgen/Term-Paper-Fundamentals/Fundamentals---Term-Paper-/WikiShootingscomplete.xlsx")
 ```
 
-```{r}
+```{r, include = FALSE}
 # Inporting excel Data 
 
 wikishooting <- read_excel("WikiShootings_final.xlsx")
@@ -385,7 +392,7 @@ wikishooting
 
 ```
 
-```{r}
+```{r, include = FALSE}
 # correcting Data types
 
 wikishooting[["Date"]] <- as.Date(wikishooting$Date, format = "%Y-%m-%d")
@@ -416,7 +423,7 @@ wikishooting
 ############################################################################################################################################
 ############################################################################################################################################
 
-## GTrend Data 
+## Data from GTrends
 
 Gtrends 
 --> scraping von mehreren Namen auf einmal --> Text ob es mit einem funktioniert
@@ -428,7 +435,7 @@ Gtrends
 ```
 
 Versuch eines Loop der einzelne outcomes speichert
-```{r}
+```{r, results="hide"}
 
 
 #listshooting <- list()
@@ -460,7 +467,7 @@ gtrends
 
 First, we transform the `data.frame` into a `tibble`.
 
-```{r}
+```{r, include = FALSE}
 gtrends <- as_tibble(gtrends)
 glimpse(gtrends)
 
@@ -529,7 +536,7 @@ gtrends
 ```
 
 
-```{r}
+```{r, include = FALSE}
 
 gtrends$rownumber = 1:15
 
@@ -582,16 +589,41 @@ Final
 
 
 
-## Fragen: 
-   - Loop bezüglich der Gtrends, erste Versuche oben.
-   - Wie hinzufügen in eine Tabelle und zu der Wikishootingstabelle
+############################################################################################################################################
+############################################################################################################################################
+############################################################################################################################################
+
+
+## Method 
+
+
+Sophie
+
+
 
 ############################################################################################################################################
 ############################################################################################################################################
 ############################################################################################################################################
 
-## Data Analysis
+# Results
+
+Hannah: Descriptives: Barplots of variables mit facet wrap
+##########################################################
+
+
 Wie sollten vllt. Gender of shooter kontrollieren. Frauen werden in den Medien mehr beachtet --> Könnte zu einer Verzerrung der Ergebnisse führen.
+
+Sophie: Scatterplot von unabhängigen Variablen und der Abnahme für jede IV --> evtl. geom point + geom smooth
+############################################################
+
+Regressionstabelle aufhübschen + alle Modelle inkludieren
+#####################################################
+
+Sophie: Plot Regressionsgeraden des vollen Modells
+##########################################
+
+Hannah: Coefplot oder Marginsplot für volles Modell
+############################################
 
 ```{r}
 # Regression 
@@ -617,27 +649,38 @@ summary(regtotal)
 
 regfull = lm(coef ~ Dead + Injured + Ethnicity + Area + Gunlaws, data = Final, )
 summary(regfull)
+
+library(lattice)
+library(MASS)
+require(memisc)
+library(pander)
+#regtable <- mtable('Model 1' = regdead,
+#            'Model 2' = reginjured,
+#            'Model 3' = regfull,
+#            summary.stats = c('R-squared','F','p','N'))
+
+pander(regfull)
+
+
 ```
+
+
+Hannah Ab Regression Table 
+
+
 
 ```{r,results='asis'}
 
-regdead <- lm(coef ~ Dead, data = Final, )
-library(xtable)
-print(xtable(summary(regdead)),type='html')
+#regdead <- lm(coef ~ Dead, data = Final, )
+#report_regression(regdead)
 
 ```
 
+# Conclusion 
+Hannah
 
 
-
-
-
-## Fragen: 
-   - Wie soll das y aussehen.
-   - Wie soll die Abnahme dargestellt/codiert werden?
-   - Welches Model ist hierfür am besten geeignet?
-   - Brauchen wir mehrere Modelle oder reicht eines?
-   - Kontrollvariablen - brauchen wir noch Weitere?
+# References
 
 
 
