@@ -26,6 +26,7 @@ library(magrittr)
 
 ```
 
+dfjhv
 Citation examples for in-text citations:
 
 Smith cited [@smith04].
