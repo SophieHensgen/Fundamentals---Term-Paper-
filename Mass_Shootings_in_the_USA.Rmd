@@ -628,53 +628,61 @@ Hannah: Coefplot oder Marginsplot für volles Modell
 ```{r}
 # Regression 
 
-regdead = lm(coef ~ Dead, data = Final, )
+regdead <- lm(coef ~ Dead, data = Final, )
 summary(regdead)
 
 reginjured = lm(coef ~ Injured, data = Final, )
 summary(reginjured)
 
-regeth = lm(coef ~ Ethnicity, data = Final, )
+regeth <- lm(coef ~ Ethnicity, data = Final, )
 summary(regeth)
 
-reggun = lm(coef ~ Gunlaws, data = Final, )
+reggun <- lm(coef ~ Gunlaws, data = Final, )
 summary(reggun)
 
-regarea = lm(coef ~ Area, data = Final, )
+regarea <- lm(coef ~ Area, data = Final, )
 summary(regarea)
 
-regtotal = lm(coef ~ Total, data = Final, )
+regtotal <- lm(coef ~ Total, data = Final, )
 summary(regtotal)
 
 
 regfull = lm(coef ~ Dead + Injured + Ethnicity + Area + Gunlaws, data = Final, )
 summary(regfull)
 
-library(lattice)
-library(MASS)
-require(memisc)
-library(pander)
+
+library(sjPlot)
+tab_model(regdead,regfull, file="output.html")
+
+
+
+
+#library(lattice)
+#library(MASS)
+#library(memisc)
+#library(pander)
 #regtable <- mtable('Model 1' = regdead,
 #            'Model 2' = reginjured,
 #            'Model 3' = regfull,
 #            summary.stats = c('R-squared','F','p','N'))
 
-pander(regfull)
+#pander(regtable)
 
 
 ```
+
+
+
+
+
+
+
 
 
 Hannah Ab Regression Table 
 
 
 
-```{r,results='asis'}
-
-#regdead <- lm(coef ~ Dead, data = Final, )
-#report_regression(regdead)
-
-```
 
 # Conclusion 
 Hannah
