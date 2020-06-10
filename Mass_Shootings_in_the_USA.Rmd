@@ -660,9 +660,34 @@ library(pander)
 #            summary.stats = c('R-squared','F','p','N'))
 
 pander(regfull)
-
+#install.packages("stargazer") 
+library(stargazer)
+regdead <- lm(coef ~ Dead, data = Final, )
+regfull <- lm(coef ~ Dead + Injured + Ethnicity + Area + Gunlaws, data = Final, )
 
 ```
+
+```{r, results='asis'}
+# If output: pdf_document
+#stargazer(regdead, regfull, type = "text", 
+ #         title            = "These are awesome results!",
+  #        covariate.labels = c("Dead", "Injured", "Ethnicity",
+   #                            "Area", "Gunlaws"),
+    #      dep.var.labels   = "decrease of interest", 
+     #     float.env = "sidewaystable", 
+      #    keep.stat = "adj.rsq")
+
+stargazer::stargazer(regdead, regfull, regeth, title   = "These are awesome results!", 
+                     covariate.labels = c("Dead", "Injured", "Ethnicity","Area", "Gunlaws"), 
+                     dep.var.labels   = "decrease of interest", 
+                     keep.stat = "adj.rsq", "n",
+                     flip = TRUE)
+                     
+#, float.env = "sidewaystable", keep.stat = "adj.rsq", title = "Table with stargazer")
+
+```
+
+
 
 
 Hannah Ab Regression Table 
