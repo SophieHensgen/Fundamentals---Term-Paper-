@@ -98,11 +98,18 @@ ggplot(example, aes(x = rownumber, y = hits, col = keyword))+
   scale_x_continuous(breaks = round(seq(min(example$rownumber), max(example$rownumber), by = 1),1)) 
 ```
 
+
 As we can see, there seems to be differences in the interest of people regarding mass shootings. With our study we want to focus on the people`s interest and these differences and less about the media itself.  
 
 # Theory and Hypotheses
+Kleine Einleitung in Literature Review:
 
-In order to understand why people tend to concentrate on more salient events we have to look into some theories which explain this circumstance, but also the part of the media in it.
+"Like acts of terrorism and mass murder, not all mass shootings receive equitable media coverage,
+despite the sensational nature of the phenomenon as a whole (Schildkraut 2014, 2016). Absent from
+the body of research, however, is an exploration as to why this coverage is disparate" Schildkraut 2018 p. 224
+
+
+In order to understand why people tend to concentrate on more salient events we have to look into some theories which explain this circumstance.
 
 ## Issue-Attention-Cycle
 
@@ -112,26 +119,26 @@ But why do people loose their interest in topics, even if they are still promine
 First, the pre problem stage, the stage in which the problem already exists, however there is less to no attention on it at the moment. One of the prior problem of our example is the high death rate by gun and the easy access to highly lethal weapons. 
 Second, the alarmed discovery and euphoric enthusiasm, which occurs after (a series of) event(s). In this period of time multiple things will happen. News outlets will heavily cover the event(s), people will then form a unit to solve the problem. However, most of those problems cannot be solved in a short period of time, like the high gun death rate. There has to changes in the government but also within the society. 
 Which brings us to our third stage, realizing the costs of solving the problem. The initial euphoria and drive will vanish and will be replaced by the reality of the sacrifices a large amount of people has to do in order to solve the problem. Even though our example has two clear sides (pro gun control and pro gun possession), both sides will come across costs in order to solve the initial problem. Pro gun possession side would have to give up the easy access to rifles and the pro gun regulation side has to stay relevant, they need the attention in order to create pressure towards the government, which is done by protests and online presence. 
-However, the fourth stage will diminish this. After the realization there will be a gradual decline of interest in this topic. Less news coverage and therefore less attention of people in general. 
+However, the fourth stage will diminish this. After the realization there will be a gradual decline of interest in this topic. Less news coverage and therefore less attention of people in general. People will feel fatique as their optimism will decrease with every person who gives up.
 And ultimately will end in the fifth stage the post problem area. This stage is not to be confused with the first stage (pre problem), even though there will be less to no focus on the problem, during the stages could have build organizations and laws could be enacted which will remain. For example, after the Parkland shooting occurred there where changes in gun laws in Florida, which is an achievement itself. Nevertheless it was not the ultimate goal of the movement. 
-In conclusion, even though the ultimate goal was not achieved, media attention and therefore public attention can has a great influence in solcing problems in their society. However, the event has to be large enough in order to start an issue-attention cycle. If not, the interest will be diminish even faster or will not be addressed at all. 
+To sum up, even though the ultimate goal was not achieved, media attention and therefore public attention can have a great influence in solving problems in their society. However, the event has to be large enough in order to start an issue-attention cycle. If not, the interest will be diminish even faster or will not be addressed at all, we will touch on this later on.
 
 
 ## Moral Panic theory
 
+Not all mass shootings will live through the whole issue-attention cycle, moreover some mass shootings will loose the attention as fast as they gained it. Not because people realize how hard it would be to make a change in order to solve the problem, but because other events will occurre which are more interesting. 
+The moral panic theory describes this phenomenon, it has a similar structure if compared to the issue-attention cycle, however, it is much more ephemeral. Moral panics are short lived, intense media coverage will appear shortly after an event occurred (similar to the issue-attention cycle), but diminish almost as fast as they occurred. Events have to be "triggering, focussing & defining" in a certain way to gain the amount of media coverage [cite!], only then people will engage in it. However, this event will be replaced after only few days. Most moral panics will peak in their first two days, after 5 to 6 days they're disappeared. Some moral panics can become routinized or institutionalized [cite!!], but most of them won't.
 
 
+## Salience of events - newsworthiness
 
-Kleine Einleitung in Literature Review:
-
-"Like acts of terrorism and mass murder, not all mass shootings receive equitable media coverage,
-despite the sensational nature of the phenomenon as a whole (Schildkraut 2014, 2016). Absent from
-the body of research, however, is an exploration as to why this coverage is disparate" Schildkraut 2018 p. 224
-
+The most newsworthy events are events that are highly salient. But what do we perceive as highly salient? It has to be something that does not happen often, a rare event. If we remember back to the beginning of the paper, we mentioned, that 417 shootings occurred in 2019, only some were featured in the news. That's because they are not newsworthy enough. The media would overflow the public with these shootings, sooner or later no one would read these articles anymore, as it would feel repetitive. So they feature only the exceptional events. 
+Another important aspect is, that it has to be quite big and attention seeking. An event that is maybe rare but small, will not get the same attention as a huge event would. For example, it is rather rare that a mass shooting is done by a women, which is a rare event in itself, however if she would only shot four people it would not get the same attention if any as if she shoot more. 
+And even if these aspects are fulfilled, it does not mean, that the event will be covered by the news as intensely as others because of the following reasons. First, if it is a problem by a minority it will be less salient and therefore less likely to be broadcasted. Second, if the problems which occurred give significant benefit to the majority or a powerful minority (e.g. pro gun allience) it will be less salient. And third, the event gave light to a problem, that has no (longer) intrinsically existing qualities. 
 
 
+As we can see, there are several aspects which come into account when talking about salience and newsworthiness. There has to be a prior problem, the event has to salient enough (rare and big) in order gain attention and also be important for the entire population, not only a minority. In consideration of all these aspects we came up with the following diagram: 
 
-Wie können wir einen Graphen einbinden/erstellen der unsere Zusammenhänge illustriert: 
 
 Deaths/Injuries/Race of perpetrator/  ----->    The decline of the search interest
 Rich area/ Loose gun control                    in google trends is slower
@@ -144,6 +151,14 @@ Rich area/ Loose gun control                    in google trends is slower
         newsworthiness of event                event in media reports
 
 
+We would like to investigate the influence of certain characteristic of mass shootings on the interest of the population. We theorize that certain aspects will gain more attention which will lead to a presumably higher and more permanent media coverage. This should lead to a general increase in the interest of the population, which should be noticeable in a slower decline of the Google trend curve. 
+
+
+ für morgen: 
+ - schildkrauts infos rausfinden
+ - Graph machen
+ - nochmal drüber gehen
+ - Übergang am Anfang anpassen
 
 More dead people --> more media attention --> higher attention in Google trends
 
