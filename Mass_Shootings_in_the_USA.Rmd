@@ -8,9 +8,9 @@ output:
   pdf_document:
     toc: yes
     df_print: kable
-always_allow_html: true
 #bibliography: Mass_Shootings.bibtex
 ---
+lala
 ```{r, include = FALSE}
 library(openxlsx)
 library(xml2)
@@ -31,14 +31,7 @@ library(broom)
 library(knitr)
 library(ggplot2)
 library(ggpubr)
-library(ggiraph)
-library(devtools)
-library(ggiraphExtra)
-library(systemfonts)
-library(jtools)
-library(broom.mixed)
 
-# devtools::install_github('davidgohel/ggiraph')
 ```
 
 dfjhv
@@ -50,58 +43,14 @@ Smith cited without author [-@smith04].
 
 # Introduction
 
-On february 14th 2018 the Parkland High school shooting took place and with it one of the largest gun control movements emerged. 
-At this incident a former student of the Marjory Stoneman Douglas High School killed 17 people and injured another 17 with a rifle. The event was heavily covered by multiple news outlets and became the subject of a heated discussion about stricter gun laws in the US. One month later on march 24th there were nation wide protest called "March for Our Lives", led by the students in cooperation with the non-profit organization Never Again MSD, which demand stricter gun laws. 
-It is not the first time, that a mass shooting started a discussion about gun regulations. Other shootings like the Sandy Hook Elementary School shooting in 2012 or the Orlando Nightclub shooting in 2016 brought the topic up as well. A study showed, that media coverage regarding gun regulation increase after a mass shooting occurs, the following Media Coverage and the general attention on this topic can have a positive influence. For example, after the Parkland shooting Florida raised the minimum age for buying a rifle from 18 to 21 years.
+Aufhänger: Many studies about media salience of mass shootings, but no research about how this media attention influences peoples' interest in certain events. 
 
-However it depends heavily on the parties which are in control to this particular time. @lucaetal16 found evidence that in the year after a large mass shooting happened, the republican are more likely to loosen the gun laws Instead of making them more strict.
+Based on previous definition of mass murder (citations from Duwe 2000, p.373) mass shootings in this paper are defined as "incidents in which four or more persons are murdered within a 24 hour period" [@Duwe2000, p. 323] with a gun.
 
-In general, the US has a long history of school and mass shootings, in 2019 alone there were 417 mass shootings, which fall under the definition as follows: "incidents in which four or more persons are murdered within a 24 hour period" [@Duwe2000, p. 323]. Many of which got little to no media attention. One possible reason why smaller shootings gather less media coverage and therefore are brought less to our attention is because there are less exciting, nothing special and therefore would not sell as good as other stories. And even if covered, after a certain amount of time, a new event occurs and will overshadow the previous news. This does not only apply to news outlets, also people in general are drawn to prominent issues and exciting events. If there are no new information coming or more specifically people have seen enough of a topic and become fatique. In the following graph we can observe such a loos in interest. 
-
-This graph displays the relation of Search Hits for each keyword in comparison to the general frequency in which they are searched prior to the event period. We included the Sandy Hook shooting, which had 28 Deaths and the Clackamas shooting which had 4 Deaths. The x axis describes the period we want to look at, from one day prior to the event (Day 1), the event day (Day 2) and two weeks following the event date (Days 3-16). The y-axis shows the related search hits for each keyword. Unfortunately we cannot make any emphases about the general attention both events achieved, as we do not have access to the total numbers of hits. However, we can see a clear difference in the search behavior. The Sandy Hook shooting got more hits on the actual event day and also lost interest much slower than the Clackamas shooting did. The Clackamas shooting got a spike in attention around one day after the event and drops rapidly on the second day after the shooting. 
-
-```{r include = FALSE}
-#Sophie: Grafik von zwei Kurven, die möglichst unterschiedlich sind
-
-sandy <- gtrends(c("Sandy Hook shooting"), geo = "US", time = "2012-12-13 2012-12-28", low_search_volume = T)
-clack <- gtrends(c("Clackamas shooting"), geo = "US", time = "2012-12-10 2012-12-25", low_search_volume = T)
-plot(sandy)
-plot(clack)
-sandyI <- sandy$interest_over_time
-clackI <- clack$interest_over_time
-example <- rbind(sandyI, clackI)
-
-example <- as_tibble(example)
-glimpse(example)
-
-example$rownumber = 1:16
-example
-
-# Aufbereitung
-example$hits <- gsub("<1", "0", example$hits, fixed = TRUE)
-example$hits <- as.numeric(as.character(example$hits))
-```
-
-```{r echo = FALSE}
-# Plot
-ggplot(example, aes(x = rownumber, y = hits, col = keyword))+
-  geom_line()+
-  theme(
-  panel.background = element_rect(fill = "white", colour = "white",
-                                size = 1, linetype = "solid"),
-  panel.grid.major = element_line(size = 0.5, linetype = 'solid',
-                                colour = "white"), 
-  panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
-                                colour = "white")
-  )+
-  labs(title = "Google Trend Example", subtitle = "Sandy Hook Elementary School Shooting & Clackamas Town Center shooting", x = "Days", y = "Search Hits", colour = "Keyword")+
-  scale_x_continuous(breaks = round(seq(min(example$rownumber), max(example$rownumber), by = 1),1)) 
-```
-
-
-As we can see, there seems to be differences in the interest of people regarding mass shootings. With our study we want to focus on the people`s interest and these differences and less about the media itself.  
+Sophie: Grafik von zwei Kurven, die möglichst unterschiedlich sind
 
 # Theory and Hypotheses
+
 Kleine Einleitung in Literature Review:
 
 "Like acts of terrorism and mass murder, not all mass shootings receive equitable media coverage,
@@ -109,36 +58,9 @@ despite the sensational nature of the phenomenon as a whole (Schildkraut 2014, 2
 the body of research, however, is an exploration as to why this coverage is disparate" Schildkraut 2018 p. 224
 
 
-In order to understand why people tend to concentrate on more salient events we have to look into some theories which explain this circumstance.
-
-## Issue-Attention-Cycle
-
-As we mentioned before, the media has a great impact on the information we consume. It dictates what will appear on our TV Screen or our newspaper. However, this is not a one way relation. The media also depends on what people want to see, which is something new, never heard before. People tend to get bored easily, even if a continuous problem occurs on their radar, after a while they strive for something new. Therefore, news outlets have to be careful on what they are reporting in order to maintain their listeners. 
-
-But why do people loose their interest in topics, even if they are still prominent? @Downs72 a Issue-Attention-Cycle could answer this question. This cycle has five stages which I will explain this by using the Parkland shooting. 
-First, the pre problem stage, the stage in which the problem already exists, however there is less to no attention on it at the moment. One of the prior problem of our example is the high death rate by gun and the easy access to highly lethal weapons. 
-Second, the alarmed discovery and euphoric enthusiasm, which occurs after (a series of) event(s). In this period of time multiple things will happen. News outlets will heavily cover the event(s), people will then form a unit to solve the problem. However, most of those problems cannot be solved in a short period of time, like the high gun death rate. There has to changes in the government but also within the society. 
-Which brings us to our third stage, realizing the costs of solving the problem. The initial euphoria and drive will vanish and will be replaced by the reality of the sacrifices a large amount of people has to do in order to solve the problem. Even though our example has two clear sides (pro gun control and pro gun possession), both sides will come across costs in order to solve the initial problem. Pro gun possession side would have to give up the easy access to rifles and the pro gun regulation side has to stay relevant, they need the attention in order to create pressure towards the government, which is done by protests and online presence. 
-However, the fourth stage will diminish this. After the realization there will be a gradual decline of interest in this topic. Less news coverage and therefore less attention of people in general. People will feel fatique as their optimism will decrease with every person who gives up.
-And ultimately will end in the fifth stage the post problem area. This stage is not to be confused with the first stage (pre problem), even though there will be less to no focus on the problem, during the stages could have build organizations and laws could be enacted which will remain. For example, after the Parkland shooting occurred there where changes in gun laws in Florida, which is an achievement itself. Nevertheless it was not the ultimate goal of the movement. 
-To sum up, even though the ultimate goal was not achieved, media attention and therefore public attention can have a great influence in solving problems in their society. However, the event has to be large enough in order to start an issue-attention cycle. If not, the interest will be diminish even faster or will not be addressed at all, we will touch on this later on.
 
 
-## Moral Panic theory
-
-Not all mass shootings will live through the whole issue-attention cycle, moreover some mass shootings will loose the attention as fast as they gained it. Not because people realize how hard it would be to make a change in order to solve the problem, but because other events will occurre which are more interesting. 
-The moral panic theory describes this phenomenon, it has a similar structure if compared to the issue-attention cycle, however, it is much more ephemeral. Moral panics are short lived, intense media coverage will appear shortly after an event occurred (similar to the issue-attention cycle), but diminish almost as fast as they occurred. Events have to be "triggering, focussing & defining" in a certain way to gain the amount of media coverage [cite!], only then people will engage in it. However, this event will be replaced after only few days. Most moral panics will peak in their first two days, after 5 to 6 days they're disappeared. Some moral panics can become routinized or institutionalized [cite!!], but most of them won't.
-
-
-## Salience of events - newsworthiness
-
-The most newsworthy events are events that are highly salient. But what do we perceive as highly salient? It has to be something that does not happen often, a rare event. If we remember back to the beginning of the paper, we mentioned, that 417 shootings occurred in 2019, only some were featured in the news. That's because they are not newsworthy enough. The media would overflow the public with these shootings, sooner or later no one would read these articles anymore, as it would feel repetitive. So they feature only the exceptional events. 
-Another important aspect is, that it has to be quite big and attention seeking. An event that is maybe rare but small, will not get the same attention as a huge event would. For example, it is rather rare that a mass shooting is done by a women, which is a rare event in itself, however if she would only shot four people it would not get the same attention if any as if she shoot more. 
-And even if these aspects are fulfilled, it does not mean, that the event will be covered by the news as intensely as others because of the following reasons. First, if it is a problem by a minority it will be less salient and therefore less likely to be broadcasted. Second, if the problems which occurred give significant benefit to the majority or a powerful minority (e.g. pro gun allience) it will be less salient. And third, the event gave light to a problem, that has no (longer) intrinsically existing qualities. 
-
-
-As we can see, there are several aspects which come into account when talking about salience and newsworthiness. There has to be a prior problem, the event has to salient enough (rare and big) in order gain attention and also be important for the entire population, not only a minority. In consideration of all these aspects we came up with the following diagram: 
-
+Wie können wir einen Graphen einbinden/erstellen der unsere Zusammenhänge illustriert: 
 
 Deaths/Injuries/Race of perpetrator/  ----->    The decline of the search interest
 Rich area/ Loose gun control                    in google trends is slower
@@ -151,14 +73,6 @@ Rich area/ Loose gun control                    in google trends is slower
         newsworthiness of event                event in media reports
 
 
-We would like to investigate the influence of certain characteristic of mass shootings on the interest of the population. We theorize that certain aspects will gain more attention which will lead to a presumably higher and more permanent media coverage. This should lead to a general increase in the interest of the population, which should be noticeable in a slower decline of the Google trend curve. 
-
-
- für morgen: 
- - schildkrauts infos rausfinden
- - Graph machen
- - nochmal drüber gehen
- - Übergang am Anfang anpassen
 
 More dead people --> more media attention --> higher attention in Google trends
 
@@ -757,37 +671,11 @@ Wie sollten vllt. Gender of shooter kontrollieren. Frauen werden in den Medien m
 Sophie: Scatterplot von unabhängigen Variablen und der Abnahme für jede IV --> evtl. geom point + geom smooth
 ############################################################
 
-```{r echo=FALSE}
-ggplot(Final) +
-  geom_point(aes(x = Dead , y = coef, color = Area)) +
-  geom_smooth(aes(x = Dead , y = coef))
-
-ggplot(Final) +
-  geom_point(aes(x = Dead , y = coef, color = Gunlaws)) +
-  geom_smooth(aes(x = Dead , y = coef))
-
-ggplot(Final) +
-  geom_point(aes(x = Dead , y = coef, color = Ethnicity)) +
-  geom_smooth(aes(x = Dead , y = coef))
-
-
-ggplot(Final) +
-  geom_point(aes(x = Injured , y = coef, color = Area)) +
-  geom_smooth(aes(x = Injured , y = coef))
-
-ggplot(Final) +
-  geom_point(aes(x = Injured , y = coef, color = Gunlaws)) +
-  geom_smooth(aes(x = Injured , y = coef))
-
-ggplot(Final) +
-  geom_point(aes(x = Injured , y = coef, color = Ethnicity)) +
-  geom_smooth(aes(x = Injured , y = coef))
-```
-
-
 Regressionstabelle aufhübschen + alle Modelle inkludieren
 #####################################################
 
+Sophie: Plot Regressionsgeraden des vollen Modells
+##########################################
 
 Hannah: Coefplot oder Marginsplot für volles Modell
 ############################################
@@ -796,58 +684,28 @@ Hannah: Coefplot oder Marginsplot für volles Modell
 # Regression 
 
 regdead <- lm(coef ~ Dead, data = Final, )
+summary(regdead)
 
 reginjured = lm(coef ~ Injured, data = Final, )
+summary(reginjured)
 
 regeth <- lm(coef ~ Ethnicity, data = Final, )
+summary(regeth)
 
 reggun <- lm(coef ~ Gunlaws, data = Final, )
+summary(reggun)
 
 regarea <- lm(coef ~ Area, data = Final, )
+summary(regarea)
+
+regtotal <- lm(coef ~ Total, data = Final, )
+summary(regtotal)
 
 regfull = lm(coef ~ Dead + Injured + Ethnicity + Area + Gunlaws, data = Final, )
+summary(regfull)
 
 #install.packages("stargazer") 
 library(stargazer)
-
-```
-```{r, echo=FALSE }
-# Regression with Deads -- Interaction
-
-#With interactive to TRUE we can observe single observations and get more information
-
-#Gun Laws
-regmixG <- lm(coef ~ Dead*Gunlaws, data = Final, )
-
-ggPredict(regmixG,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
-
-#Area
-regmixA <- lm(coef ~ Dead*Area, data = Final, )
-
-ggPredict(regmixA,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
-
-#Ethnicity
-regmixE <- lm(coef ~ Dead*Ethnicity, data = Final, )
-
-ggPredict(regmixE,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
-
-
-#Regression with Injured - Interaction
-
-#Gun Laws
-regmixGU <- lm(coef ~ Injured*Gunlaws, data = Final, )
-
-ggPredict(regmixGU,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
-
-#Area
-regmixAR <- lm(coef ~ Injured*Area, data = Final, )
-
-ggPredict(regmixAR,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
-
-#Ethnicity
-regmixET <- lm(coef ~ Injured*Ethnicity, data = Final, )
-
-ggPredict(regmixET,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
 
 ```
 
@@ -859,77 +717,12 @@ stargazer::stargazer(regdead, reginjured, regeth, reggun, regarea, regfull,
                      dep.var.labels   = "decrease of interest", 
                      keep.stat = c("adj.rsq", "n"),
                      flip = TRUE)
-
-# Möglich aber nicht nötig -- Interaktionen
-stargazer::stargazer( regfull, regmixGU, regmixAR, regmixET, 
-                     title   = "These are awesome results!", 
-                     covariate.labels = c("Dead", "Injured", "Ethnicity","Area", "Gunlaws", "Injured x Gunlaws", "Injured x Area", "Injured x Ethnicity"), 
-                     dep.var.labels   = "decrease of interest", 
-                     keep.stat = c("adj.rsq", "n"),
-                     flip = TRUE)  
-
-stargazer::stargazer( regfull, regmixG, regmixA, regmixE, 
-                     title   = "These are awesome results!", 
-                     covariate.labels = c("Dead", "Injured", "Ethnicity","Area", "Gunlaws", "Dead x Gunlaws", "Dead x Area", "Dead x Ethnicity"), 
-                     dep.var.labels   = "decrease of interest", 
-                     keep.stat = c("adj.rsq", "n"),
-                     flip = TRUE)  
+                     
 ```
 
-Sophie: Plot Regressionsgeraden des vollen Modells
-##########################################
-
-```{r echo=FALSE}
-# simple predict plot for the first to hypotheses
-
-ggPredict(regdead,se=TRUE,interactive=FALSE)
-ggPredict(reginjured,se=TRUE,interactive=FALSE)
-
-# Regression with Deads
-
-#With interactive to TRUE we can observe single observations and get more information
-
-#Gun Laws
-regmixG <- lm(coef ~ Dead + Gunlaws, data = Final, )
-
-ggPredict(regmixG,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
-
-#Area
-regmixA <- lm(coef ~ Dead + Area, data = Final, )
-
-ggPredict(regmixA,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
-
-#Ethnicity
-regmixE <- lm(coef ~ Dead + Ethnicity, data = Final, )
-
-ggPredict(regmixE,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
 
 
-#Regression with Injured
 
-#Gun Laws
-regmixGU <- lm(coef ~ Injured + Gunlaws, data = Final, )
-
-ggPredict(regmixGU,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
-
-#Area
-regmixAR <- lm(coef ~ Injured + Area, data = Final, )
-
-ggPredict(regmixAR,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
-
-#Ethnicity
-regmixET <- lm(coef ~ Injured + Ethnicity, data = Final, )
-
-ggPredict(regmixET,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
-
-```
-
-```{r echo=FALSE}
-
-plot_summs(regarea, regeth, reggun, reginjured, regdead, regfull, scale = TRUE, inner_ci_level = .9, colors = "Set3")
-
-# durch integrieren von allen Variablen in das Model entfernen sie sich von der MItte.
-```
 
 Hannah Ab Regression Table 
 
