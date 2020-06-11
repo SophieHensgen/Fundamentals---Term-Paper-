@@ -98,9 +98,29 @@ ggplot(example, aes(x = rownumber, y = hits, col = keyword))+
   scale_x_continuous(breaks = round(seq(min(example$rownumber), max(example$rownumber), by = 1),1)) 
 ```
 
-As we can see, there seems to be differences in the interest of people regarding mass shootings. With our study we want to focus the peoples interest and these differences and less about the media itself.  
+As we can see, there seems to be differences in the interest of people regarding mass shootings. With our study we want to focus on the people`s interest and these differences and less about the media itself.  
 
 # Theory and Hypotheses
+
+In order to understand why people tend to concentrate on more salient events we have to look into some theories which explain this circumstance, but also the part of the media in it.
+
+## Issue-Attention-Cycle
+
+As we mentioned before, the media has a great impact on the information we consume. It dictates what will appear on our TV Screen or our newspaper. However, this is not a one way relation. The media also depends on what people want to see, which is something new, never heard before. People tend to get bored easily, even if a continuous problem occurs on their radar, after a while they strive for something new. Therefore, news outlets have to be careful on what they are reporting in order to maintain their listeners. 
+
+But why do people loose their interest in topics, even if they are still prominent? @Downs72 a Issue-Attention-Cycle could answer this question. This cycle has five stages which I will explain this by using the Parkland shooting. 
+First, the pre problem stage, the stage in which the problem already exists, however there is less to no attention on it at the moment. One of the prior problem of our example is the high death rate by gun and the easy access to highly lethal weapons. 
+Second, the alarmed discovery and euphoric enthusiasm, which occurs after (a series of) event(s). In this period of time multiple things will happen. News outlets will heavily cover the event(s), people will then form a unit to solve the problem. However, most of those problems cannot be solved in a short period of time, like the high gun death rate. There has to changes in the government but also within the society. 
+Which brings us to our third stage, realizing the costs of solving the problem. The initial euphoria and drive will vanish and will be replaced by the reality of the sacrifices a large amount of people has to do in order to solve the problem. Even though our example has two clear sides (pro gun control and pro gun possession), both sides will come across costs in order to solve the initial problem. Pro gun possession side would have to give up the easy access to rifles and the pro gun regulation side has to stay relevant, they need the attention in order to create pressure towards the government, which is done by protests and online presence. 
+However, the fourth stage will diminish this. After the realization there will be a gradual decline of interest in this topic. Less news coverage and therefore less attention of people in general. 
+And ultimately will end in the fifth stage the post problem area. This stage is not to be confused with the first stage (pre problem), even though there will be less to no focus on the problem, during the stages could have build organizations and laws could be enacted which will remain. For example, after the Parkland shooting occurred there where changes in gun laws in Florida, which is an achievement itself. Nevertheless it was not the ultimate goal of the movement. 
+In conclusion, even though the ultimate goal was not achieved, media attention and therefore public attention can has a great influence in solcing problems in their society. However, the event has to be large enough in order to start an issue-attention cycle. If not, the interest will be diminish even faster or will not be addressed at all. 
+
+
+## Moral Panic theory
+
+
+
 
 Kleine Einleitung in Literature Review:
 
