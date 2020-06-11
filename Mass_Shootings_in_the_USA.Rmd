@@ -35,6 +35,8 @@ library(ggiraph)
 library(devtools)
 library(ggiraphExtra)
 library(systemfonts)
+library(jtools)
+library(broom.mixed)
 
 # devtools::install_github('davidgohel/ggiraph')
 ```
@@ -593,29 +595,29 @@ Sophie: Scatterplot von unabhängigen Variablen und der Abnahme für jede IV -->
 
 ```{r echo=FALSE}
 ggplot(Final) +
-  geom_point(aes(x = coef , y = Dead, color = Area)) +
-  geom_smooth(aes(x = coef, y = Dead))
+  geom_point(aes(x = Dead , y = coef, color = Area)) +
+  geom_smooth(aes(x = Dead , y = coef))
 
 ggplot(Final) +
-  geom_point(aes(x = coef , y = Dead, color = Gunlaws)) +
-  geom_smooth(aes(x = coef, y = Dead))
+  geom_point(aes(x = Dead , y = coef, color = Gunlaws)) +
+  geom_smooth(aes(x = Dead , y = coef))
 
 ggplot(Final) +
-  geom_point(aes(x = coef , y = Dead, color = Ethnicity)) +
-  geom_smooth(aes(x = coef, y = Dead))
+  geom_point(aes(x = Dead , y = coef, color = Ethnicity)) +
+  geom_smooth(aes(x = Dead , y = coef))
 
 
 ggplot(Final) +
-  geom_point(aes(x = coef , y = Injured, color = Area)) +
-  geom_smooth(aes(x = coef, y = Injured))
+  geom_point(aes(x = Injured , y = coef, color = Area)) +
+  geom_smooth(aes(x = Injured , y = coef))
 
 ggplot(Final) +
-  geom_point(aes(x = coef , y = Injured, color = Gunlaws)) +
-  geom_smooth(aes(x = coef, y = Injured))
+  geom_point(aes(x = Injured , y = coef, color = Gunlaws)) +
+  geom_smooth(aes(x = Injured , y = coef))
 
 ggplot(Final) +
-  geom_point(aes(x = coef , y = Injured, color = Ethnicity)) +
-  geom_smooth(aes(x = coef, y = Injured))
+  geom_point(aes(x = Injured , y = coef, color = Ethnicity)) +
+  geom_smooth(aes(x = Injured , y = coef))
 ```
 
 
@@ -630,25 +632,58 @@ Hannah: Coefplot oder Marginsplot für volles Modell
 # Regression 
 
 regdead <- lm(coef ~ Dead, data = Final, )
-summary(regdead)
 
 reginjured = lm(coef ~ Injured, data = Final, )
-summary(reginjured)
 
 regeth <- lm(coef ~ Ethnicity, data = Final, )
-summary(regeth)
 
 reggun <- lm(coef ~ Gunlaws, data = Final, )
-summary(reggun)
 
 regarea <- lm(coef ~ Area, data = Final, )
-summary(regarea)
 
 regfull = lm(coef ~ Dead + Injured + Ethnicity + Area + Gunlaws, data = Final, )
-summary(regfull)
 
 #install.packages("stargazer") 
 library(stargazer)
+
+```
+```{r, echo=FALSE }
+# Regression with Deads -- Interaction
+
+#With interactive to TRUE we can observe single observations and get more information
+
+#Gun Laws
+regmixG <- lm(coef ~ Dead*Gunlaws, data = Final, )
+
+ggPredict(regmixG,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
+
+#Area
+regmixA <- lm(coef ~ Dead*Area, data = Final, )
+
+ggPredict(regmixA,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
+
+#Ethnicity
+regmixE <- lm(coef ~ Dead*Ethnicity, data = Final, )
+
+ggPredict(regmixE,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
+
+
+#Regression with Injured - Interaction
+
+#Gun Laws
+regmixGU <- lm(coef ~ Injured*Gunlaws, data = Final, )
+
+ggPredict(regmixGU,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
+
+#Area
+regmixAR <- lm(coef ~ Injured*Area, data = Final, )
+
+ggPredict(regmixAR,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
+
+#Ethnicity
+regmixET <- lm(coef ~ Injured*Ethnicity, data = Final, )
+
+ggPredict(regmixET,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
 
 ```
 
@@ -660,32 +695,48 @@ stargazer::stargazer(regdead, reginjured, regeth, reggun, regarea, regfull,
                      dep.var.labels   = "decrease of interest", 
                      keep.stat = c("adj.rsq", "n"),
                      flip = TRUE)
-                     
+
+# Möglich aber nicht nötig -- Interaktionen
+stargazer::stargazer( regfull, regmixGU, regmixAR, regmixET, 
+                     title   = "These are awesome results!", 
+                     covariate.labels = c("Dead", "Injured", "Ethnicity","Area", "Gunlaws", "Injured x Gunlaws", "Injured x Area", "Injured x Ethnicity"), 
+                     dep.var.labels   = "decrease of interest", 
+                     keep.stat = c("adj.rsq", "n"),
+                     flip = TRUE)  
+
+stargazer::stargazer( regfull, regmixG, regmixA, regmixE, 
+                     title   = "These are awesome results!", 
+                     covariate.labels = c("Dead", "Injured", "Ethnicity","Area", "Gunlaws", "Dead x Gunlaws", "Dead x Area", "Dead x Ethnicity"), 
+                     dep.var.labels   = "decrease of interest", 
+                     keep.stat = c("adj.rsq", "n"),
+                     flip = TRUE)  
 ```
 
 Sophie: Plot Regressionsgeraden des vollen Modells
 ##########################################
 
 ```{r echo=FALSE}
+# simple predict plot for the first to hypotheses
+
+ggPredict(regdead,se=TRUE,interactive=FALSE)
+ggPredict(reginjured,se=TRUE,interactive=FALSE)
+
 # Regression with Deads
 
 #With interactive to TRUE we can observe single observations and get more information
 
 #Gun Laws
 regmixG <- lm(coef ~ Dead + Gunlaws, data = Final, )
-summary(regmixG)
 
 ggPredict(regmixG,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
 
 #Area
 regmixA <- lm(coef ~ Dead + Area, data = Final, )
-summary(regmixA)
 
 ggPredict(regmixA,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
 
 #Ethnicity
 regmixE <- lm(coef ~ Dead + Ethnicity, data = Final, )
-summary(regmixE)
 
 ggPredict(regmixE,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
 
@@ -694,27 +745,27 @@ ggPredict(regmixE,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
 
 #Gun Laws
 regmixGU <- lm(coef ~ Injured + Gunlaws, data = Final, )
-summary(regmixGU)
 
 ggPredict(regmixGU,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
 
 #Area
 regmixAR <- lm(coef ~ Injured + Area, data = Final, )
-summary(regmixAR)
 
 ggPredict(regmixAR,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
 
 #Ethnicity
 regmixET <- lm(coef ~ Injured + Ethnicity, data = Final, )
-summary(regmixET)
 
 ggPredict(regmixET,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
 
 ```
 
+```{r echo=FALSE}
 
+plot_summs(regarea, regeth, reggun, reginjured, regdead, regfull, scale = TRUE, inner_ci_level = .9, colors = "Set3")
 
-
+# durch integrieren von allen Variablen in das Model entfernen sie sich von der MItte.
+```
 
 Hannah Ab Regression Table 
 
