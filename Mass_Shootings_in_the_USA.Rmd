@@ -11,7 +11,6 @@ output:
 always_allow_html: true
 #bibliography: Mass_Shootings.bibtex
 ---
-lala
 ```{r, include = FALSE}
 library(openxlsx)
 library(xml2)
@@ -51,13 +50,19 @@ Smith cited without author [-@smith04].
 
 # Introduction
 
-Aufhänger: Many studies about media salience of mass shootings, but no research about how this media attention influences peoples' interest in certain events. 
+On february 14th 2018 the Parkland High school shooting took place and with it one of the largest gun control movements emerged. 
+At this incident a former student of the Marjory Stoneman Douglas High School killed 17 people and injured another 17 with a rifle. The event was heavily covered by multiple news outlets and became the subject of a heated discussion about stricter gun laws in the US. One month later on march 24th there were nation wide protest called "March for Our Lives", led by the students in cooperation with the non-profit organization Never Again MSD, which demand stricter gun laws. 
+It is not the first time, that a mass shooting started a discussion about gun regulations. Other shootings like the Sandy Hook Elementary School shooting in 2012 or the Orlando Nightclub shooting in 2016 brought the topic up as well. A study showed, that media coverage regarding gun regulation increase after a mass shooting occurs, the following Media Coverage and the general attention on this topic can have a positive influence. For example, after the Parkland shooting Florida raised the minimum age for buying a rifle from 18 to 21 years.
 
-Based on previous definition of mass murder (citations from Duwe 2000, p.373) mass shootings in this paper are defined as "incidents in which four or more persons are murdered within a 24 hour period" [@Duwe2000, p. 323] with a gun.
+However it depends heavily on the parties which are in control to this particular time. @lucaetal16 found evidence that in the year after a large mass shooting happened, the republican are more likely to loosen the gun laws Instead of making them more strict.
 
-Sophie: Grafik von zwei Kurven, die möglichst unterschiedlich sind
+In general, the US has a long history of school and mass shootings, in 2019 alone there were 417 mass shootings, which fall under the definition as follows: "incidents in which four or more persons are murdered within a 24 hour period" [@Duwe2000, p. 323]. Many of which got little to no media attention. One possible reason why smaller shootings gather less media coverage and therefore are brought less to our attention is because there are less exciting, nothing special and therefore would not sell as good as other stories. And even if covered, after a certain amount of time, a new event occurs and will overshadow the previous news. This does not only apply to news outlets, also people in general are drawn to prominent issues and exciting events. If there are no new information coming or more specifically people have seen enough of a topic and become fatique. In the following graph we can observe such a loos in interest. 
+
+This graph displays the relation of Search Hits for each keyword in comparison to the general frequency in which they are searched prior to the event period. We included the Sandy Hook shooting, which had 28 Deaths and the Clackamas shooting which had 4 Deaths. The x axis describes the period we want to look at, from one day prior to the event (Day 1), the event day (Day 2) and two weeks following the event date (Days 3-16). The y-axis shows the related search hits for each keyword. Unfortunately we cannot make any emphases about the general attention both events achieved, as we do not have access to the total numbers of hits. However, we can see a clear difference in the search behavior. The Sandy Hook shooting got more hits on the actual event day and also lost interest much slower than the Clackamas shooting did. The Clackamas shooting got a spike in attention around one day after the event and drops rapidly on the second day after the shooting. 
 
 ```{r include = FALSE}
+#Sophie: Grafik von zwei Kurven, die möglichst unterschiedlich sind
+
 sandy <- gtrends(c("Sandy Hook shooting"), geo = "US", time = "2012-12-13 2012-12-28", low_search_volume = T)
 clack <- gtrends(c("Clackamas shooting"), geo = "US", time = "2012-12-10 2012-12-25", low_search_volume = T)
 plot(sandy)
@@ -77,7 +82,7 @@ example$hits <- gsub("<1", "0", example$hits, fixed = TRUE)
 example$hits <- as.numeric(as.character(example$hits))
 ```
 
-```{r}
+```{r echo = FALSE}
 # Plot
 ggplot(example, aes(x = rownumber, y = hits, col = keyword))+
   geom_line()+
@@ -93,6 +98,7 @@ ggplot(example, aes(x = rownumber, y = hits, col = keyword))+
   scale_x_continuous(breaks = round(seq(min(example$rownumber), max(example$rownumber), by = 1),1)) 
 ```
 
+As we can see, there seems to be differences in the interest of people regarding mass shootings. With our study we want to focus the peoples interest and these differences and less about the media itself.  
 
 # Theory and Hypotheses
 
