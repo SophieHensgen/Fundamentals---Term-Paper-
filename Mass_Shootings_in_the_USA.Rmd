@@ -56,6 +56,43 @@ Based on previous definition of mass murder (citations from Duwe 2000, p.373) ma
 
 Sophie: Grafik von zwei Kurven, die möglichst unterschiedlich sind
 
+```{r include = FALSE}
+sandy <- gtrends(c("Sandy Hook shooting"), geo = "US", time = "2012-12-13 2012-12-28", low_search_volume = T)
+clack <- gtrends(c("Clackamas shooting"), geo = "US", time = "2012-12-10 2012-12-25", low_search_volume = T)
+plot(sandy)
+plot(clack)
+sandyI <- sandy$interest_over_time
+clackI <- clack$interest_over_time
+example <- rbind(sandyI, clackI)
+
+example <- as_tibble(example)
+glimpse(example)
+
+example$rownumber = 1:16
+example
+
+# Aufbereitung
+example$hits <- gsub("<1", "0", example$hits, fixed = TRUE)
+example$hits <- as.numeric(as.character(example$hits))
+```
+
+```{r}
+# Plot
+ggplot(example, aes(x = rownumber, y = hits, col = keyword))+
+  geom_line()+
+  theme(
+  panel.background = element_rect(fill = "white", colour = "grey",
+                                size = 1, linetype = "solid"),
+  panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "white"), 
+  panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                colour = "grey")
+  )+
+  labs(title = "Google Trend Example", subtitle = "Sandy Hook Elementary School Shooting & Clackamas Town Center shooting", x = "Days", y = "Search Hits", colour = "Keyword")+
+  scale_x_continuous(breaks = round(seq(min(example$rownumber), max(example$rownumber), by = 1),1)) 
+```
+
+
 # Theory and Hypotheses
 
 Kleine Einleitung in Literature Review:
