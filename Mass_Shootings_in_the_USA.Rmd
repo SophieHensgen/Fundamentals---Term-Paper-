@@ -35,6 +35,7 @@ library(ggpubr)
 ```
 
 dfjhv
+sc
 Citation examples for in-text citations:
 
 Smith cited [@smith04].
