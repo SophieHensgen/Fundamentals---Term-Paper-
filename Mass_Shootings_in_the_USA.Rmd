@@ -13,7 +13,7 @@ output:
     toc: yes
     df_print: kable
 always_allow_html: true
-#bibliography: Mass_Shootings.bibtex
+bibliography: Fundamentals_Paper.bib
 ---
 
 ```{r, include = FALSE}
@@ -44,8 +44,7 @@ library(jtools)
 library(broom.mixed)
 library(stargazer)
 library(ggstance)
-library(stargazer)
-library(summarytools)
+#library(summarytools)
 
 
 #devtools::install_github('davidgohel/ggiraph')
@@ -161,7 +160,7 @@ knitr::include_graphics("causality-model.png")
 @Schildkraut et al examined several potential aspects of mass shooting that could lead to increased media coverage. These include the ethnicity of the predator, the survival of the redactor, gender of the predator, location and the victim count. He found evidence that increased media coverage would be induced if the predator would be non-white, would survive or if there were a high number of victims. The latter is particularly interesting for our first two hypotheses. We argue, that because of the increased salience caused by a high number of victims, the media coverage will drastically increase which will in turn result in a gentle decrease of search hits compared to less media covered shootings. 
 
 
-Based on the research of @Schildkrautetal and other researchers who found similar results regarding media coverage of mass shootings [@Sung-Yeon12], we came up with the following hypotheses: 
+Based on the research of @Schildkraut2018 and other researchers who found similar results regarding media coverage of mass shootings [@Park2012], we came up with the following hypotheses: 
 
 *H1: The more people got injured during a massshooting, the decline in the relative count of search hits on the event will be less steep.*
 
@@ -178,7 +177,7 @@ In line with these findings, we suggest that as non-white violators in mass shoo
 
 *H3: If the shooter is black or has a migration-background, the decline in the relative count of search hits on the event is less steep.*
 
-Another important characteristic to explain why the public interest declines slower for some mass shootings but not for others is the affluence of the area in which the shooting happens. There is not much research on the relationship between the Affluence of the area in which a mass shooting takes place and the media coverage it receives yet. However, the study by [-@Schildkraut2018, p. 235] shows that  shootings that happen in more affluent communities receive more attention from newspapers. Accordingly, we assume that mass shootings in more affluent communities are more  newsworthy and thus draw more media attention. Subsequently, the public interest in these shootings is greater and the reduction of the relative search hit count is less steep than for shootings that happen in less affluent communities. Therefore, the fourth hypothesis is:
+Another important characteristic to explain why the public interest declines slower for some mass shootings but not for others is the affluence of the area in which the shooting happens. There is not much research on the relationship between the Affluence of the area in which a mass shooting takes place and the media coverage it receives yet. However, the study by [@Schildkraut2018, p. 235] shows that  shootings that happen in more affluent communities receive more attention from newspapers. Accordingly, we assume that mass shootings in more affluent communities are more  newsworthy and thus draw more media attention. Subsequently, the public interest in these shootings is greater and the reduction of the relative search hit count is less steep than for shootings that happen in less affluent communities. Therefore, the fourth hypothesis is:
 
 *H4: The more affluent a community a mass shooting happens in is, the shallower is the reduction of the relative search hit count.*
 
@@ -776,26 +775,6 @@ annotate_figure(barplots,
 
 
 
-
-
-```{r, include = FALSE}
-# Tabels with descriptive statistics of independent variables
-
-st_options(freq.cumul = FALSE)
-
-descmetric <-
-  Final %>%
-  select(c(Dead, Injured)) %>%
-  descr(.,stats = c("mean", "sd"), transpose = TRUE, headings = FALSE) 
-descmetric
-
-desccat <-
-  Final %>%
-  select(c(Ethnicity, Area, Gunlaws)) %>%
-  freq(., plain.ascii=FALSE, cumul = FALSE, report.nas = FALSE, totals = FALSE, headings = FALSE)
-desccat
-
-```
 
 
 ```{r echo=FALSE}
