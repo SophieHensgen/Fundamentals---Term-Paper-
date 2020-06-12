@@ -43,6 +43,7 @@ library(ggstance)
 #devtools::install_github('davidgohel/ggiraph')
 ```
 
+
 Citation examples for in-text citations:
 
 Smith cited [@smith04].
@@ -643,7 +644,8 @@ Sophie
 
 # Results
 
-```{r}
+
+```{r, include = FALSE}
 
 # Converting variables needed for bar plots into character vectors
 
@@ -658,25 +660,39 @@ Final
 
 boxdead <- 
   ggplot(Final) +
-  labs(title = "Boxplot of the Number of Dead Persons", x = "", y = "Number of Dead Persons") +
+  labs(title = "Dead Persons", x = "", y = "Count") +
   geom_boxplot(mapping = aes(x = "Dead", y = Dead)) +
-  theme(
-  axis.text.y = element_blank(),
-  axis.ticks.y = element_blank()) +
-  scale_y_continuous(breaks=seq(0,60,5)) +
-  coord_flip()
+  theme(plot.title = element_text(size = 10.5),
+        axis.title.y = element_text(size = 10.5),
+        axis.text.y = element_text(size=8.5),
+        axis.text.x = element_blank(), 
+        axis.ticks.x = element_blank()) +
+ # theme(
+  #axis.text.y = element_blank()) + #,
+ # axis.ticks.y = element_blank()) +
+  coord_cartesian(ylim = c(0, 20)) 
+ # scale_y_continuous(breaks=seq(0,15,5)) 
+  #coord_flip()
 boxdead
 
 boxinjured <- 
   ggplot(Final) +
-  labs(title = "Boxplot of the Number of Injured Persons", x = "", y = "Number of Injured Persons") +
+  labs(title = "Injured Persons", x = "", y = "Count") +
   geom_boxplot(mapping = aes(x = "Injured", y = Injured)) +
-  theme(
-  axis.text.y = element_blank(),
-  axis.ticks.y = element_blank()) +
-  scale_y_continuous(breaks=seq(0,500,20)) +
-  coord_flip()
+  theme(plot.title = element_text(size = 10.5),
+        axis.title.y = element_text(size = 10.5),
+        axis.text.y = element_text(size=8.5),
+        axis.text.x = element_blank(), 
+        axis.ticks.x = element_blank()) +
+ # scale_y_continuous(limits = quantile(Final$Injured, c(0.1, 0.9))) +
+ # theme(
+ # axis.text.y = element_blank(), +
+ # axis.ticks.y = element_blank()) +
+ # scale_y_continuous(breaks=seq(0,500,20)) +
+  coord_cartesian(ylim = c(0, 20)) 
+  #coord_flip()
 boxinjured
+
 
 #Versuch
 #histdead <- ggplot(Final) +
@@ -688,7 +704,11 @@ boxinjured
 
 ## Ethnicity
 bareth <- ggplot(Final, aes(x = Ethnicity)) + # include percent
-  labs(title = "Frequencies by Ethnicity", x = "Ethnicity", y = "Count") +
+  labs(title = "Ethnicity", x = "", y = "Count") +
+  theme(plot.title = element_text(size = 10.5),
+        axis.title.y = element_text(size = 10.5),
+        axis.text.x = element_text(size=8.5),
+        axis.text.y = element_text(size=8.5)) +
   geom_bar() +
   scale_x_discrete(labels=c("0" =  "Black or Other Ethnicity", "1" = "White American")) +
   scale_y_continuous(breaks=seq(0,120,20), limit = c(0, 120)) +
@@ -699,7 +719,11 @@ bareth
 
 ## Area
 bararea <- ggplot(Final, aes(x = Area)) + # include percent
-  labs(title = "Frequencies by Affluence of Community", x = "Affluence of Community", y = "Count") +
+  labs(title = "Affluence of Community", x = "", y = "Count") +
+  theme(plot.title = element_text(size = 10.5),
+        axis.title.y = element_text(size = 10.5),
+        axis.text.x = element_text(size=8.5),
+        axis.text.y = element_text(size=8.5)) +
   geom_bar()  +
   scale_x_discrete(labels=c("0" =  "Low Income Community", "1" = "High Income Community")) +
   scale_y_continuous(breaks=seq(0,120,20), limit = c(0, 120)) +
@@ -710,7 +734,11 @@ bararea
 
 ## Gunlaws
 bargun <- ggplot(Final, aes(x = Gunlaws)) + # include percent
-  labs(title = "Frequencies by Gun Law Strength", x = "Gun Law Strength", y = "Count") +
+  labs(title = "Gun Law Strength", x = "", y = "Count") +
+  theme(plot.title = element_text(size = 10.5),
+        axis.title.y = element_text(size = 10.5),
+        axis.text.x = element_text(size=8.5),
+        axis.text.y = element_text(size=8.5)) +
   geom_bar()  +
   scale_x_discrete(labels=c("0" =  "Weak Gun Laws", "1" = "Strong Gun Laws")) +
   scale_y_continuous(breaks=seq(0,120,20), limit = c(0, 120)) +
@@ -719,10 +747,66 @@ bargun <- ggplot(Final, aes(x = Gunlaws)) + # include percent
   #geom_text(aes(label = ..prop..), stat= "count", vjust = -.5)
 bargun
 
+```
 
-ggarrange(bareth, bararea, bargun + rremove("x.text"), 
+
+```{r echo=FALSE}
+barplots <- ggarrange(bareth, bararea, bargun,   #+ rremove("x.text"), 
           #labels = c("A", "B", "C"),
           ncol = 2, nrow = 2)
+annotate_figure(barplots,
+               top = text_grob("Figure 1: Barplots of Categorical Variables with Frequencies and Shares in Percent", color = "black", face = "bold", size = 11), 
+               #fig.lab = "Figure 1", fig.lab.face = "bold"
+               )
+
+```
+
+
+```{r echo=FALSE}
+boxplots <- ggarrange(boxdead, boxinjured,   #+ rremove("x.text"), 
+          #labels = c("A", "B", "C"),
+          ncol = 2, nrow = 1)
+annotate_figure(boxplots,
+               top = text_grob("Figure 2: Boxplots of Metric Variables", color = "black", face = "bold", size = 11)
+               #fig.lab = "Figure 2", fig.lab.face = "bold"
+               )
+
+```
+
+
+```{r echo=FALSE}
+# Tabels with descriptive statistics of independent variables
+
+library(summarytools)
+st_options(freq.cumul = FALSE)
+
+descmetric <-
+  Final %>%
+  select(c(Dead, Injured)) %>%
+  descr(.,stats = c("mean", "sd"), transpose = TRUE, headings = FALSE) 
+descmetric
+
+desccat <-
+  Final %>%
+  select(c(Ethnicity, Area, Gunlaws)) %>%
+  freq(., plain.ascii=FALSE, cumul = FALSE, report.nas = FALSE, totals = FALSE, headings = FALSE)
+desccat
+
+```
+
+
+```{r echo=FALSE}
+# Tabels with descriptive statistics of independent variables
+
+stargazer(Final[c("Dead","Injured")], type = "text", title="Descriptive statistics of metric variables", summary.stat = c("n", "median", "sd", "min", "max"))
+
+#stargazer(Final[c("Ethnicity","Area", "Gunlaws")], type = "text", title="Descriptive statistics of categorical variables")
+
+#desccat <-
+#  Final %>%
+#  select(c(Ethnicity, Area, Gunlaws)) %>%
+#  freq(., plain.ascii=FALSE, cumul = FALSE, report.nas = FALSE, totals = FALSE, headings = FALSE)
+#desccat
 
 
 ```
