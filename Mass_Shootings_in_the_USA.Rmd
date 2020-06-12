@@ -184,6 +184,8 @@ Another important characteristic to explain why the public interest declines slo
 
 *H4: The more affluent a community a mass shooting happens in is, the shallower is the reduction of the relative search hit count.*
 
+--> Evtl. umformulieren, Sophie fragen
+
 As for the last hypothesis there is sparse research on how the gun laws of the state a mass shooting happens in influence its newsworthiness, media coverage and how this might affect the public interest. We expect that if a mass shooting happens in a state with weak gun laws the issue of gun control becomes more salient. Subsequently in light of this public discussion the event becomes more newsworthy and the media covers the shooting more heavily. Because of this, the public interest in the mass shooting rises and the relative count of the search hits on Google declines slower. Hence, the fifth hypothesis is:
 
 *H5: If the state a mass shooting happens in has weak gun laws, the relative count of the search hits on Google declines slower.*
@@ -201,7 +203,7 @@ First, we scraped all tables from the Wikipedia page on mass shootings in the US
 
 Because we are using the data set based on the information from Wikipedia later on to scrape data from Google Trends we created additional variables. We generated a variable with a date fourteen days after the date of the mass shooting. This variable was subsequently used to create another variable which included both, the date of the mass shooting and the date fourteen days after the mass shooting in the required style of the Google Trends API. Furthermore, we generated a variable for the search term the Google Trends API is using to find information on the relative count of hits this keyword received in the 15 days time period. We conducted a manual search on Google Trends to find the search term for each event that received the highest number of hits in the 15 days time span for each event. Moreover, we discarded the years 2000, 2001, 2002 and 2003 as it is not possible to scrape Google Trends data before the year 2004.
 
-After exporting this data table to excel we added three variables with information on the ethnicity of the shooter, the affluence of the community a shooting happened at and the strength of the gun laws for the state in which a shooting happened. These are the indpendendent variables for the regression models in the analysis section additionally to the count of dead and injured persons. In order to find the necessary information on these characteristics, an online search was executed. The information on the ethnicity of the perpetrator was found on the respective Wikipedia page for each mass shooting. The variable was coded 0 if the shooter was black or had a migration background and 1 for white US Americans. Furthermore, we looked up the median houshold income (in 2018) for all communities in which a mass shooting happened and determined if the community is affluent or not based on a chart that depicts how the US Census Bureau breaks down income levels [@income]. If the median household was below $44,999, the community was classified as low income and coded 0. Accordingly, if the median houshold income was above $44,999 the community was considered as high income and coded 1. Additionally, the strength of the gun laws in the states where shootings happened were evaluated based on a ranking of states by their gun law strength ^[In this paper states that are considered to have strong gun laws are: California, New Jersey, Conneticut, New York, Hawaii, Maryland, Massachusetts, Illinois, Rhode Island, Washington, Delaware, Pennsylvania, Minnesota, Colorado, Nevada, Oregon, New Mexico, Nebraska, Iowa, Michigan, Wisconsin, Florida, and Vermont. States with weak gun laws are: North Carolina, Ohio, Virginia, Utah, Indiana, Tennessee, New Hampshire, South Carolina, Georgia, Lousiana, Maine, Montana, Texas, West Virgina, Alabama, North Dakota, Arkansas, Oklahoma, Alaska, Kansas, South Dakota, Arizona, Kentucky, Missouri, Idaho, Wyoming, Mississippi]. States with weak gun laws are coded 0 and states with strong gun laws are coded 1. Observations for which no information on the ethnicity, the affluence of the community or the gun law strength could be found were dropped.
+After exporting this data table to excel we added three variables with information on the ethnicity of the shooter, the affluence of the community a shooting happened at and the strength of the gun laws for the state in which a shooting happened. These are the indpendendent variables for the regression models in the analysis section additionally to the count of dead and injured persons. In order to find the necessary information on these characteristics, an online search was executed. The information on the ethnicity of the perpetrator was found on the respective Wikipedia page for each mass shooting. The variable was coded 0 if the shooter was a white US Americans and 1 if the shooter was black or had a migration background. Furthermore, we looked up the median houshold income (in 2018) for all communities in which a mass shooting happened and determined if the community is affluent or not based on a chart that depicts how the US Census Bureau breaks down income levels [@income]. If the median household was below $44,999, the community was classified as low income and coded 0. Accordingly, if the median houshold income was above $44,999 the community was considered as high income and coded 1. Additionally, the strength of the gun laws in the states where shootings happened were evaluated based on a ranking of states by their gun law strength ^[In this paper states that are considered to have strong gun laws are: California, New Jersey, Conneticut, New York, Hawaii, Maryland, Massachusetts, Illinois, Rhode Island, Washington, Delaware, Pennsylvania, Minnesota, Colorado, Nevada, Oregon, New Mexico, Nebraska, Iowa, Michigan, Wisconsin, Florida, and Vermont. States with weak gun laws are: North Carolina, Ohio, Virginia, Utah, Indiana, Tennessee, New Hampshire, South Carolina, Georgia, Lousiana, Maine, Montana, Texas, West Virgina, Alabama, North Dakota, Arkansas, Oklahoma, Alaska, Kansas, South Dakota, Arizona, Kentucky, Missouri, Idaho, Wyoming, Mississippi]. States with strong gun laws are coded 0 and states with weak gun laws are coded 1. Observations for which no information on the ethnicity, the affluence of the community or the gun law strength could be found were dropped.
 
 
 
@@ -483,7 +485,7 @@ wikishooting
 
 ## Data from GTrends
 
-After the scraping of the Wikipedia tables with basic information about the most notable mass shootings and adding of further variables, we scraped Google Trends data. The Wikipedia data set provided us with the necessary information about the time period (15 days) and the best search term for each mass shooting. The interest in each shooting over the time period was scraped for the whole US and collected in one data set. As for some shootings the best search term was the same, we renamed those with the year as identifier.  
+After the scraping of the Wikipedia tables with basic information about the most notable mass shootings and adding of further variables, we scraped Google Trends data. The Wikipedia data set provided us with the necessary information about the time period (15 days) and the best search term for each mass shooting. The interest in each shooting over the time period was scraped for the whole US and collected in one data set. As for some shootings the best search term was the same, we renamed those with the year as identifier. Moreover, we dropped the shotting of the Haynie family in 2020 as there was not enough data available in Google Trends for this observation.
 
 
 
@@ -714,9 +716,9 @@ bareth <- ggplot(Final, aes(x = Ethnicity)) +
   labs(title = "Ethnicity", x = "", y = "Relative Frequencies") +
   theme(plot.title = element_text(size = 10.5),
         axis.title.y = element_text(size = 10.5),
-        axis.text.x = element_text(size=7.5),
+        axis.text.x = element_text(size=7),
         axis.text.y = element_text(size=8)) +
-  scale_x_discrete(labels=c("0" =  "Black or Other Ethnicity", "1" = "White US American")) +
+  scale_x_discrete(labels=c("0" =  "White US American", "1" = "Black or Other Ethnicity")) +
   scale_y_continuous(labels = scales::percent_format(), limit = c(0, 1.0)) +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
             y= ((..count..)/sum(..count..))), stat="count", size = 3, vjust = -.5) 
@@ -730,7 +732,7 @@ bararea <- ggplot(Final, aes(x = Area)) +
   labs(title = "Affluence of Community", x = "", y = "Relative Frequencies") +
   theme(plot.title = element_text(size = 10.5),
         axis.title.y = element_text(size = 10.5),
-        axis.text.x = element_text(size=7.5),
+        axis.text.x = element_text(size=7),
         axis.text.y = element_text(size=8)) +
   scale_x_discrete(labels=c("0" =  "Low Income Community", "1" = "High Income Community")) +
   scale_y_continuous(labels = scales::percent_format(), limit = c(0, 1.0)) +
@@ -745,9 +747,9 @@ bargun <- ggplot(Final, aes(x = Gunlaws)) +
   labs(title = "Gun Law Strength", x = "", y = "Relative Frequencies") +
   theme(plot.title = element_text(size = 10.5),
         axis.title.y = element_text(size = 10.5),
-        axis.text.x = element_text(size=7.5),
+        axis.text.x = element_text(size=7),
         axis.text.y = element_text(size=8)) +
-  scale_x_discrete(labels=c("0" =  "Weak Gun Laws", "1" = "Strong Gun Laws")) +
+  scale_x_discrete(labels=c("0" =  "Strong Gun Laws", "1" = "Weak Gun Laws")) +
   scale_y_continuous(labels = scales::percent_format(), limit = c(0, 1.0)) +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
             y= ((..count..)/sum(..count..))), stat="count", size = 3, vjust = -.5) 
@@ -829,6 +831,12 @@ Regressionstabelle aufhübschen + alle Modelle inkludieren
 Hannah: Coefplot oder Marginsplot für volles Modell
 ############################################
 
+In the following our hypotheses will be analyzed with an OLS regression of the independent variables - the number of dead persons, the number of injured persons, the ethnicity of the shooter, the affluence of the community, and the strength of the states' gun laws on the decline in interest of mass shootings. According to hypothesis 1 and 2, we expect that the interest in the shooting declines slower, the more people died or got injured in the shooting. We also assume in line with hypotheses 3 that the interest in a mass shooting decreases slower if the shooter was black or had a migration background. Furthermore, we hypothesize (H4) that if the community the shooting happened in is more affluent, the decrease in interest is less steep. And finally we expect that according to hypothesis 5 that if the gun laws of the state in which a shooting took place are weak, the decline in interest is slower. 
+
+Table 1 shows the results for the OLS regression of all independent variables on the decrease in interest of mass shootings. The models 1 to 5 each report the results of the regression of one of the independent variables on the decrease in interest of mass shootings. As none of the coefficients is statistically significant at the 10% level we do not assume that the number of dead persons, the number of injured persons, the ethnicity of the shooter, the affluence of the community, and the strength of the states' gun laws are correlated with the steepness of the decline in interest in Google Trends. Model 6 includes all of the independent variables. When controlling for  
+
+
+
 ```{r, include = FALSE}
 # Regression 
 
@@ -848,7 +856,7 @@ regfull <-  lm(coef ~ Dead + Injured + Ethnicity + Area + Gunlaws, data = Final,
 ```{r, results='asis'}
 # PDF Table of regressions
 stargazer::stargazer(regdead, reginjured, regeth, reggun, regarea, regfull, 
-                     title   = "These are awesome results!", 
+                     title   = "Table 1: OLS Regression of the Independent Variables on the Decrease in Interest of Mass Shootings", 
                      covariate.labels = c("Dead", "Injured", "Ethnicity","Area", "Gunlaws"), 
                      dep.var.labels   = "decrease of interest", 
                      keep.stat = c("adj.rsq", "n"),
@@ -902,8 +910,6 @@ plot_summs(regarea, regeth, reggun, reginjured, regdead, regfull, scale = TRUE, 
 ```
 
 Hannah Ab Regression Table 
-
-
 
 
 
