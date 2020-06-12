@@ -3,6 +3,10 @@ title: "Mass Shootings in the USA"
 author: "Hannah Reitz & Sophie Hensgen"
 header-includes:
     - \usepackage{setspace}\doublespacing
+    - \usepackage{booktabs}
+    - \usepackage{longtable}
+    - \usepackage{floatrow}
+    - \floatsetup[table]{capposition=top}
 date: "`r Sys.Date()`"
 output:
   pdf_document:
@@ -749,7 +753,7 @@ bargun
 ```
 
 
-```{r, echo=FALSE}
+```{r, echo = FALSE}
 barplots <- ggarrange(bareth, bararea, bargun,   #+ rremove("x.text"), 
           #labels = c("A", "B", "C"),
           ncol = 2, nrow = 2)
@@ -761,7 +765,7 @@ annotate_figure(barplots,
 ```
 
 
-```{r, echo=FALSE}
+```{r, echo = FALSE}
 boxplots <- ggarrange(boxdead, boxinjured,   #+ rremove("x.text"), 
           #labels = c("A", "B", "C"),
           ncol = 2, nrow = 1)
@@ -773,42 +777,7 @@ annotate_figure(boxplots,
 ```
 
 
-```{r, echo=FALSE}
-# Tabels with descriptive statistics of independent variables
 
-library(summarytools)
-st_options(freq.cumul = FALSE)
-
-descmetric <-
-  Final %>%
-  select(c(Dead, Injured)) %>%
-  descr(.,stats = c("mean", "sd"), transpose = TRUE, headings = FALSE) 
-descmetric
-
-desccat <-
-  Final %>%
-  select(c(Ethnicity, Area, Gunlaws)) %>%
-  freq(., plain.ascii=FALSE, cumul = FALSE, report.nas = FALSE, totals = FALSE, headings = FALSE)
-desccat
-
-```
-
-
-```{r, echo=FALSE}
-# Tabels with descriptive statistics of independent variables
-
-stargazer(Final[c("Dead","Injured")], type = "text", title="Descriptive statistics of metric variables", summary.stat = c("n", "median", "sd", "min", "max"))
-
-#stargazer(Final[c("Ethnicity","Area", "Gunlaws")], type = "text", title="Descriptive statistics of categorical variables")
-
-#desccat <-
-#  Final %>%
-#  select(c(Ethnicity, Area, Gunlaws)) %>%
-#  freq(., plain.ascii=FALSE, cumul = FALSE, report.nas = FALSE, totals = FALSE, headings = FALSE)
-#desccat
-
-
-```
 
 
 Hannah: Descriptives: Barplots of variables mit facet wrap wewe
@@ -1016,7 +985,64 @@ Hannah
 # References
 
 
+# Appendix
 
+```{r, include = FALSE}
+# Tabels with descriptive statistics of independent variables
+
+#library(summarytools)
+#st_options(freq.cumul = FALSE)
+
+#descmetric <-
+#  Final %>%
+#  select(c(Dead, Injured)) %>%
+#  descr(.,stats = c("mean", "sd"), transpose = TRUE, headings = FALSE) 
+#descmetric
+
+#desccat <-
+#  Final %>%
+#  select(c(Ethnicity, Area, Gunlaws)) %>%
+#  freq(., plain.ascii=FALSE, cumul = FALSE, report.nas = FALSE, totals = FALSE, headings = FALSE)
+#desccat
+
+```
+
+
+
+```{r results = 'asis'}
+# Tabels with descriptive statistics of independent variables
+
+#stargazer::stargazer(Final[c("Dead","Injured")], type = "text", title="Descriptive statistics of metric variables", summary.stat = c("n", "mean", "sd", "min", "max"))
+
+stargazer(Final[c("Dead","Injured")], title="Descriptive statistics of metric variables", summary.stat = c("n", "median", "sd", "min", "max"), table.layout ="=n")
+
+library(sjmisc)
+library(papeR)
+
+
+Final$Ethnicity <- as.factor(Final$Ethnicity)
+Final$Ethnicity <- factor(Final$Ethnicity,
+levels = c(0, 1),
+labels = c("Black or Other Ethnicity", "White American")) 
+
+Final$Area <- as.factor(Final$Area)
+Final$Area <- factor(Final$Area,
+levels = c(0, 1),
+labels = c("Low Income Community", "High Income Community")) 
+
+#Final
+#Final$Ethnicity <- as.factor(Final$Ethnicity)
+
+#summarize(Final, type = "factor", variables = "Ethnicity")
+
+
+print(xtable::xtable(summarize(Final, caption = "My Title", type = "factor", variables = c("Ethnicity", "Area"), caption.placement = "top")))
+
+
+
+
+
+```
 
 
 
