@@ -41,6 +41,7 @@ library(ggiraphExtra)
 library(systemfonts)
 library(jtools)
 library(broom.mixed)
+library(stargazer)
 
 # devtools::install_github('davidgohel/ggiraph')
 ```
@@ -141,7 +142,7 @@ And even if these aspects are fulfilled, it does not mean, that the event will b
 
 As we can see, there are several aspects which come into account when talking about salience and newsworthiness. There has to be a prior problem, the event has to be salient enough (an rare and great event) in order gain attention and also be important for the entire population, not only for a minority. In consideration of all these aspects we came up with the following diagram: 
 
-#![an image caption Source: Made by me](images/Theorie-graph.png)
+
 
 We would like to investigate the influence of certain characteristic of mass shootings on the interest of the population. On basis of the moral panic theory and the issue-attention cycle we theorize that certain aspects will gain more attention because of their salience level, which will lead to a presumably higher and more permanent media coverage. Through the increased media coverage, there should follow a general increase in the interest of the population on this specific event, which should in turn result in a slower decline of the Google trend curve. 
 
@@ -150,7 +151,7 @@ We would like to investigate the influence of certain characteristic of mass sho
 
 @Schildkraut et al examined several potential aspects of mass shooting that could lead to increased media coverage. These include the ethnicity of the predator, the survival of the redactor, gender of the predator, location and the victim count. He found evidence that increased media coverage would be induced if the predator would be non-white, would survive or if there were a high number of victims. The latter is particularly interesting for our first two hypotheses. We argue, that because of the increased salience caused by a high number of victims, the media coverage will drastically increase which will in turn result in a gentle decrease of search hits compared to less media covered shootings. 
 
-#![an image caption Source: Made by me](images/Kausalitätsmodell.png)
+
 
 Based on the research of @Schildkrautetal and other researchers who found similar results regarding media coverage of mass shootings [@Sung-Yeon12], we came up with the following hypotheses: 
 
@@ -585,7 +586,7 @@ gtrends
 
 ```{r, include = FALSE}
 # give every shooting a countdown with 1 to 15, for each day we inspect
-gtrends$rownumber = 1:15
+gtrends$rownumber <- rep(c(1:15), times=131)
 
 # save the hits as numeric values
 gtrends$hits <- as.numeric(as.character(gtrends$hits))
@@ -690,63 +691,58 @@ boxinjured <-
 boxinjured
 
 
-#Versuch
-#histdead <- ggplot(Final) +
-#  geom_histogram(mapping = aes(x = Dead), binwidth = 1)
-
-#histdead
-
-# Bar plots of all categorical variables (Ethincity, Area, Gunlaws)
+# Barplots of categorical variables (Dead, Injured)
 
 ## Ethnicity
-bareth <- ggplot(Final, aes(x = Ethnicity)) + # include percent
-  labs(title = "Ethnicity", x = "", y = "Count") +
+
+bareth <- ggplot(Final, aes(x = Ethnicity)) +
+  geom_bar(mapping = aes(y = ..prop.., group = 1), stat = "count") +
+  labs(title = "Ethnicity", x = "", y = "Relative Frequencies") +
   theme(plot.title = element_text(size = 10.5),
         axis.title.y = element_text(size = 10.5),
-        axis.text.x = element_text(size=8.5),
-        axis.text.y = element_text(size=8.5)) +
-  geom_bar() +
+        axis.text.x = element_text(size=7.5),
+        axis.text.y = element_text(size=8)) +
   scale_x_discrete(labels=c("0" =  "Black or Other Ethnicity", "1" = "White American")) +
-  scale_y_continuous(breaks=seq(0,120,20), limit = c(0, 120)) +
-  geom_text(stat='count', aes(label=..count..), vjust=-0.5) 
-  #geom_text(aes(label=paste0(round(Ethnicity*100,1),"%"),  y=pc))
-  #geom_text(aes(label = ..prop..), stat= "count", vjust = -.5)
+  scale_y_continuous(labels = scales::percent_format(), limit = c(0, 1.0)) +
+  geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
+            y= ((..count..)/sum(..count..))), stat="count", size = 3, vjust = -.5) 
 bareth
 
+
 ## Area
-bararea <- ggplot(Final, aes(x = Area)) + # include percent
-  labs(title = "Affluence of Community", x = "", y = "Count") +
+
+bararea <- ggplot(Final, aes(x = Area)) + 
+  geom_bar(mapping = aes(y = ..prop.., group = 1), stat = "count") +
+  labs(title = "Affluence of Community", x = "", y = "Relative Frequencies") +
   theme(plot.title = element_text(size = 10.5),
         axis.title.y = element_text(size = 10.5),
-        axis.text.x = element_text(size=8.5),
-        axis.text.y = element_text(size=8.5)) +
-  geom_bar()  +
+        axis.text.x = element_text(size=7.5),
+        axis.text.y = element_text(size=8)) +
   scale_x_discrete(labels=c("0" =  "Low Income Community", "1" = "High Income Community")) +
-  scale_y_continuous(breaks=seq(0,120,20), limit = c(0, 120)) +
-  geom_text(stat='count', aes(label=..count..), vjust=-0.5) 
-  #geom_text(aes(label=paste0(round(Ethnicity*100,1),"%"),  y=pc))
-  #geom_text(aes(label = ..prop..), stat= "count", vjust = -.5)
+  scale_y_continuous(labels = scales::percent_format(), limit = c(0, 1.0)) +
+  geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
+            y= ((..count..)/sum(..count..))), stat="count", size = 3, vjust = -.5) 
 bararea
 
+
 ## Gunlaws
-bargun <- ggplot(Final, aes(x = Gunlaws)) + # include percent
-  labs(title = "Gun Law Strength", x = "", y = "Count") +
+bargun <- ggplot(Final, aes(x = Gunlaws)) + 
+  geom_bar(mapping = aes(y = ..prop.., group = 1), stat = "count") +
+  labs(title = "Gun Law Strength", x = "", y = "Relative Frequencies") +
   theme(plot.title = element_text(size = 10.5),
         axis.title.y = element_text(size = 10.5),
-        axis.text.x = element_text(size=8.5),
-        axis.text.y = element_text(size=8.5)) +
-  geom_bar()  +
+        axis.text.x = element_text(size=7.5),
+        axis.text.y = element_text(size=8)) +
   scale_x_discrete(labels=c("0" =  "Weak Gun Laws", "1" = "Strong Gun Laws")) +
-  scale_y_continuous(breaks=seq(0,120,20), limit = c(0, 120)) +
-  geom_text(stat='count', aes(label=..count..), vjust=-0.5) 
-  #geom_text(aes(label=paste0(round(Ethnicity*100,1),"%"),  y=pc))
-  #geom_text(aes(label = ..prop..), stat= "count", vjust = -.5)
+  scale_y_continuous(labels = scales::percent_format(), limit = c(0, 1.0)) +
+  geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
+            y= ((..count..)/sum(..count..))), stat="count", size = 3, vjust = -.5) 
 bargun
 
 ```
 
 
-```{r echo=FALSE}
+```{r, echo=FALSE}
 barplots <- ggarrange(bareth, bararea, bargun,   #+ rremove("x.text"), 
           #labels = c("A", "B", "C"),
           ncol = 2, nrow = 2)
@@ -758,7 +754,7 @@ annotate_figure(barplots,
 ```
 
 
-```{r echo=FALSE}
+```{r, echo=FALSE}
 boxplots <- ggarrange(boxdead, boxinjured,   #+ rremove("x.text"), 
           #labels = c("A", "B", "C"),
           ncol = 2, nrow = 1)
@@ -770,7 +766,7 @@ annotate_figure(boxplots,
 ```
 
 
-```{r echo=FALSE}
+```{r, echo=FALSE}
 # Tabels with descriptive statistics of independent variables
 
 library(summarytools)
@@ -791,7 +787,7 @@ desccat
 ```
 
 
-```{r echo=FALSE}
+```{r, echo=FALSE}
 # Tabels with descriptive statistics of independent variables
 
 stargazer(Final[c("Dead","Injured")], type = "text", title="Descriptive statistics of metric variables", summary.stat = c("n", "median", "sd", "min", "max"))
