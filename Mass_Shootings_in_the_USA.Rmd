@@ -3,6 +3,10 @@ title: "Mass Shootings in the USA"
 author: "Hannah Reitz & Sophie Hensgen"
 header-includes:
     - \usepackage{setspace}\doublespacing
+    - \usepackage{booktabs}
+    - \usepackage{longtable}
+    - \usepackage{floatrow}
+    - \floatsetup[table]{capposition=top}
 date: "`r Sys.Date()`"
 output:
   pdf_document:
@@ -38,9 +42,11 @@ library(devtools)
 library(ggiraphExtra)
 library(jtools)
 library(broom.mixed)
+library(stargazer)
 library(ggstance)
 library(stargazer)
 library(summarytools)
+
 
 #devtools::install_github('davidgohel/ggiraph')
 ```
@@ -590,8 +596,10 @@ gtrends
 
 ```{r, include = FALSE}
 # give every shooting a countdown with 1 to 15, for each day we inspect
+
 gtrends$rownumber <-  rep(c(1:15), times=131)
 gtrends
+
 # save the hits as numeric values
 gtrends$hits <- as.numeric(as.character(gtrends$hits))
 
@@ -695,63 +703,58 @@ boxinjured <-
 boxinjured
 
 
-#Versuch
-#histdead <- ggplot(Final) +
-#  geom_histogram(mapping = aes(x = Dead), binwidth = 1)
-
-#histdead
-
-# Bar plots of all categorical variables (Ethincity, Area, Gunlaws)
+# Barplots of categorical variables (Dead, Injured)
 
 ## Ethnicity
-bareth <- ggplot(Final, aes(x = Ethnicity)) + # include percent
-  labs(title = "Ethnicity", x = "", y = "Count") +
+
+bareth <- ggplot(Final, aes(x = Ethnicity)) +
+  geom_bar(mapping = aes(y = ..prop.., group = 1), stat = "count") +
+  labs(title = "Ethnicity", x = "", y = "Relative Frequencies") +
   theme(plot.title = element_text(size = 10.5),
         axis.title.y = element_text(size = 10.5),
-        axis.text.x = element_text(size=8.5),
-        axis.text.y = element_text(size=8.5)) +
-  geom_bar() +
+        axis.text.x = element_text(size=7.5),
+        axis.text.y = element_text(size=8)) +
   scale_x_discrete(labels=c("0" =  "Black or Other Ethnicity", "1" = "White American")) +
-  scale_y_continuous(breaks=seq(0,120,20), limit = c(0, 120)) +
-  geom_text(stat='count', aes(label=..count..), vjust=-0.5) 
-  #geom_text(aes(label=paste0(round(Ethnicity*100,1),"%"),  y=pc))
-  #geom_text(aes(label = ..prop..), stat= "count", vjust = -.5)
+  scale_y_continuous(labels = scales::percent_format(), limit = c(0, 1.0)) +
+  geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
+            y= ((..count..)/sum(..count..))), stat="count", size = 3, vjust = -.5) 
 bareth
 
+
 ## Area
-bararea <- ggplot(Final, aes(x = Area)) + # include percent
-  labs(title = "Affluence of Community", x = "", y = "Count") +
+
+bararea <- ggplot(Final, aes(x = Area)) + 
+  geom_bar(mapping = aes(y = ..prop.., group = 1), stat = "count") +
+  labs(title = "Affluence of Community", x = "", y = "Relative Frequencies") +
   theme(plot.title = element_text(size = 10.5),
         axis.title.y = element_text(size = 10.5),
-        axis.text.x = element_text(size=8.5),
-        axis.text.y = element_text(size=8.5)) +
-  geom_bar()  +
+        axis.text.x = element_text(size=7.5),
+        axis.text.y = element_text(size=8)) +
   scale_x_discrete(labels=c("0" =  "Low Income Community", "1" = "High Income Community")) +
-  scale_y_continuous(breaks=seq(0,120,20), limit = c(0, 120)) +
-  geom_text(stat='count', aes(label=..count..), vjust=-0.5) 
-  #geom_text(aes(label=paste0(round(Ethnicity*100,1),"%"),  y=pc))
-  #geom_text(aes(label = ..prop..), stat= "count", vjust = -.5)
+  scale_y_continuous(labels = scales::percent_format(), limit = c(0, 1.0)) +
+  geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
+            y= ((..count..)/sum(..count..))), stat="count", size = 3, vjust = -.5) 
 bararea
 
+
 ## Gunlaws
-bargun <- ggplot(Final, aes(x = Gunlaws)) + # include percent
-  labs(title = "Gun Law Strength", x = "", y = "Count") +
+bargun <- ggplot(Final, aes(x = Gunlaws)) + 
+  geom_bar(mapping = aes(y = ..prop.., group = 1), stat = "count") +
+  labs(title = "Gun Law Strength", x = "", y = "Relative Frequencies") +
   theme(plot.title = element_text(size = 10.5),
         axis.title.y = element_text(size = 10.5),
-        axis.text.x = element_text(size=8.5),
-        axis.text.y = element_text(size=8.5)) +
-  geom_bar()  +
+        axis.text.x = element_text(size=7.5),
+        axis.text.y = element_text(size=8)) +
   scale_x_discrete(labels=c("0" =  "Weak Gun Laws", "1" = "Strong Gun Laws")) +
-  scale_y_continuous(breaks=seq(0,120,20), limit = c(0, 120)) +
-  geom_text(stat='count', aes(label=..count..), vjust=-0.5) 
-  #geom_text(aes(label=paste0(round(Ethnicity*100,1),"%"),  y=pc))
-  #geom_text(aes(label = ..prop..), stat= "count", vjust = -.5)
+  scale_y_continuous(labels = scales::percent_format(), limit = c(0, 1.0)) +
+  geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
+            y= ((..count..)/sum(..count..))), stat="count", size = 3, vjust = -.5) 
 bargun
 
 ```
 
 
-```{r echo=FALSE}
+```{r, echo = FALSE}
 barplots <- ggarrange(bareth, bararea, bargun,   #+ rremove("x.text"), 
           #labels = c("A", "B", "C"),
           ncol = 2, nrow = 2)
@@ -763,7 +766,7 @@ annotate_figure(barplots,
 ```
 
 
-```{r echo=FALSE}
+```{r, echo = FALSE}
 boxplots <- ggarrange(boxdead, boxinjured,   #+ rremove("x.text"), 
           #labels = c("A", "B", "C"),
           ncol = 2, nrow = 1)
@@ -917,7 +920,64 @@ Hannah
 # References
 
 
+# Appendix
 
+```{r, include = FALSE}
+# Tabels with descriptive statistics of independent variables
+
+#library(summarytools)
+#st_options(freq.cumul = FALSE)
+
+#descmetric <-
+#  Final %>%
+#  select(c(Dead, Injured)) %>%
+#  descr(.,stats = c("mean", "sd"), transpose = TRUE, headings = FALSE) 
+#descmetric
+
+#desccat <-
+#  Final %>%
+#  select(c(Ethnicity, Area, Gunlaws)) %>%
+#  freq(., plain.ascii=FALSE, cumul = FALSE, report.nas = FALSE, totals = FALSE, headings = FALSE)
+#desccat
+
+```
+
+
+
+```{r results = 'asis'}
+# Tabels with descriptive statistics of independent variables
+
+#stargazer::stargazer(Final[c("Dead","Injured")], type = "text", title="Descriptive statistics of metric variables", summary.stat = c("n", "mean", "sd", "min", "max"))
+
+stargazer(Final[c("Dead","Injured")], title="Descriptive statistics of metric variables", summary.stat = c("n", "median", "sd", "min", "max"), table.layout ="=n")
+
+library(sjmisc)
+library(papeR)
+
+
+Final$Ethnicity <- as.factor(Final$Ethnicity)
+Final$Ethnicity <- factor(Final$Ethnicity,
+levels = c(0, 1),
+labels = c("Black or Other Ethnicity", "White American")) 
+
+Final$Area <- as.factor(Final$Area)
+Final$Area <- factor(Final$Area,
+levels = c(0, 1),
+labels = c("Low Income Community", "High Income Community")) 
+
+#Final
+#Final$Ethnicity <- as.factor(Final$Ethnicity)
+
+#summarize(Final, type = "factor", variables = "Ethnicity")
+
+
+print(xtable::xtable(summarize(Final, caption = "My Title", type = "factor", variables = c("Ethnicity", "Area"), caption.placement = "top")))
+
+
+
+
+
+```
 
 
 
