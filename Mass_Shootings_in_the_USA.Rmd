@@ -196,14 +196,12 @@ In order to analyze our hypotheses we combine data from Wikipedia that includes 
 
 ## Data from Wikipedia
 
-First, we scraped all tables from the Wikipedia page on mass shootings in the US which are available from 2000 to 2020 [@wiki] and cleaned the data from unnecessary information. Then the scraped tables were joined into one data set and all columns that include missings were dropped as we cannot include them in a regression. The resulting table includes information about the date, the location, the count of dead persons, the count of injured persons, the total number of dead and injured persons and a description for each massshooting. 
+First, we scraped all tables from the Wikipedia page on mass shootings in the US which are available from 2000 to 2020 [@wiki] and cleaned the data from unnecessary information. Then the scraped tables were joined into one data set and all columns that include missings were dropped as we cannot include them in a regression. The resulting data table includes information about the date, the location, the count of dead persons, the count of injured persons, the total number of dead and injured persons and a description for each massshooting. 
 
-Because we are using the data set based on the information from wikipedia later on to scrape data from google trends we created additional variables. We generated a variable with the dates fourteen days after the date of the mass shooting. This variable was subsequently used to create another variable which included both, the date of the mass shooting and the date fourteen days after the mass shooting in the required style of the Google Trends API. Furthermore, we generated a variable for the search term the Google Trends API is using to find information on the relative count of hits this keyword received in the 15 days time period. We conducted a manual search on Google Trends to find the search term for each event that received the highest number of hits in the 15 days time span for each event. Moreover, we discarded the years 2000, 2001, 2002 and 2003 as it is not possible to scrape Google Trends data before the year 2004.
+Because we are using the data set based on the information from Wikipedia later on to scrape data from Google Trends we created additional variables. We generated a variable with a date fourteen days after the date of the mass shooting. This variable was subsequently used to create another variable which included both, the date of the mass shooting and the date fourteen days after the mass shooting in the required style of the Google Trends API. Furthermore, we generated a variable for the search term the Google Trends API is using to find information on the relative count of hits this keyword received in the 15 days time period. We conducted a manual search on Google Trends to find the search term for each event that received the highest number of hits in the 15 days time span for each event. Moreover, we discarded the years 2000, 2001, 2002 and 2003 as it is not possible to scrape Google Trends data before the year 2004.
 
-After exporting this data table to excel we added three variables with information on the ethnicity of the shooter, the affluence of the area/community a shooting happened at and the strength of the gun laws for the state in which a shooting happened. These variable represent the indpendendent variables for the regression models in the analysis section additionally to the count of dead and injured persons. In order to find the necessary information on these characteristics, a online search was executed. The information on the ethnicity of the perpetrator was found on the respective Wikipedia page for each mass shooting. The variable was coded 0 if the shooter was black or had a migration background and 1 for white US Americans. The affluence of the community a mass shootings happened in was determined by a chart that depicts how the US Census Bureau breaks down income levels [@income].  .................... to be continued
+After exporting this data table to excel we added three variables with information on the ethnicity of the shooter, the affluence of the community a shooting happened at and the strength of the gun laws for the state in which a shooting happened. These are the indpendendent variables for the regression models in the analysis section additionally to the count of dead and injured persons. In order to find the necessary information on these characteristics, an online search was executed. The information on the ethnicity of the perpetrator was found on the respective Wikipedia page for each mass shooting. The variable was coded 0 if the shooter was black or had a migration background and 1 for white US Americans. Furthermore, we looked up the median houshold income (in 2018) for all communities in which a mass shooting happened and determined if the community is affluent or not based on a chart that depicts how the US Census Bureau breaks down income levels [@income]. If the median household was below $44,999, the community was classified as low income and coded 0. Accordingly, if the median houshold income was above $44,999 the community was considered as high income and coded 1. Additionally, the strength of the gun laws in the states where shootings happened were evaluated based on a ranking of states by their gun law strength ^[In this paper states that are considered to have strong gun laws are: California, New Jersey, Conneticut, New York, Hawaii, Maryland, Massachusetts, Illinois, Rhode Island, Washington, Delaware, Pennsylvania, Minnesota, Colorado, Nevada, Oregon, New Mexico, Nebraska, Iowa, Michigan, Wisconsin, Florida, and Vermont. States with weak gun laws are: North Carolina, Ohio, Virginia, Utah, Indiana, Tennessee, New Hampshire, South Carolina, Georgia, Lousiana, Maine, Montana, Texas, West Virgina, Alabama, North Dakota, Arkansas, Oklahoma, Alaska, Kansas, South Dakota, Arizona, Kentucky, Missouri, Idaho, Wyoming, Mississippi]. States with weak gun laws are coded 0 and states with strong gun laws are coded 1. Observations for which no information on the ethnicity, the affluence of the community or the gun law strength could be found were dropped.
 
-Erlärung welche Daten, wie gescrapt, wie sehen die Daten aus Deskription
-Tabelle mit für Missing, welche observations haben wir warum gedropped, wie viele observations verbleiben in unserem sample --> timeperiods droppen.
 
 
 ```{r Scraping of Wikipedia tables, results="hide"}
@@ -484,6 +482,9 @@ wikishooting
 
 ## Data from GTrends
 
+After the scraping of the Wikipedia tables with basic information about the most notable mass shootings and adding of further variables, we scraped Google Trends data. The Wikipedia data set provided us with the necessary information about the time period (15 days) and the best search term for each mass shooting. The interest in each shooting over the time period was scraped for the whole US and collected in one data set. As for some shootings the best search term was the same, we renamed those with the year as identifier.  
+
+
 
 ```{r, include = FALSE}
 #Versuch eines Loop der einzelne outcomes speichert
@@ -593,6 +594,16 @@ gtrends
 ```
 
 
+
+
+
+############################################################################################################################################
+############################################################################################################################################
+############################################################################################################################################
+
+
+## Method 
+
 ```{r, include = FALSE}
 # give every shooting a countdown with 1 to 15, for each day we inspect
 
@@ -631,15 +642,6 @@ Final <- cbind(wikishooting, coef = reg$estimate)
 
 Final
 ```
-
-
-
-############################################################################################################################################
-############################################################################################################################################
-############################################################################################################################################
-
-
-## Method 
 
 
 Sophie
@@ -713,7 +715,7 @@ bareth <- ggplot(Final, aes(x = Ethnicity)) +
         axis.title.y = element_text(size = 10.5),
         axis.text.x = element_text(size=7.5),
         axis.text.y = element_text(size=8)) +
-  scale_x_discrete(labels=c("0" =  "Black or Other Ethnicity", "1" = "White American")) +
+  scale_x_discrete(labels=c("0" =  "Black or Other Ethnicity", "1" = "White US American")) +
   scale_y_continuous(labels = scales::percent_format(), limit = c(0, 1.0)) +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
             y= ((..count..)/sum(..count..))), stat="count", size = 3, vjust = -.5) 
@@ -1013,6 +1015,10 @@ Hannah
 # Tabels with descriptive statistics of independent variables
 
 #stargazer::stargazer(Final[c("Dead","Injured")], type = "text", title="Descriptive statistics of metric variables", summary.stat = c("n", "mean", "sd", "min", "max"))
+
+
+# evtl. knitr::kable?
+
 
 stargazer(Final[c("Dead","Injured")], title="Descriptive statistics of metric variables", summary.stat = c("n", "median", "sd", "min", "max"), table.layout ="=n")
 
