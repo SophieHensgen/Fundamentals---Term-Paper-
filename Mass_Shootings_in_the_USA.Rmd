@@ -44,6 +44,8 @@ library(jtools)
 library(broom.mixed)
 library(stargazer)
 library(ggstance)
+library(stargazer)
+library(summarytools)
 
 
 #devtools::install_github('davidgohel/ggiraph')
@@ -68,6 +70,10 @@ In general, the US has a long history of school and mass shootings, in 2019 alon
 
 This graph displays the relation of Search Hits for each keyword in comparison to the general frequency in which they are searched prior to the event period. We included the Sandy Hook shooting, which had 28 Deaths and the Clackamas shooting which had 4 Deaths. The x axis describes the period we want to look at, from one day prior to the event (Day 1), the event day (Day 2) and two weeks following the event date (Days 3-16). The y-axis shows the related search hits for each keyword. Unfortunately we cannot make any emphases about the general attention both events achieved, as we do not have access to the total numbers of hits. However, we can see a clear difference in the search behavior. The Sandy Hook shooting got more hits on the actual event day and also lost interest much slower than the Clackamas shooting did. The Clackamas shooting got a spike in attention around one day after the event and drops rapidly on the second day after the shooting. 
 
+
+
+
+
 ```{r include = FALSE}
 sandy <- gtrends(c("Sandy Hook shooting"), geo = "US", time = "2012-12-13 2012-12-28", low_search_volume = T)
 clack <- gtrends(c("Clackamas shooting"), geo = "US", time = "2012-12-10 2012-12-25", low_search_volume = T)
@@ -80,11 +86,8 @@ example <- rbind(sandyI, clackI)
 example <- as_tibble(example)
 glimpse(example)
 
-#für Sophie 
 example$rownumber <- rep(c(1:16), times=2)
 
-#für Hannah
-#example$rownumber = 1:16
 example
 
 # Aufbereitung
@@ -152,14 +155,12 @@ And even if these aspects are fulfilled, it does not mean, that the event will b
 As we can see, there are several aspects which come into account when talking about salience and newsworthiness. There has to be a prior problem, the event has to be salient enough (an rare and great event) in order gain attention and also be important for the entire population, not only for a minority. In consideration of all these aspects we came up with the following diagram: 
 
 
-
 We would like to investigate the influence of certain characteristic of mass shootings on the interest of the population. On basis of the moral panic theory and the issue-attention cycle we theorize that certain aspects will gain more attention because of their salience level, which will lead to a presumably higher and more permanent media coverage. Through the increased media coverage, there should follow a general increase in the interest of the population on this specific event, which should in turn result in a slower decline of the Google trend curve. 
 
 
 ## Hypotheses
 
 @Schildkraut et al examined several potential aspects of mass shooting that could lead to increased media coverage. These include the ethnicity of the predator, the survival of the redactor, gender of the predator, location and the victim count. He found evidence that increased media coverage would be induced if the predator would be non-white, would survive or if there were a high number of victims. The latter is particularly interesting for our first two hypotheses. We argue, that because of the increased salience caused by a high number of victims, the media coverage will drastically increase which will in turn result in a gentle decrease of search hits compared to less media covered shootings. 
-
 
 
 Based on the research of @Schildkrautetal and other researchers who found similar results regarding media coverage of mass shootings [@Sung-Yeon12], we came up with the following hypotheses: 
@@ -779,7 +780,39 @@ annotate_figure(boxplots,
 ```
 
 
+```{r, include = FALSE}
+# Tabels with descriptive statistics of independent variables
 
+st_options(freq.cumul = FALSE)
+
+descmetric <-
+  Final %>%
+  select(c(Dead, Injured)) %>%
+  descr(.,stats = c("mean", "sd"), transpose = TRUE, headings = FALSE) 
+descmetric
+
+desccat <-
+  Final %>%
+  select(c(Ethnicity, Area, Gunlaws)) %>%
+  freq(., plain.ascii=FALSE, cumul = FALSE, report.nas = FALSE, totals = FALSE, headings = FALSE)
+desccat
+
+```
+
+
+```{r echo=FALSE}
+# Tabels with descriptive statistics of independent variables
+
+stargazer(Final[c("Dead","Injured")], type = "text", title="Descriptive statistics of metric variables", summary.stat = c("n", "median", "sd", "min", "max"))
+
+#stargazer(Final[c("Ethnicity","Area", "Gunlaws")], type = "text", title="Descriptive statistics of categorical variables")
+
+#desccat <-
+#  Final %>%
+#  select(c(Ethnicity, Area, Gunlaws)) %>%
+#  freq(., plain.ascii=FALSE, cumul = FALSE, report.nas = FALSE, totals = FALSE, headings = FALSE)
+#desccat
+```
 
 
 Hannah: Descriptives: Barplots of variables mit facet wrap wewe
@@ -787,36 +820,6 @@ Hannah: Descriptives: Barplots of variables mit facet wrap wewe
 
 
 Wie sollten vllt. Gender of shooter kontrollieren. Frauen werden in den Medien mehr beachtet --> Könnte zu einer Verzerrung der Ergebnisse führen.
-
-Sophie: Scatterplot von unabhängigen Variablen und der Abnahme für jede IV --> evtl. geom point + geom smooth
-############################################################
-
-```{r echo=FALSE}
-ggplot(Final) +
-  geom_point(aes(x = Dead , y = coef, color = Area)) +
-  geom_smooth(aes(x = Dead , y = coef))
-
-ggplot(Final) +
-  geom_point(aes(x = Dead , y = coef, color = Gunlaws)) +
-  geom_smooth(aes(x = Dead , y = coef))
-
-ggplot(Final) +
-  geom_point(aes(x = Dead , y = coef, color = Ethnicity)) +
-  geom_smooth(aes(x = Dead , y = coef))
-
-
-ggplot(Final) +
-  geom_point(aes(x = Injured , y = coef, color = Area)) +
-  geom_smooth(aes(x = Injured , y = coef))
-
-ggplot(Final) +
-  geom_point(aes(x = Injured , y = coef, color = Gunlaws)) +
-  geom_smooth(aes(x = Injured , y = coef))
-
-ggplot(Final) +
-  geom_point(aes(x = Injured , y = coef, color = Ethnicity)) +
-  geom_smooth(aes(x = Injured , y = coef))
-```
 
 
 Regressionstabelle aufhübschen + alle Modelle inkludieren
@@ -831,7 +834,7 @@ Hannah: Coefplot oder Marginsplot für volles Modell
 
 regdead <- lm(coef ~ Dead, data = Final, )
 
-reginjured = lm(coef ~ Injured, data = Final, )
+reginjured <- lm(coef ~ Injured, data = Final, )
 
 regeth <- lm(coef ~ Ethnicity, data = Final, )
 
@@ -839,51 +842,7 @@ reggun <- lm(coef ~ Gunlaws, data = Final, )
 
 regarea <- lm(coef ~ Area, data = Final, )
 
-regfull = lm(coef ~ Dead + Injured + Ethnicity + Area + Gunlaws, data = Final, )
-
-#install.packages("stargazer") 
-library(stargazer)
-
-```
-
-```{r, echo=FALSE }
-# Regression with Deads -- Interaction
-
-#With interactive to TRUE we can observe single observations and get more information
-
-#Gun Laws
-regmixG <- lm(coef ~ Dead*Gunlaws, data = Final, )
-
-ggPredict(regmixG,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
-
-#Area
-regmixA <- lm(coef ~ Dead*Area, data = Final, )
-
-ggPredict(regmixA,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
-
-#Ethnicity
-regmixE <- lm(coef ~ Dead*Ethnicity, data = Final, )
-
-ggPredict(regmixE,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
-
-
-#Regression with Injured - Interaction
-
-#Gun Laws
-regmixGU <- lm(coef ~ Injured*Gunlaws, data = Final, )
-
-ggPredict(regmixGU,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
-
-#Area
-regmixAR <- lm(coef ~ Injured*Area, data = Final, )
-
-ggPredict(regmixAR,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
-
-#Ethnicity
-regmixET <- lm(coef ~ Injured*Ethnicity, data = Final, )
-
-ggPredict(regmixET,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
-
+regfull <-  lm(coef ~ Dead + Injured + Ethnicity + Area + Gunlaws, data = Final, )
 ```
 
 ```{r, results='asis'}
@@ -894,72 +853,48 @@ stargazer::stargazer(regdead, reginjured, regeth, reggun, regarea, regfull,
                      dep.var.labels   = "decrease of interest", 
                      keep.stat = c("adj.rsq", "n"),
                      flip = TRUE)
-
-# Möglich aber nicht nötig -- Interaktionen
-stargazer::stargazer( regfull, regmixGU, regmixAR, regmixET, 
-                     title   = "These are awesome results!", 
-                     covariate.labels = c("Dead", "Injured", "Ethnicity","Area", "Gunlaws", "Injured x Gunlaws", "Injured x Area", "Injured x Ethnicity"), 
-                     dep.var.labels   = "decrease of interest", 
-                     keep.stat = c("adj.rsq", "n"),
-                     flip = TRUE)  
-
-stargazer::stargazer( regfull, regmixG, regmixA, regmixE, 
-                     title   = "These are awesome results!", 
-                     covariate.labels = c("Dead", "Injured", "Ethnicity","Area", "Gunlaws", "Dead x Gunlaws", "Dead x Area", "Dead x Ethnicity"), 
-                     dep.var.labels   = "decrease of interest", 
-                     keep.stat = c("adj.rsq", "n"),
-                     flip = TRUE)  
 ```
 
 Sophie: Plot Regressionsgeraden des vollen Modells
 ##########################################
 
-```{r echo=FALSE}
+```{r include=FALSE}
 # simple predict plot for the first to hypotheses
 
-ggPredict(regdead,se=TRUE,interactive=FALSE)
-ggPredict(reginjured,se=TRUE,interactive=FALSE)
+scatdead <- ggPredict(regdead,se=TRUE,interactive=FALSE)
+scatinjured <- ggPredict(reginjured,se=TRUE,interactive=FALSE)
+scatarea <- ggPredict(regarea, se=TRUE,interactive=FALSE)
+scatgunlaw <- ggPredict(reggun, se=TRUE,interactive=FALSE)
+scatethnic <- ggPredict(regeth, se=TRUE,interactive=FALSE)
+```
 
-# Regression with Deads
-
-#With interactive to TRUE we can observe single observations and get more information
-
-#Gun Laws
-regmixG <- lm(coef ~ Dead + Gunlaws, data = Final, )
-
-ggPredict(regmixG,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
-
-#Area
-regmixA <- lm(coef ~ Dead + Area, data = Final, )
-
-ggPredict(regmixA,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
-
-#Ethnicity
-regmixE <- lm(coef ~ Dead + Ethnicity, data = Final, )
-
-ggPredict(regmixE,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
+```{r include=FALSE}
+scatterplots1 <- ggarrange(scatdead, scatinjured,  
+          ncol = 2, nrow = 1)
+scatterplots2 <- ggarrange(scatarea, scatgunlaw, scatethnic, 
+          ncol = 2, nrow = 2)
 
 
-#Regression with Injured
+```
+```{r echo=FALSE}
+annotate_figure(scatterplots1,
+               top = text_grob(label = "Figure 3: predicted scatterplots of the regression", color = "black", face = "plain", size = 11), 
+               #fig.lab = "Figure 1", fig.lab.face = "bold"
+               )
 
-#Gun Laws
-regmixGU <- lm(coef ~ Injured + Gunlaws, data = Final, )
-
-ggPredict(regmixGU,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
-
-#Area
-regmixAR <- lm(coef ~ Injured + Area, data = Final, )
-
-ggPredict(regmixAR,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
-
-#Ethnicity
-regmixET <- lm(coef ~ Injured + Ethnicity, data = Final, )
-
-ggPredict(regmixET,se=TRUE,interactive=FALSE, colorAsFactor = TRUE)
-
+annotate_figure(scatterplots2,
+               top = text_grob(label = NULL, color = "black", face = "plain", size = 11), 
+               #fig.lab = "Figure 1", fig.lab.face = "bold"
+               )
 ```
 
 ```{r echo=FALSE}
+coefplot <- plot_coefs(regarea, regeth, reggun, reginjured, regdead, regfull, scale = TRUE, inner_ci_level = .9, colors = "Set3")
+
+annotate_figure(coefplot,
+               top = text_grob(label = "Figure 4: Coefissionplot on every regression model ", color = "black", face = "plain", size = 11), 
+               #fig.lab = "Figure 1", fig.lab.face = "bold"
+               )
 
 plot_summs(regarea, regeth, reggun, reginjured, regdead, regfull, scale = TRUE, inner_ci_level = .9, colors = "Set3")
 
