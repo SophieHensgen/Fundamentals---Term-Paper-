@@ -115,15 +115,7 @@ As we can see, there seems to be differences in the interest of people regarding
 
 # Lit Rev & Theory and Hypotheses
 
-In september 1949 one of the first publicly known mass shootings took place, which was later k and since then hundrets followed
-Kleine Einleitung in Literature Review:
-
-"Like acts of terrorism and mass murder, not all mass shootings receive equitable media coverage,
-despite the sensational nature of the phenomenon as a whole (Schildkraut 2014, 2016). Absent from
-the body of research, however, is an exploration as to why this coverage is disparate" Schildkraut 2018 p. 224
-
-
-In order to understand why people tend to concentrate on more salient events we have to look into some theories which explain this circumstance.
+On september 6 1949 one of the first publicly known mass shootings took place. One man strolled through his neigbourhood and killed 12 people, this shooting was  later known as the walk of death. Since then hundreds of shootings followed (Wikipedia) and even though it was not the first mass shooting, it was the first one that got broad media attention. But why do only some mass shootings get this kind of media attention and others are not even covered by one newspaper? In order to answer this question and therefore understand why people tend to concentrate on more salient events we have to inspect the course of how news are perceived and what they induce in oneself.
 
 ## Issue-Attention-Cycle
 
@@ -154,9 +146,15 @@ And even if these aspects are fulfilled, it does not mean, that the event will b
 
 As we can see, there are several aspects which come into account when talking about salience and newsworthiness. There has to be a prior problem, the event has to be salient enough (an rare and great event) in order gain attention and also be important for the entire population, not only for a minority. In consideration of all these aspects we came up with the following diagram: 
 
+```{r Micro-Macro-Model, echo=FALSE, fig.cap="Figure 2: Micro-Macro-Model", out.width = '90%'}
+knitr::include_graphics("Theorie-graph.png")
+```
 
-We would like to investigate the influence of certain characteristic of mass shootings on the interest of the population. On basis of the moral panic theory and the issue-attention cycle we theorize that certain aspects will gain more attention because of their salience level, which will lead to a presumably higher and more permanent media coverage. Through the increased media coverage, there should follow a general increase in the interest of the population on this specific event, which should in turn result in a slower decline of the Google trend curve. 
+We will investigate the influence of certain characteristic of mass shootings on the interest of the population. On basis of the moral panic theory and the issue-attention cycle we theorize that certain aspects will gain more attention because of their salience level, which will lead to a presumably higher and more permanent media coverage. Through the increased media coverage, there should follow a general increase in the interest of the population on this specific event, which should in turn result in a slower decline of the Google trend curve. 
 
+```{r Causality Model, echo=FALSE, fig.cap="Figure 3: Causality Model", out.width = '90%'}
+knitr::include_graphics("causality-model.png")
+```
 
 ## Hypotheses
 
@@ -596,16 +594,10 @@ gtrends
 
 ```
 
-
-
-
-
-############################################################################################################################################
-############################################################################################################################################
-############################################################################################################################################
-
-
 ## Method 
+
+Due to the Google Trend data and its structure, we are not able to investigate the true frequencies of Google searches. However, as we focus on the descent of interest for each shooting we will take a different approach. In order to inspect the decline of interest we created linear regressions for each individual shooting using the Google Trend data set we created prior. For each regression we use as dependent variable the search hits in relation and as independent variable the days we inspect, from one day prior to the shooting till two weeks after it happened (15 days). The resulting coefficient for each shooting represents the decline in interest of the population and can be used further as a new variable in our data set. We then include the new variable into the data set with our Wikipedia Data. For our further investigation we will concentrate on the new expanded Wikipedia data set. The new variable is used as the new dependent variable in our final linear regression. The independent variables are the number of deaths, number of injured people, area in which it happened, the gun laws in the area of the shooting and the ethnicity od the predator.
+
 
 ```{r, include = FALSE}
 # give every shooting a countdown with 1 to 15, for each day we inspect
@@ -617,12 +609,18 @@ gtrends
 gtrends$hits <- as.numeric(as.character(gtrends$hits))
 
 # regression for each mass shooting 
+```
+
+```{r, results="hide"}
 reg <-
   gtrends %>%
-  group_by(keyword) %>%            # group by column z
+  group_by(keyword) %>%           
   do(tidy(lm(hits ~ rownumber, data=.)))
+```
 
+```{r, include = FALSE}
 reg 
+
 
 # subset the reg
 reg <- subset(reg, term=="rownumber")
@@ -645,15 +643,6 @@ Final <- cbind(wikishooting, coef = reg$estimate)
 
 Final
 ```
-
-
-Sophie
-
-
-
-############################################################################################################################################
-############################################################################################################################################
-############################################################################################################################################
 
 # Results
 
@@ -757,6 +746,22 @@ bargun
 
 ```
 
+## Descriptives
+
+During our research we concentrate on five main characteristics of mass shootings: death count, count of injured people, ethnicity of predator, affluence of community and the gun law strength. To visualize the count of death and injured people we created two boxplots respectively, shwon in figure 4. The count for dead people is less distributed, which suggests that in 50 % of the cases in our sample 3 to 8 people die. However, the distribution for injured people is wider and suggests that within our sample 50 % of the shootings have 1 to 8 injured people ^[Not all outliers are pictured in the boxplots]. 
+
+```{r, echo = FALSE}
+boxplots <- ggarrange(boxdead, boxinjured,   #+ rremove("x.text"), 
+          #labels = c("A", "B", "C"),
+          ncol = 2, nrow = 1)
+annotate_figure(boxplots,
+               top = text_grob("Figure 2: Boxplots of Metric Variables", color = "black", face = "bold", size = 11)
+               #fig.lab = "Figure 2", fig.lab.face = "bold"
+               )
+
+```
+Figure 5 shows the three dichotomous variables. There are clear differences in the distribution of each variable. First, in regards to the ethnicity we can observe that in our sample more white US American were the predator by 57%. Second, most mass shootings in our sample took place in high Income communities rather then in low income communities. And third, two third of the shootings of our sample occurred in states with strong gun regulations.
+
 
 ```{r, echo = FALSE}
 barplots <- ggarrange(bareth, bararea, bargun,   #+ rremove("x.text"), 
@@ -770,16 +775,7 @@ annotate_figure(barplots,
 ```
 
 
-```{r, echo = FALSE}
-boxplots <- ggarrange(boxdead, boxinjured,   #+ rremove("x.text"), 
-          #labels = c("A", "B", "C"),
-          ncol = 2, nrow = 1)
-annotate_figure(boxplots,
-               top = text_grob("Figure 2: Boxplots of Metric Variables", color = "black", face = "bold", size = 11)
-               #fig.lab = "Figure 2", fig.lab.face = "bold"
-               )
 
-```
 
 
 ```{r, include = FALSE}
@@ -823,9 +819,6 @@ Hannah: Descriptives: Barplots of variables mit facet wrap wewe
 
 Wie sollten vllt. Gender of shooter kontrollieren. Frauen werden in den Medien mehr beachtet --> Könnte zu einer Verzerrung der Ergebnisse führen.
 
-
-Regressionstabelle aufhübschen + alle Modelle inkludieren
-#####################################################
 
 
 Hannah: Coefplot oder Marginsplot für volles Modell
@@ -884,6 +877,7 @@ scatterplots2 <- ggarrange(scatarea, scatgunlaw, scatethnic,
 
 
 ```
+
 ```{r echo=FALSE}
 annotate_figure(scatterplots1,
                top = text_grob(label = "Figure 3: predicted scatterplots of the regression", color = "black", face = "plain", size = 11), 
