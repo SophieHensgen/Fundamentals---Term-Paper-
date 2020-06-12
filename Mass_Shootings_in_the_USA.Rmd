@@ -11,6 +11,10 @@ output:
 always_allow_html: true
 #bibliography: Mass_Shootings.bibtex
 ---
+```{r, include=FALSE}
+options(tinytex.verbose = TRUE)
+```
+
 ```{r, include = FALSE}
 library(openxlsx)
 library(xml2)
@@ -41,7 +45,6 @@ library(broom.mixed)
 # devtools::install_github('davidgohel/ggiraph')
 ```
 
-dfjhv
 Citation examples for in-text citations:
 
 Smith cited [@smith04].
@@ -61,8 +64,6 @@ In general, the US has a long history of school and mass shootings, in 2019 alon
 This graph displays the relation of Search Hits for each keyword in comparison to the general frequency in which they are searched prior to the event period. We included the Sandy Hook shooting, which had 28 Deaths and the Clackamas shooting which had 4 Deaths. The x axis describes the period we want to look at, from one day prior to the event (Day 1), the event day (Day 2) and two weeks following the event date (Days 3-16). The y-axis shows the related search hits for each keyword. Unfortunately we cannot make any emphases about the general attention both events achieved, as we do not have access to the total numbers of hits. However, we can see a clear difference in the search behavior. The Sandy Hook shooting got more hits on the actual event day and also lost interest much slower than the Clackamas shooting did. The Clackamas shooting got a spike in attention around one day after the event and drops rapidly on the second day after the shooting. 
 
 ```{r include = FALSE}
-#Sophie: Grafik von zwei Kurven, die möglichst unterschiedlich sind
-
 sandy <- gtrends(c("Sandy Hook shooting"), geo = "US", time = "2012-12-13 2012-12-28", low_search_volume = T)
 clack <- gtrends(c("Clackamas shooting"), geo = "US", time = "2012-12-10 2012-12-25", low_search_volume = T)
 plot(sandy)
@@ -136,50 +137,26 @@ The most newsworthy events are events that are highly salient. But what do we pe
 Another important aspect is, that it has to be quite big and attention seeking. An event that is maybe rare but small, will not get the same attention as a huge event would. For example, it is rather rare that a mass shooting is done by a women, which is a rare event in itself, however if she would only shot four people it would not get the same attention if any as if she shoot more. 
 And even if these aspects are fulfilled, it does not mean, that the event will be covered by the news as intensely as others because of the following reasons. First, if it is a problem by a minority it will be less salient and therefore less likely to be broadcasted. Second, if the problems which occurred give significant benefit to the majority or a powerful minority (e.g. pro gun allience) it will be less salient. And third, the event gave light to a problem, that has no (longer) intrinsically existing qualities. 
 
+## Theory 
 
-As we can see, there are several aspects which come into account when talking about salience and newsworthiness. There has to be a prior problem, the event has to salient enough (rare and big) in order gain attention and also be important for the entire population, not only a minority. In consideration of all these aspects we came up with the following diagram: 
+As we can see, there are several aspects which come into account when talking about salience and newsworthiness. There has to be a prior problem, the event has to be salient enough (an rare and great event) in order gain attention and also be important for the entire population, not only for a minority. In consideration of all these aspects we came up with the following diagram: 
 
+#![an image caption Source: Made by me](images/Theorie-graph.png)
 
-Deaths/Injuries/Race of perpetrator/  ----->    The decline of the search interest
-Rich area/ Loose gun control                    in google trends is slower
-          I                                            /\
-           I                                          I
-            I                                        I
-             V                                      I
-        more media attention for a 
-        longer time span due to more  --->     More people notice the  
-        newsworthiness of event                event in media reports
+We would like to investigate the influence of certain characteristic of mass shootings on the interest of the population. On basis of the moral panic theory and the issue-attention cycle we theorize that certain aspects will gain more attention because of their salience level, which will lead to a presumably higher and more permanent media coverage. Through the increased media coverage, there should follow a general increase in the interest of the population on this specific event, which should in turn result in a slower decline of the Google trend curve. 
 
 
-We would like to investigate the influence of certain characteristic of mass shootings on the interest of the population. We theorize that certain aspects will gain more attention which will lead to a presumably higher and more permanent media coverage. This should lead to a general increase in the interest of the population, which should be noticeable in a slower decline of the Google trend curve. 
+## Hypotheses
 
+@Schildkraut et al examined several potential aspects of mass shooting that could lead to increased media coverage. These include the ethnicity of the predator, the survival of the redactor, gender of the predator, location and the victim count. He found evidence that increased media coverage would be induced if the predator would be non-white, would survive or if there were a high number of victims. The latter is particularly interesting for our first two hypotheses. We argue, that because of the increased salience caused by a high number of victims, the media coverage will drastically increase which will in turn result in a gentle decrease of search hits compared to less media covered shootings. 
 
- für morgen: 
- - schildkrauts infos rausfinden
- - Graph machen
- - nochmal drüber gehen
- - Übergang am Anfang anpassen
+#![an image caption Source: Made by me](images/Kausalitätsmodell.png)
 
-More dead people --> more media attention --> higher attention in Google trends
+Based on the research of @Schildkrautetal and other researchers who found similar results regarding media coverage of mass shootings [@Sung-Yeon12], we came up with the following hypotheses: 
 
-newworthiness in den Medien
+*H1: The more people got injured during a massshooting, the decline in the relative count of search hits on the event will be less steep.*
 
-Könntest du evtl. gebrauchen:
-"Because agenda-setting theory is applicable at both the issue and attribute levels,17
-media coverage of school shootings can be analyzed at these two levels as well.
-Although no particular theory was mentioned in it, a study examining the salience of
-fourteen school shooting incidents in network television news can be considered an
-example of issue agenda-setting research.18 By measuring the amount of news coverage
-of the incidents, the researchers showed that shooting incidents that resulted in
-more deaths or greater injuries were covered more. They also found that the amount
-of coverage was highly correlated across major television networks, demonstrating
-their “herd mentality.” Sung-Yeon Park (2012), p. 478
-
-1. The more people got injured, the longer the shooting stayed in the trends.
-
-2. The more deaths, the longer the shooting stayed in the trends.
-
-evtl. newswothiness in Kombination mit inequality
+*H1: The more people died during a massshooting, the decline in the relative count of search hits on the event will be less steep.*
 
 
 Generally, research indicates that news coverage particularly is skewed toward stories about crime Schildkraut p. 223
