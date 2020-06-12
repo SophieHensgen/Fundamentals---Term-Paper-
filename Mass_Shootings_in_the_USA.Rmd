@@ -11,9 +11,6 @@ output:
 always_allow_html: true
 #bibliography: Mass_Shootings.bibtex
 ---
-```{r, include=FALSE}
-#options(tinytex.verbose = TRUE)
-```
 
 ```{r, include = FALSE}
 library(openxlsx)
@@ -35,15 +32,17 @@ library(broom)
 library(knitr)
 library(ggplot2)
 library(ggpubr)
+library(systemfonts)
 library(ggiraph)
 library(devtools)
 library(ggiraphExtra)
-library(systemfonts)
 library(jtools)
 library(broom.mixed)
 library(stargazer)
+library(ggstance)
 
-# devtools::install_github('davidgohel/ggiraph')
+
+#devtools::install_github('davidgohel/ggiraph')
 ```
 
 
@@ -77,7 +76,11 @@ example <- rbind(sandyI, clackI)
 example <- as_tibble(example)
 glimpse(example)
 
-example$rownumber = 1:16
+#für Sophie 
+example$rownumber <- rep(c(1:16), times=2)
+
+#für Hannah
+#example$rownumber = 1:16
 example
 
 # Aufbereitung
@@ -103,7 +106,9 @@ ggplot(example, aes(x = rownumber, y = hits, col = keyword))+
 
 As we can see, there seems to be differences in the interest of people regarding mass shootings. With our study we want to focus on the people`s interest and these differences and less about the media itself.  
 
-# Theory and Hypotheses
+# Lit Rev & Theory and Hypotheses
+
+In september 1949 one of the first publicly known mass shootings took place, which was later k and since then hundrets followed
 Kleine Einleitung in Literature Review:
 
 "Like acts of terrorism and mass murder, not all mass shootings receive equitable media coverage,
@@ -586,7 +591,9 @@ gtrends
 
 ```{r, include = FALSE}
 # give every shooting a countdown with 1 to 15, for each day we inspect
-gtrends$rownumber <- rep(c(1:15), times=131)
+
+gtrends$rownumber <-  rep(c(1:15), times=131)
+gtrends
 
 # save the hits as numeric values
 gtrends$hits <- as.numeric(as.character(gtrends$hits))
