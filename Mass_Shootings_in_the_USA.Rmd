@@ -593,6 +593,14 @@ gtrends
 
 ```
 
+############################################################################################################################################
+############################################################################################################################################
+############################################################################################################################################
+
+
+## Method 
+
+Due to the Google Trend data and its structure, we are not able to investigate the true frequencies of Google searches. However, as we focus on the descent of interest for each shooting we will take a different approach. In order to inspect the decline of interest we created linear regressions for each individual shooting using the Google Trend data set we created prior. For each regression we use as dependent variable the search hits in relation and as independent variable the days we inspect, from one day prior to the shooting till two weeks after it happened (15 days). The resulting coefficient for each shooting represents the decline in interest of the population and can be used further as a new variable in our data set. We then include the new variable into the data set with our Wikipedia Data. For our further investigation we will concentrate on the new expanded Wikipedia data set. The new variable is used as the new dependent variable in our final linear regression. The independent variables are the number of deaths, number of injured people, area in which it happened, the gun laws in the area of the shooting and the ethnicity od the predator.
 
 ```{r, include = FALSE}
 # give every shooting a countdown with 1 to 15, for each day we inspect
@@ -604,12 +612,18 @@ gtrends
 gtrends$hits <- as.numeric(as.character(gtrends$hits))
 
 # regression for each mass shooting 
+```
+
+```{r, results="hide"}
 reg <-
   gtrends %>%
-  group_by(keyword) %>%            # group by column z
+  group_by(keyword) %>%           
   do(tidy(lm(hits ~ rownumber, data=.)))
+```
 
+```{r, include = FALSE}
 reg 
+
 
 # subset the reg
 reg <- subset(reg, term=="rownumber")
@@ -632,20 +646,6 @@ Final <- cbind(wikishooting, coef = reg$estimate)
 
 Final
 ```
-
-
-
-############################################################################################################################################
-############################################################################################################################################
-############################################################################################################################################
-
-
-## Method 
-
-
-Sophie
-
-
 
 ############################################################################################################################################
 ############################################################################################################################################
@@ -820,9 +820,6 @@ Hannah: Descriptives: Barplots of variables mit facet wrap wewe
 Wie sollten vllt. Gender of shooter kontrollieren. Frauen werden in den Medien mehr beachtet --> Könnte zu einer Verzerrung der Ergebnisse führen.
 
 
-Regressionstabelle aufhübschen + alle Modelle inkludieren
-#####################################################
-
 
 Hannah: Coefplot oder Marginsplot für volles Modell
 ############################################
@@ -874,6 +871,7 @@ scatterplots2 <- ggarrange(scatarea, scatgunlaw, scatethnic,
 
 
 ```
+
 ```{r echo=FALSE}
 annotate_figure(scatterplots1,
                top = text_grob(label = "Figure 3: predicted scatterplots of the regression", color = "black", face = "plain", size = 11), 
