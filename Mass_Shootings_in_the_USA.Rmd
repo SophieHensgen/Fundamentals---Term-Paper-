@@ -783,14 +783,12 @@ Figure ? shows the results for the OLS regression of all independent variables o
 ```{r echo=FALSE}
 ## Coefplot
 
-coefplot <- plot_coefs(regarea, regeth, reggun, reginjured, regdead, regfull, scale = TRUE, inner_ci_level = .9, colors = "Set3")
+coefplot <- plot_summs(regarea, regeth, reggun, reginjured, regdead, regfull, scale = TRUE, inner_ci_level = .9, colors = "Set3")
 
 annotate_figure(coefplot,
                top = text_grob(label = "Figure 4: Parameter Estimates with 90% and 95% Confidence Intervals", color = "black", face = "plain", size = 11), 
                #fig.lab = "Figure 1", fig.lab.face = "bold"
                )
-
-plot_summs(regarea, regeth, reggun, reginjured, regdead, regfull, scale = TRUE, inner_ci_level = .9, colors = "Set3")
 
 ```
 
