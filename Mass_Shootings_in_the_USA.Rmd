@@ -150,7 +150,6 @@ knitr::include_graphics("causality-model.png")
 
 ## Hypotheses
 
-<<<<<<< HEAD
 @Schildkrau2017 examined several potential aspects of mass shooting that could lead to increased media coverage. These include the ethnicity of the predator, the survival of the redactor, gender of the predator, location and the victim count. They found evidence that increased media coverage would be induced if the predator would be non-white, would survive the shooting or if there were a high number of victims. The latter is particularly interesting for our first two hypotheses. We argue, that because of the increased salience caused by a high number of victims, the media coverage will drastically increase which will in turn result in a gentle decrease of search hits compared to less media covered shootings. 
 
 Based on the research of @Schildkraut2017 and other researchers who found similar results regarding media coverage of mass shootings [@Park2012], we came up with the following hypotheses: 
