@@ -4,9 +4,7 @@ author: "Hannah Reitz & Sophie Hensgen"
 header-includes:
     - \usepackage{setspace}\doublespacing
     - \usepackage{booktabs}
-    - \usepackage{longtable}
-    - \usepackage{floatrow}
-    - \floatsetup[table]{capposition=top}
+    - \usepackage{capt-of}
 date: "`r Sys.Date()`"
 output:
   pdf_document:
@@ -45,6 +43,9 @@ library(jtools)
 library(broom.mixed)
 library(stargazer)
 library(ggstance)
+library(sjmisc)
+library(papeR)
+library(kableExtra)
 ```
 
 
@@ -809,6 +810,8 @@ Furthermore, the Google Trends data constrained the operationalization of our de
 # References
 <div id="refs"></div>
 
+\newpage
+
 # Appendix
 
 ```{r, results='asis', echo = FALSE}
@@ -820,74 +823,47 @@ stargazer::stargazer(regdead, reginjured, regeth, reggun, regarea, regfull,
                      keep.stat = c("adj.rsq", "n"),
                      notes.append = FALSE, notes.align = "l",
                      notes = "\\parbox[t]{11cm}{* p < 0.10, ** p < 0.05, *** p < 0.01. Standard errors in paranthesis.}",
-                     flip = TRUE)
+                     flip = TRUE,
+                     header=FALSE )
 ```
 
-```{r, include = FALSE}
-# Tabels with descriptive statistics of independent variables
+\vspace{2cm}
+```{r, results='asis', echo=FALSE}
 
-#library(summarytools)
-#st_options(freq.cumul = FALSE)
+# Descriptive statistics of metric variables
 
-#descmetric <-
-#  Final %>%
-#  select(c(Dead, Injured)) %>%
-#  descr(.,stats = c("mean", "sd"), transpose = TRUE, headings = FALSE) 
-#descmetric
-
-#desccat <-
-#  Final %>%
-#  select(c(Ethnicity, Area, Gunlaws)) %>%
-#  freq(., plain.ascii=FALSE, cumul = FALSE, report.nas = FALSE, totals = FALSE, headings = FALSE)
-#desccat
+stargazer(Final[c("Dead","Injured")], title="Descriptive Statistics of Metric Variables", summary.stat = c("n", "median", "sd", "min", "max"), header=FALSE) #table.layout = "=n=")
 
 ```
 
 
+```{r, results='asis', echo=FALSE}
 
-```{r results = 'asis'}
-# Tabels with descriptive statistics of independent variables
-
-#stargazer::stargazer(Final[c("Dead","Injured")], type = "text", title="Descriptive statistics of metric variables", summary.stat = c("n", "mean", "sd", "min", "max"))
-
-
-# evtl. knitr::kable?
-
-
-stargazer(Final[c("Dead","Injured")], title="Descriptive statistics of metric variables", summary.stat = c("n", "median", "sd", "min", "max"), table.layout ="=n")
-
-library(sjmisc)
-library(papeR)
-
-# Calculate summary statistics
-#chicken.summary <- ChickWeight %>% group_by(Diet) %>%
-#  summarise(
-#    "Mean Weight" = mean(weight),
-#    "SD Weight" = sd(weight)
-#  )
-
-# Print table in APA format
-
-#papaja::apa_table(chicken.summary, caption = "Summary statistics of chicken weights by Diet")
-
+# Descriptive statistics of categorical variables
 
 Final$Ethnicity <- as.factor(Final$Ethnicity)
 Final$Ethnicity <- factor(Final$Ethnicity,
 levels = c(0, 1),
-labels = c("Black or Other Ethnicity", "White American")) 
+labels = c("Non-White or Other Ethnicity", "White US American")) 
 
 Final$Area <- as.factor(Final$Area)
 Final$Area <- factor(Final$Area,
 levels = c(0, 1),
 labels = c("Low Income Community", "High Income Community")) 
 
-#Final
-#Final$Ethnicity <- as.factor(Final$Ethnicity)
+Final$Gunlaws <- as.factor(Final$Gunlaws)
+Final$Gunlaws <- factor(Final$Gunlaws,
+levels = c(0, 1),
+labels = c("Strong Gun Laws", "Weak Gun Laws")) 
 
-#summarize(Final, type = "factor", variables = "Ethnicity")
 
+catsum <- summarize(Final, type = "factor", variables = c("Ethnicity", "Area", "Gunlaws"))
 
-print(xtable::xtable(summarize(Final, caption = "My Title", type = "factor", variables = c("Ethnicity", "Area"), caption.placement = "top")))
+catsum <- catsum[ -c(3) ]
+
+kable(head(catsum[, 1:4]), format = "latex", caption = "Descriptive Statistics of Categorical Variables", booktabs=TRUE, linesep = "") #%>% 
+ # row_spec(6, hline_after = TRUE)
+
 
 
 
