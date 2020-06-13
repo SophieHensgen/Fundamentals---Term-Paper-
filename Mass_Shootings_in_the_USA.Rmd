@@ -61,7 +61,7 @@ On february 14th 2018 the Parkland High school shooting took place and with it o
 At this incident a former student of the Marjory Stoneman Douglas High School killed 17 people and injured another 17 with a rifle[@Laughland2018]. The event was heavily covered by multiple news outlets and became the subject of a heated discussion about stricter gun laws in the US. One month later on march 24th there were nation wide protest called "March for Our Lives", led by the students in cooperation with the non-profit organization Never Again MSD, which demand stricter gun laws[@Marchforourlives18]. 
 It is not the first time, that a mass shooting started a discussion about gun regulations. Other shootings like the Sandy Hook Elementary School shooting in 2012 or the Orlando Nightclub shooting in 2016 brought the topic up as well. A study showed, that media coverage regarding gun regulation increase after a mass shooting occurs, the following Media Coverage and the general attention on this topic can have a positive influence[@Luca2016]. For example, after the Parkland shooting Florida raised the minimum age for buying a rifle from 18 to 21 years[@Sanchez2018].
 
-In general, the US has a long history of school and mass shootings, in 2019 alone there were 417 mass shootings[Gva2020], which fall under the definition as follows: "incidents in which four or more persons are murdered within a 24 hour period" [@Duwe2000, p. 323]. Many of which got little to no media attention. One possible reason why smaller shootings gather less media coverage and therefore are brought less to our attention is because there are less exciting, nothing special and therefore would not sell as good as other stories. And even if covered, after a certain amount of time, a new event occurs and will overshadow the previous news[@Schildkraut2014]. This does not only apply to news outlets, also people in general are drawn to prominent issues and exciting events[cite]. If there are no new information coming or more specifically people have seen enough of a topic and become fatique, they will turn their back on this topic. In figure 1 we can observe such a loos in interest. 
+In general, the US has a long history of school and mass shootings, in 2019 alone there were 417 mass shootings[@Gva2020], which fall under the definition as follows: "incidents in which four or more persons are murdered within a 24 hour period" [@Duwe2000, p. 323]. Many of which got little to no media attention. One possible reason why smaller shootings gather less media coverage and therefore are brought less to our attention is because there are less exciting, nothing special and therefore would not sell as good as other stories. And even if covered, after a certain amount of time, a new event occurs and will overshadow the previous news[@Schildkraut2014]. This does not only apply to news outlets, also people in general are drawn to prominent issues and exciting events[@Jason2018]. If there are no new information coming or more specifically people have seen enough of a topic and become fatique, they will turn their back on this topic. In figure 1 we can observe such a loos in interest. 
 
 This graph displays the relation of Search Hits for each keyword in comparison to the general frequency in which they are searched prior to the event period. We included the Sandy Hook shooting, which had 28 Deaths and the Clackamas shooting which had 4 Deaths[@Wikipediamassshootings]. The x axis describes the period we want to look at, from one day prior to the event (Day 1), the event day (Day 2) and two weeks following the event date (Days 3-16). The y-axis shows the related search hits for each keyword. Unfortunately we cannot make any emphases about the general attention both events achieved, as we do not have access to the total numbers of hits. However, we can see a clear difference in the search behavior. The Sandy Hook shooting got more hits on the actual event day and also lost interest much slower than the Clackamas shooting did. The Clackamas shooting got a spike in attention around one day after the event and drops rapidly on the second day after the shooting. 
 
@@ -107,11 +107,11 @@ As we can see, there are differences in the interest of people regarding mass sh
 
 # Literature Review
 
-On september 6 1949 one of the first publicly known mass shootings took place. One man strolled through his neigbourhood and killed 12 people, this shooting was later known as the walk of death[@Berger1949]. Since then hundreds of shootings followed [@Gva2020] and even though it was not the first mass shooting, it was the first one that got broad media attention. But why do only some mass shootings get this kind of media attention and others are not even covered by one newspaper? In order to answer this question and therefore understand why people tend to concentrate on more salient events we have to inspect the course of how news are perceived and what they induce in oneself.
+On september 6 1949 one of the first publicly known mass shootings took place. One man strolled through his neigbourhood and killed 12 people, this shooting was later known as the walk of death [@Berger1949]. Since then hundreds of shootings followed [@Gva2020] and even though it was not the first mass shooting, it was the first one that got broad media attention. But why do only some mass shootings get this kind of media attention and others are not even covered by one newspaper? In order to answer this question and therefore understand why people tend to concentrate on more salient events we have to inspect the course of how news are perceived and what they induce in oneself.
 
 ## Issue-Attention-Cycle
 
-As we mentioned before, the media has a great impact on the information we consume. It dictates what will appear on our TV Screen and our newspaper[@Schildkraut2019]. However, this is not a one way relation. The media also depends on what people want to see, which is something new, never heard before. People tend to get bored easily, even if a continuous problem occurs on their radar, after a while they strive for something new[@Djerf-Pierre2012][@Schildkraut2014]. Therefore, news outlets have to be careful on what they are reporting in order to maintain their listeners. 
+As we mentioned before, the media has a great impact on the information we consume. It dictates what will appear on our TV Screen and our newspaper [@Schildkraut2019]. However, this is not a one way relation. The media also depends on what people want to see, which is something new, never heard before. People tend to get bored easily, even if a continuous problem occurs on their radar, after a while they strive for something new[@Djerf-Pierre2012][@Schildkraut2014]. Therefore, news outlets have to be careful on what they are reporting in order to maintain their listeners. 
 
 But why do people loose their interest in topics, even if they are still prominent? @Downs1972 Issue-Attention-Cycle could answer this question. This cycle has five stages which I will explain by using the Parkland shooting as example. 
 First, the *pre problem stage*, the stage in which the problem already exists, however there is less to no attention on it at that moment. One of the prior problems of our example is the high death rate by guns and the easy access to highly lethal weapons. 
@@ -150,7 +150,6 @@ knitr::include_graphics("causality-model.png")
 
 ## Hypotheses
 
-<<<<<<< HEAD
 @Schildkrau2017 examined several potential aspects of mass shooting that could lead to increased media coverage. These include the ethnicity of the predator, the survival of the redactor, gender of the predator, location and the victim count. They found evidence that increased media coverage would be induced if the predator would be non-white, would survive the shooting or if there were a high number of victims. The latter is particularly interesting for our first two hypotheses. We argue, that because of the increased salience caused by a high number of victims, the media coverage will drastically increase which will in turn result in a gentle decrease of search hits compared to less media covered shootings. 
 
 Based on the research of @Schildkraut2017 and other researchers who found similar results regarding media coverage of mass shootings [@Park2012], we came up with the following hypotheses: 
@@ -247,7 +246,7 @@ for (i in 1:10) {
 
 newtab
 
-# Change Date structure
+# Change date structure
 
 str(newtab$Date)
 
@@ -258,7 +257,7 @@ for (i in 1:10) {
 
 newtab
 
-#Extract only the name of the shooting of off the Description, delete everything else
+#Extract only the name of the shooting of off the description, delete everything else
 
 newtab$Description <- sub(":.*$", "", newtab$Description)
 newtab
@@ -284,15 +283,14 @@ newtab <- na.omit(newtab)
 # Correct the order of the variables
 
 newtab <- newtab[, c("Date", "After", "Location", "Dead", "Injured", "Total", "Description")] 
-newtab
 
 # Create a new Variable for the Timespan --> TrendPeriod
 newtab$TrendPeriod <- paste(newtab$Date, newtab$After)
-newtab
 
 ```
 
 ```{r, include = FALSE}
+
 ### Data Editing 
 
 newtab$SearchTerm <- gsub("shootout", "shooting", newtab$Description, fixed = TRUE)
@@ -490,6 +488,7 @@ gtrends
 
 
 ```{r, include = FALSE}
+
 ### Data editing
 
 # Google Trends data set convert into tibble
@@ -558,9 +557,6 @@ gtrends$hits <- gsub("<1", "0", gtrends$hits, fixed = TRUE)
 # Covina shooting had to have a larger Time period, here we correct it. So does it fits with the others.
 
 gtrends <- gtrends[-c(271:284), ]
-
-gtrends
-
 
 ```
 
