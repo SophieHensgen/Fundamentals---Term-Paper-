@@ -44,26 +44,20 @@ library(jtools)
 library(broom.mixed)
 library(stargazer)
 library(ggstance)
-#library(summarytools)
-
-
-#devtools::install_github('davidgohel/ggiraph')
 ```
 
 
 Citation examples for in-text citations:
 
-Smith cited [@smith04].
-Smith cited without author [-@smith04].
-@smith04 cited in line.
+Smith cited [@Smith2004].
+Smith cited without author [-@Smith2004].
+@Smith2004 cited in line.
 
 # Introduction
 
 On february 14th 2018 the Parkland High school shooting took place and with it one of the largest gun control movements emerged. 
 At this incident a former student of the Marjory Stoneman Douglas High School killed 17 people and injured another 17 with a rifle[@laughland18]. The event was heavily covered by multiple news outlets and became the subject of a heated discussion about stricter gun laws in the US. One month later on march 24th there were nation wide protest called "March for Our Lives", led by the students in cooperation with the non-profit organization Never Again MSD, which demand stricter gun laws[@marchforourlives18]. 
 It is not the first time, that a mass shooting started a discussion about gun regulations. Other shootings like the Sandy Hook Elementary School shooting in 2012 or the Orlando Nightclub shooting in 2016 brought the topic up as well. A study showed, that media coverage regarding gun regulation increase after a mass shooting occurs, the following Media Coverage and the general attention on this topic can have a positive influence[@lucaetal16]. For example, after the Parkland shooting Florida raised the minimum age for buying a rifle from 18 to 21 years[@Sanchez18].
-
-However it depends heavily on the parties which are in control to this particular time. @lucaetal16 found evidence that in the year after a large mass shooting happened, the republican are more likely to loosen the gun laws Instead of making them more strict.
 
 In general, the US has a long history of school and mass shootings, in 2019 alone there were 417 mass shootings[gva20], which fall under the definition as follows: "incidents in which four or more persons are murdered within a 24 hour period" [@Duwe2000, p. 323]. Many of which got little to no media attention. One possible reason why smaller shootings gather less media coverage and therefore are brought less to our attention is because there are less exciting, nothing special and therefore would not sell as good as other stories. And even if covered, after a certain amount of time, a new event occurs and will overshadow the previous news[@schildkraut14]. This does not only apply to news outlets, also people in general are drawn to prominent issues and exciting events[cite]. If there are no new information coming or more specifically people have seen enough of a topic and become fatique, they will turn their back on this topic. In figure 1 we can observe such a loos in interest. 
 
@@ -109,7 +103,7 @@ ggplot(example, aes(x = rownumber, y = hits, col = keyword))+
 
 As we can see, there are differences in the interest of people regarding mass shootings. The shooting, with more casualties, was of longer interest. In our study we will focus on the decrease of interest of the population and not about the media itself, however media has a great impact in what we are intereted in. 
 
-# Lit Rev & Theory and Hypotheses
+# Literature Review
 
 On september 6 1949 one of the first publicly known mass shootings took place. One man strolled through his neigbourhood and killed 12 people, this shooting was later known as the walk of death[@Berger49]. Since then hundreds of shootings followed [@gva20] and even though it was not the first mass shooting, it was the first one that got broad media attention. But why do only some mass shootings get this kind of media attention and others are not even covered by one newspaper? In order to answer this question and therefore understand why people tend to concentrate on more salient events we have to inspect the course of how news are perceived and what they induce in oneself.
 
@@ -122,7 +116,7 @@ First, the *pre problem stage*, the stage in which the problem already exists, h
 Second, the *alarmed discovery and euphoric enthusiasm*, which occurs after (a series of) event(s). In this period of time multiple things will happen. News outlets will heavily cover the event(s), people will then form a unit to solve the problem. However, most of those problems cannot be solved in a short period of time, like the high gun death rate. There has to be changes in the government but also within the society. 
 Which brings us to our third stage, *realizing the costs of solving the problem*. The initial euphoria and drive will vanish and will be replaced by the reality of the sacrifices a large amount of people has to commit to in order to solve the problem. Even though our example has two clear sides (pro gun control and pro gun possession), both sides will come across costs in order to solve the initial problem. The Pro gun possession side would have to give up the easy access to rifles and the access to certain rifles all together. On the other side the pro gun regulation side has to stay relevant, they need the attention in order to create pressure towards the government, which is done by protests and online presence. 
 However, the fourth stage will diminish this. After the realization of the costs which would come with solving the problem there will be a *gradual decline of interest in this topic*. Less news coverage, which therefore leads to less attention of people in general. People will feel fatique towards the issue, as their optimism decreases with each person who gives up and solving the problem becomes increasingly impossible.
-And ultimately will end in the fifth stage the *post problem area*. This stage is not to be confused with the first stage (pre problem), even though there will be less to no focus on the problem like in the first stage, during the prior stages there organizations were build and laws were enacted which will remain over time. For example, after the Parkland shooting took place, there where changes in gun laws in Florida, which is an achievement in itself. Nevertheless it was not the ultimate goal of the movement. 
+And ultimately will end in the fifth stage the *post problem stage*. This stage is not to be confused with the first stage (pre problem), even though there will be less to no focus on the problem like in the first stage, during the prior stages there organizations were build and laws were enacted which will remain over time. For example, after the Parkland shooting took place, there where changes in gun laws in Florida, which is an achievement in itself. Nevertheless it was not the ultimate goal of the movement. 
 To sum up, even though the ultimate goal was not achieved, media attention and therefore public attention can have a great influence in solving problems in their society. However, the event has to be large enough in order to start an issue-attention cycle. If not, the interest will be diminish even faster or will not be addressed at all, we will touch on this later on.
 
 
@@ -138,7 +132,7 @@ It seems to be that the most newsworthy events are events that are highly salien
 Another important aspect is, that it has to be quite big and attention seeking[Cite]. An event that is maybe rare but small, will not get the same attention as a huge event would. For example, it is rather rare that a mass shooting is done by a women, which is a rare event in itself, however if she would only shot four people it would not get the same attention if any as if she shot more. 
 And even if these aspects are fulfilled, it does not mean, that the event will be covered by the news as intensely as others because of the following reasons. First, if it is a problem by a minority it will be less salient and therefore less likely to be broadcasted. Second, if the problems which occurred give significant benefit to the majority or a powerful minority (e.g. pro gun allience) it will be less salient. And third, the event gave light to a problem, that has no (longer) intrinsically existing qualities[Cite]. 
 
-## Theory 
+# Theory 
 
 As we can see, there are several aspects which come into account when talking about salience and newsworthiness. There has to be a prior problem, the event has to be salient enough (a rare and great event) in order gain attention and also be important for the entire population, not only for a minority. In consideration of all these aspects we came up with the following diagram: 
 
@@ -162,9 +156,6 @@ Based on the research of @Schildkraut2018 and other researchers who found simila
 
 *H2: The more people died during a massshooting, the decline in the relative count of search hits on the event will be less steep.*
 
-
-Generally, research indicates that news coverage particularly is skewed toward stories about crime Schildkraut p. 223
-
 The first two hypotheses mainly focus on how certain crimes in this case mass shootings garner more attention from the media because they are more "newsworthy" [@someauthors]. We argued that the more people died or got injured during a mass shooting the more newsworthy the event is and the more the media reports about it. In turn this high media attention leads to an increase in public interest and the decline of search hits in Google trends on this mass shooting is less steep than for mass shootings that are not as newsworthy, do not get reported on as heavily and do not accumulate as much public interest. The next three hypotheses concentrate more on specific characteristics of mass shootings and how those could affect the decline of the relative count of search hits on this event in Google.
 
 First, the racial or ethnic identity of the perpetrator might be an important characteristic to consider as this could heavily shape the way media presents mass shootings and the ensuing public interest in the events. Mainstream media targets mostly the white middle class in th US as the goal is to reach a larch audience. Because of this most media outlets report from a white perspective and thus "non-whites are more likely to be portrayed in a negative light relative to whites" [@Callanan2012, p. 94]  [@Tukachinsky2015, p. 187; @Wheeler2017, p. 73]. Therefore, a selection bias in media reporting in relation to race exists. Previous studies show that race explains some of the selection bias in the media. If the perpetrator in a mass shooting is not white or from another ethnicity than the majority population, the media covers the event more extensively [citations] Lundman
@@ -176,8 +167,6 @@ In line with these findings, we suggest that as non-white violators in mass shoo
 Another important characteristic to explain why the public interest declines slower for some mass shootings but not for others is the affluence of the area in which the shooting happens. There is not much research on the relationship between the Affluence of the area in which a mass shooting takes place and the media coverage it receives yet. However, the study by [@Schildkraut2018, p. 235] shows that  shootings that happen in more affluent communities receive more attention from newspapers. Accordingly, we assume that mass shootings in more affluent communities are more  newsworthy and thus draw more media attention. Subsequently, the public interest in these shootings is greater and the reduction of the relative search hit count is less steep than for shootings that happen in less affluent communities. Therefore, the fourth hypothesis is:
 
 *H4: The more affluent a community a mass shooting happens in is, the shallower is the reduction of the relative search hit count.*
-
---> Evtl. umformulieren, Sophie fragen
 
 As for the last hypothesis there is sparse research on how the gun laws of the state a mass shooting happens in influence its newsworthiness, media coverage and how this might affect the public interest. We expect that if a mass shooting happens in a state with weak gun laws the issue of gun control becomes more salient. Subsequently in light of this public discussion the event becomes more newsworthy and the media covers the shooting more heavily. Because of this, the public interest in the mass shooting rises and the relative count of the search hits on Google declines slower. Hence, the fifth hypothesis is:
 
@@ -199,15 +188,10 @@ Because we are using the data set based on the information from Wikipedia later 
 After exporting this data table to excel we added three variables with information on the ethnicity of the shooter, the affluence of the community a shooting happened at and the strength of the gun laws for the state in which a shooting happened. These are the indpendendent variables for the regression models in the analysis section additionally to the count of dead and injured persons. In order to find the necessary information on these characteristics, an online search was executed. The information on the ethnicity of the perpetrator was found on the respective Wikipedia page for each mass shooting. The variable was coded 0 if the shooter was a white US Americans and 1 if the shooter was black or had a migration background. Furthermore, we looked up the median houshold income (in 2018) for all communities in which a mass shooting happened and determined if the community is affluent or not based on a chart that depicts how the US Census Bureau breaks down income levels [@income]. If the median household was below $44,999, the community was classified as low income and coded 0. Accordingly, if the median houshold income was above $44,999 the community was considered as high income and coded 1. Additionally, the strength of the gun laws in the states where shootings happened were evaluated based on a ranking of states by their gun law strength ^[In this paper states that are considered to have strong gun laws are: California, New Jersey, Conneticut, New York, Hawaii, Maryland, Massachusetts, Illinois, Rhode Island, Washington, Delaware, Pennsylvania, Minnesota, Colorado, Nevada, Oregon, New Mexico, Nebraska, Iowa, Michigan, Wisconsin, Florida, and Vermont. States with weak gun laws are: North Carolina, Ohio, Virginia, Utah, Indiana, Tennessee, New Hampshire, South Carolina, Georgia, Lousiana, Maine, Montana, Texas, West Virgina, Alabama, North Dakota, Arkansas, Oklahoma, Alaska, Kansas, South Dakota, Arizona, Kentucky, Missouri, Idaho, Wyoming, Mississippi]. States with strong gun laws are coded 0 and states with weak gun laws are coded 1. Observations for which no information on the ethnicity, the affluence of the community or the gun law strength could be found were dropped.
 
 
-
 ```{r Scraping of Wikipedia tables, results="hide"}
 url <- "https://en.wikipedia.org/wiki/List_of_mass_shootings_in_the_United_States"
 t <- read_html(url)
 table <- t %>% html_nodes("#mw-content-text > div > table") %>% html_table(trim=T)
-```
-
-```{r, include = FALSE}
-table
 ```
 
 ```{r, include = FALSE}
@@ -247,8 +231,9 @@ for (i in 1:10) {
   as.numeric(as.character(table[[i]]$Dead))
   as.numeric(as.character(table[[i]]$Total))
 }
+```
 
-
+```{r, include = FALSE}
 # Joining all tables to one data frame
 
 newtab <- table[[1]]
@@ -276,7 +261,6 @@ newtab$Description <- sub(":.*$", "", newtab$Description)
 newtab
 ```
 
-
 ```{r, include = FALSE}
 
 # save Date as date format
@@ -285,12 +269,12 @@ lct <- Sys.getlocale("LC_TIME"); Sys.setlocale("LC_TIME", "C")
 newtab[["Date"]] <- as.Date(newtab$Date, format = "%B-%d-%Y")
 newtab
 
-# Create new Variable for the Timespan
+# Create new variable for the time span
 
 newtab$After <- newtab$Date + 14
 newtab
 
-# delete NAs
+# Delete NAs
 
 newtab <- na.omit(newtab)
 
@@ -305,12 +289,6 @@ newtab
 
 ```
 
-Erwähnen, dass wir nur nach einem Begriff suchen
-Search Terms verglichen bei Trends 
-Alle Events, die über Tage gehen gedropped
-Sophie: 6-10 subben
-Hannah: 11-15 
-
 ```{r, include = FALSE}
 ### Data Editing 
 
@@ -320,7 +298,7 @@ newtab$SearchTerm <- gsub("shootout", "shooting", newtab$Description, fixed = TR
 
 newtab <- newtab[, c("Date", "After", "TrendPeriod", "SearchTerm", "Description", "Location", "Dead", "Injured", "Total")] 
 
-# delete the number in the searchterm
+# Delete the number in the searchterm
 number <- c("2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019")
 
 as.character(number)
@@ -411,18 +389,13 @@ newtab$SearchTerm <- gsub("Columbus nightclub shooting", "Columbus shooting", ne
 newtab$SearchTerm <- gsub("Hunting Trip ()", "Meteor shooting", newtab$SearchTerm, fixed = TRUE)
 newtab$SearchTerm <- gsub("Wesson family murders", "Fresno shooting", newtab$SearchTerm, fixed = TRUE)
 
+# Drop all cases before 2004
 newtab <- newtab[format(newtab$Date,'%Y') != "2003", ]
 newtab <- newtab[format(newtab$Date,'%Y') != "2002", ]
 newtab <- newtab[format(newtab$Date,'%Y') != "2001", ]
 newtab <- newtab[format(newtab$Date,'%Y') != "2000", ]
 
-newtab
-
-
 ```
-Delisle tripple murder droppen -->> nicht genug daten
-Bart shooting evtl. rausnehmen --> sieht aus als hätte es sehr kleine Fallzahlen und einen seltsamen Verlauf
-Meteor shooting sieht komish aus --> evtl droppen wegen kleiner Fallzahl
 
 ```{r, include = FALSE}
 # Exporting data frame to excel in order to add further variables
@@ -435,7 +408,7 @@ Meteor shooting sieht komish aus --> evtl droppen wegen kleiner Fallzahl
 ```
 
 ```{r, include = FALSE}
-# Inporting excel Data 
+# Importing excel data 
 
 wikishooting <- read_excel("WikiShootings_final.xlsx")
 wikishooting
@@ -443,9 +416,9 @@ wikishooting
 ```
 
 ```{r, include = FALSE}
-### Data edditing
+### Data editing
 
-# correcting Data types
+# Correcting data types 
 
 wikishooting[["Date"]] <- as.Date(wikishooting$Date, format = "%Y-%m-%d")
 wikishooting[["After"]] <- as.Date(wikishooting$Date, format = "%Y-%m-%d")
@@ -472,18 +445,14 @@ wikishooting
 
 ```
 
-############################################################################################################################################
-############################################################################################################################################
-############################################################################################################################################
-
 ## Data from GTrends
 
 After the scraping of the Wikipedia tables with basic information about the most notable mass shootings and adding of further variables, we scraped Google Trends data. The Wikipedia data set provided us with the necessary information about the time period (15 days) and the best search term for each mass shooting. The interest in each shooting over the time period was scraped for the whole US and collected in one data set. As for some shootings the best search term was the same, we renamed those with the year as identifier. Moreover, we dropped the shotting of the Haynie family in 2020 as there was not enough data available in Google Trends for this observation.
 
 
 
-```{r, include = FALSE}
-#Versuch eines Loop der einzelne outcomes speichert
+```{r Scraping of Google Trends a tables, results="hide"}
+#Scraping of Google Trends Data 
 
 #listshooting <- list()
 #for (i in 1:nrow(wikishooting)){
@@ -493,10 +462,10 @@ After the scraping of the Wikipedia tables with basic information about the most
 #    iteration <- (1 + length(listshooting))
 #    listshooting[[iteration]] <- shooting
 # }
+```
 
-
-
-# Beispiel wie man die einzelnen Tabellen verbindet
+```{r, include = FALSE}
+# Combining GoogleTrends data frames
 
 #massshooting <- listshooting[[1]]$interest_over_time
 #for (i in 2:length(listshooting)){
@@ -506,23 +475,26 @@ After the scraping of the Wikipedia tables with basic information about the most
 #massshooting
 
 #saveRDS(massshooting, "massshooting.rds")
+```
 
-# Load the city object as city
+```{r, include = FALSE}
+# Load Gtrends Data (save as rds file)
+
 gtrends <- readRDS("massshooting.rds")
 gtrends
 
 ```
 
-First, we transform the `data.frame` into a `tibble`.
 
 ```{r, include = FALSE}
 ### Data editing
 
-# Some shootings have the same search term, so we add here the Date in order to recognize them latter on
+# Google Trends data set convert into tibble
 
 gtrends <- as_tibble(gtrends)
 glimpse(gtrends)
 
+# Some shootings have the same search term, so we add here the date in order to recognize them latter on.
 
 gtrends$keyword <- ifelse(gtrends$time == "2004-03-12 2004-03-26", 
                              gsub("Fresno shooting", "Fresno shooting 2004", gtrends$keyword, fixed = TRUE),
@@ -576,11 +548,11 @@ gtrends$keyword <- ifelse(gtrends$time == "2017-06-05 2017-06-19",
                              gsub("Orlando shooting", "Orlando shooting 2017", gtrends$keyword, fixed = TRUE),
                              gtrends$keyword)
 
-# change smaller than 1 to 0 to make sure, that we do not get any NAs because of them
+# change smaller than 1 to 0 to make sure, that we do not get any NAs because of them.
 
 gtrends$hits <- gsub("<1", "0", gtrends$hits, fixed = TRUE)
 
-# covina Shooting had to have a larger Time period, here we correct it. So does it fits with the others
+# Covina shooting had to have a larger Time period, here we correct it. So does it fits with the others.
 
 gtrends <- gtrends[-c(271:284), ]
 
@@ -595,18 +567,16 @@ Due to the Google Trend data and its structure, we are not able to investigate t
 
 
 ```{r, include = FALSE}
-# give every shooting a countdown with 1 to 15, for each day we inspect
+# Give every shooting a countdown with 1 to 15, for each day we inspect
 
 gtrends$rownumber <-  rep(c(1:15), times=131)
 gtrends
 
 # save the hits as numeric values
 gtrends$hits <- as.numeric(as.character(gtrends$hits))
-
-# regression for each mass shooting 
 ```
 
-```{r, results="hide"}
+```{r, regression for each mass shooting,  results="hide"}
 reg <-
   gtrends %>%
   group_by(keyword) %>%           
@@ -614,35 +584,28 @@ reg <-
 ```
 
 ```{r, include = FALSE}
-reg 
-
 
 # subset the reg
 reg <- subset(reg, term=="rownumber")
 
-reg
-
 #write_xlsx(reg,"C:\\Users\\hre\\Documents\\Uni_Mannheim\\FSS_2020\\Research_Methods_Fundamentals_of_Computing_and_Data_Display\\Paper\\Term-Paper-Fundamentals\\Fundamentals---Term-Paper-\\reg.xlsx")
-
-gtrends
 
 wikishooting <-
   wikishooting %>%
   arrange(SearchTerm)
 
-wikishooting
-
 #write_xlsx(wikishooting,"C:\\Users\\hre\\Documents\\Uni_Mannheim\\FSS_2020\\Research_Methods_Fundamentals_of_Computing_and_Data_Display\\Paper\\Term-Paper-Fundamentals\\Fundamentals---Term-Paper-\\wikialph.xlsx")
 
-Final <- cbind(wikishooting, coef = reg$estimate) 
+# combining the Wikipedia data set with the regression coefficient variable from the Google Trends data set.
 
-Final
+Final <- cbind(wikishooting, coef = reg$estimate) 
 ```
 
 # Results
 
 
 ```{r, include = FALSE}
+## Descriptive Plots of independent variables
 
 # Converting variables needed for bar plots into character vectors
 
@@ -651,9 +614,11 @@ Final$Ethnicity <- as.character(Final$Ethnicity)
 Final$Area <- as.character(Final$Area)
 
 Final$Gunlaws <- as.character(Final$Gunlaws)
-Final
+
 
 # Boxplots of metric variables (Dead, Injured)
+
+## Daed
 
 boxdead <- 
   ggplot(Final) +
@@ -664,13 +629,9 @@ boxdead <-
         axis.text.y = element_text(size=8.5),
         axis.text.x = element_blank(), 
         axis.ticks.x = element_blank()) +
- # theme(
-  #axis.text.y = element_blank()) + #,
- # axis.ticks.y = element_blank()) +
   coord_cartesian(ylim = c(0, 20)) 
- # scale_y_continuous(breaks=seq(0,15,5)) 
-  #coord_flip()
-boxdead
+
+## Injured 
 
 boxinjured <- 
   ggplot(Final) +
@@ -681,15 +642,11 @@ boxinjured <-
         axis.text.y = element_text(size=8.5),
         axis.text.x = element_blank(), 
         axis.ticks.x = element_blank()) +
- # scale_y_continuous(limits = quantile(Final$Injured, c(0.1, 0.9))) +
- # theme(
- # axis.text.y = element_blank(), +
- # axis.ticks.y = element_blank()) +
- # scale_y_continuous(breaks=seq(0,500,20)) +
   coord_cartesian(ylim = c(0, 20)) 
-  #coord_flip()
-boxinjured
 
+```
+
+```{r, include = FALSE}
 
 # Barplots of categorical variables (Dead, Injured)
 
@@ -706,7 +663,6 @@ bareth <- ggplot(Final, aes(x = Ethnicity)) +
   scale_y_continuous(labels = scales::percent_format(), limit = c(0, 1.0)) +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
             y= ((..count..)/sum(..count..))), stat="count", size = 3, vjust = -.5) 
-bareth
 
 
 ## Area
@@ -722,10 +678,10 @@ bararea <- ggplot(Final, aes(x = Area)) +
   scale_y_continuous(labels = scales::percent_format(), limit = c(0, 1.0)) +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
             y= ((..count..)/sum(..count..))), stat="count", size = 3, vjust = -.5) 
-bararea
 
 
 ## Gunlaws
+
 bargun <- ggplot(Final, aes(x = Gunlaws)) + 
   geom_bar(mapping = aes(y = ..prop.., group = 1), stat = "count") +
   labs(title = "Gun Law Strength", x = "", y = "Relative Frequencies") +
@@ -737,7 +693,7 @@ bargun <- ggplot(Final, aes(x = Gunlaws)) +
   scale_y_continuous(labels = scales::percent_format(), limit = c(0, 1.0)) +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
             y= ((..count..)/sum(..count..))), stat="count", size = 3, vjust = -.5) 
-bargun
+
 
 ```
 
@@ -753,8 +709,8 @@ annotate_figure(boxplots,
                top = text_grob("Figure 2: Boxplots of Metric Variables", color = "black", face = "bold", size = 11)
                #fig.lab = "Figure 2", fig.lab.face = "bold"
                )
-
 ```
+
 Figure 5 shows the three dichotomous variables. There are clear differences in the distribution of each variable. First, in regards to the ethnicity we can observe that in our sample more white US American were the predator by 57%. Second, most mass shootings in our sample took place in high Income communities (73%) rather then in low income communities. And third, two thirds of the shootings in our sample occurred in states with strong gun regulations.
 
 
@@ -766,38 +722,7 @@ annotate_figure(barplots,
                top = text_grob("Figure 1: Barplots of Categorical Variables with Frequencies and Shares in Percent", color = "black", face = "bold", size = 11), 
                #fig.lab = "Figure 1", fig.lab.face = "bold"
                )
-
 ```
-
-
-
-
-
-```{r echo=FALSE}
-# Tabels with descriptive statistics of independent variables
-
-stargazer(Final[c("Dead","Injured")], type = "text", title="Descriptive statistics of metric variables", summary.stat = c("n", "median", "sd", "min", "max"))
-
-#stargazer(Final[c("Ethnicity","Area", "Gunlaws")], type = "text", title="Descriptive statistics of categorical variables")
-
-#desccat <-
-#  Final %>%
-#  select(c(Ethnicity, Area, Gunlaws)) %>%
-#  freq(., plain.ascii=FALSE, cumul = FALSE, report.nas = FALSE, totals = FALSE, headings = FALSE)
-#desccat
-```
-
-
-Hannah: Descriptives: Barplots of variables mit facet wrap wewe
-##########################################################
-
-
-Wie sollten vllt. Gender of shooter kontrollieren. Frauen werden in den Medien mehr beachtet --> Könnte zu einer Verzerrung der Ergebnisse führen.
-
-
-
-Hannah: Coefplot oder Marginsplot für volles Modell
-############################################
 
 In the following our hypotheses will be analyzed with an OLS regression of the independent variables - the number of dead persons, the number of injured persons, the ethnicity of the shooter, the affluence of the community, and the strength of the states' gun laws on the decline in interest of mass shootings. According to hypothesis 1 and 2, we expect that the interest in the shooting declines slower, the more people died or got injured in the shooting. We also assume in line with hypotheses 3 that the interest in a mass shooting decreases slower if the shooter was black or had a migration background. Furthermore, we hypothesize (H4) that if the community the shooting happened in is more affluent, the decrease in interest is less steep. And finally we expect that according to hypothesis 5 that if the gun laws of the state in which a shooting took place are weak, the decline in interest is slower. 
 
@@ -810,7 +735,7 @@ These results show that we have to reject hypotheses 1 and 2. There seems to be 
 
 
 ```{r, include = FALSE}
-# Regression 
+# Regressions 
 
 regdead <- lm(coef ~ Dead, data = Final, )
 
@@ -824,20 +749,6 @@ regarea <- lm(coef ~ Area, data = Final, )
 
 regfull <-  lm(coef ~ Dead + Injured + Ethnicity + Area + Gunlaws, data = Final, )
 ```
-
-```{r, results='asis'}
-# PDF Table of regressions
-stargazer::stargazer(regdead, reginjured, regeth, reggun, regarea, regfull, 
-                     title   = "Table 1: OLS Regression of the Independent Variables on the Decrease in Interest of Mass Shootings", 
-                     covariate.labels = c("Dead", "Injured", "Ethnicity","Area", "Gunlaws"), 
-                     dep.var.labels   = "decrease of interest", 
-                     keep.stat = c("adj.rsq", "n"),
-                     flip = TRUE)
-```
-
-Sophie: Plot Regressionsgeraden des vollen Modells
-##########################################
-
 ```{r include=FALSE}
 # simple predict plot for the first to hypotheses
 
@@ -853,8 +764,6 @@ scatterplots1 <- ggarrange(scatdead, scatinjured,
           ncol = 2, nrow = 1)
 scatterplots2 <- ggarrange(scatarea, scatgunlaw, scatethnic, 
           ncol = 2, nrow = 2)
-
-
 ```
 
 ```{r echo=FALSE}
@@ -868,8 +777,19 @@ annotate_figure(scatterplots2,
                #fig.lab = "Figure 1", fig.lab.face = "bold"
                )
 ```
+```{r, results='asis', echo = FALSE}
+# PDF Table of regressions
+stargazer::stargazer(regdead, reginjured, regeth, reggun, regarea, regfull, 
+                     title   = "Table 1: OLS Regression of the Independent Variables on the Decrease in Interest of Mass Shootings", 
+                     covariate.labels = c("Dead", "Injured", "Ethnicity","Area", "Gunlaws"), 
+                     dep.var.labels   = "decrease of interest", 
+                     keep.stat = c("adj.rsq", "n"),
+                     flip = TRUE)
+```
 
 ```{r echo=FALSE}
+## Coefplot
+
 coefplot <- plot_coefs(regarea, regeth, reggun, reginjured, regdead, regfull, scale = TRUE, inner_ci_level = .9, colors = "Set3")
 
 annotate_figure(coefplot,
@@ -879,7 +799,6 @@ annotate_figure(coefplot,
 
 plot_summs(regarea, regeth, reggun, reginjured, regdead, regfull, scale = TRUE, inner_ci_level = .9, colors = "Set3")
 
-# durch integrieren von allen Variablen in das Model entfernen sie sich von der MItte.
 ```
 
 
