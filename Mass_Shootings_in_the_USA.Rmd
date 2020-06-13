@@ -12,6 +12,7 @@ output:
   pdf_document:
     toc: yes
     df_print: kable
+    number_sections: true
 always_allow_html: true
 bibliography: Fundamentals_Paper.bib
 ---
@@ -445,7 +446,7 @@ wikishooting
 
 ```
 
-## Data from GTrends
+## Data from Google Trends
 
 After the scraping of the Wikipedia tables with basic information about the most notable mass shootings and adding of further variables, we scraped Google Trends data. The Wikipedia data set provided us with the necessary information about the time period (15 days) and the best search term for each mass shooting. The interest in each shooting over the time period was scraped for the whole US and collected in one data set. As for some shootings the best search term was the same, we renamed those with the year as identifier. Moreover, we dropped the shotting of the Haynie family in 2020 as there was not enough data available in Google Trends for this observation.
 
@@ -728,11 +729,6 @@ In the following our hypotheses will be analyzed with an OLS regression of the i
 
 The predicted scatterplots of the regressions show that the regression lines of the simple regression models between each of the independent variables and the dependent variable, the steepness of the decline in interest, seem to be in line with our hypotheses except for hypothesis 1. The regression line for hypothesis 1 shows that the interest decreases faster the more people die in a mass shooting. For all other hypotheses the regression line seem to support our hypothesis. --> Für andere hypothesen noch genauer beschreiben?
 
-Figure ? shows the results for the OLS regression of all independent variables on the decrease in interest of mass shootings. The models 1 to 5 each report the results of the regression of one of the independent variables on the decrease in interest of mass shootings. As none of the coefficients is statistically significant at the 10% level we do not assume that the number of dead persons, the number of injured persons, the ethnicity of the shooter, the affluence of the community, and the strength of the states' gun laws are correlated with the steepness of the decline in interest on Google. Model 6 includes all of the independent variables. When controlling for all other independent variables the relationship between the ethnicity and steepness of the decline in interest is significant at the 10% level. This means that the decline in interest is significantly slower for mass shootings with shooters who are non-white or have a migration backgroung compared to mass shootings with shooters who are white US Americans. Furthermore, controlling for all other independent variables the interest in mass shootings in states with weak gun laws declines less steeply than for mass shootings in states with strong gun laws. Table A1 shows the results of the regression models in more detail. Overall these predicors do not explain much of the variation in the steepness of the decline in interest in a mass shooting as the adjusted R^2 is very poor for all Models. Model 6 with all independent variables included only explains 2.4% percent of the variation of the steepness of the decrease in interest on Google.
-
-These findings show that we have to reject hypotheses 1 and 2. There seems to be no significant relationship between the number of dead nor the number of injured persons and the steepness of the decline in interest. Moreover, we cannot reject hypothesis 3 when controlling for other factors. If the shooter is black or has a migration background, the decrease in interest in the mass shooting is slower than for shootings with a white US American perpetrator. Hypothesis 4 also has to be rejected. The affluence of the community in which a shooting takes place is not significantly related to the steepness of the decline in interest. Finally, hypothesis 5 cannot be rejected when covariates are included in the model. If a mass shooting happens in a state with weak gun laws the decline in interest is slower than if a shooting happens in a state with strong gun laws.
-
-
 
 ```{r, include = FALSE}
 # Regressions 
@@ -766,6 +762,7 @@ scatterplots2 <- ggarrange(scatarea, scatgunlaw, scatethnic,
           ncol = 2, nrow = 2)
 ```
 
+
 ```{r echo=FALSE}
 annotate_figure(scatterplots1,
                top = text_grob(label = "Figure 3: predicted scatterplots of the regression", color = "black", face = "plain", size = 11), 
@@ -777,15 +774,11 @@ annotate_figure(scatterplots2,
                #fig.lab = "Figure 1", fig.lab.face = "bold"
                )
 ```
-```{r, results='asis', echo = FALSE}
-# PDF Table of regressions
-stargazer::stargazer(regdead, reginjured, regeth, reggun, regarea, regfull, 
-                     title   = "Table 1: OLS Regression of the Independent Variables on the Decrease in Interest of Mass Shootings", 
-                     covariate.labels = c("Dead", "Injured", "Ethnicity","Area", "Gunlaws"), 
-                     dep.var.labels   = "decrease of interest", 
-                     keep.stat = c("adj.rsq", "n"),
-                     flip = TRUE)
-```
+
+
+
+Figure ? shows the results for the OLS regression of all independent variables on the decrease in interest of mass shootings. The models 1 to 5 each report the results of the regression of one of the independent variables on the decrease in interest of mass shootings. As none of the coefficients is statistically significant at the 10% level we do not assume that the number of dead persons, the number of injured persons, the ethnicity of the shooter, the affluence of the community, and the strength of the states' gun laws are correlated with the steepness of the decline in interest on Google. Model 6 includes all of the independent variables. When controlling for all other independent variables the relationship between the ethnicity and steepness of the decline in interest is significant at the 10% level. This means that the decline in interest is significantly slower for mass shootings with shooters who are non-white or have a migration backgroung compared to mass shootings with shooters who are white US Americans. Furthermore, controlling for all other independent variables the interest in mass shootings in states with weak gun laws declines less steeply than for mass shootings in states with strong gun laws. Table A1 shows the results of the regression models in more detail. Overall these predicors do not explain much of the variation in the steepness of the decline in interest in a mass shooting as the adjusted R^2 is very poor for all Models. Model 6 with all independent variables included only explains 2.4% percent of the variation of the steepness of the decrease in interest on Google.
+
 
 ```{r echo=FALSE}
 ## Coefplot
@@ -803,6 +796,7 @@ plot_summs(regarea, regeth, reggun, reginjured, regdead, regfull, scale = TRUE, 
 
 
 
+These findings show that we have to reject hypotheses 1 and 2. There seems to be no significant relationship between the number of dead nor the number of injured persons and the steepness of the decline in interest. Moreover, we cannot reject hypothesis 3 when controlling for other factors. If the shooter is black or has a migration background, the decrease in interest in the mass shooting is slower than for shootings with a white US American perpetrator. Hypothesis 4 also has to be rejected. The affluence of the community in which a shooting takes place is not significantly related to the steepness of the decline in interest. Finally, hypothesis 5 cannot be rejected when covariates are included in the model. If a mass shooting happens in a state with weak gun laws the decline in interest is slower than if a shooting happens in a state with strong gun laws.
 
 
 # Conclusion 
@@ -815,9 +809,21 @@ The Wikipedia page on mass shootings [@wiki] only features the most prominent ev
 Furthermore, the Google Trends data constrained the operationalization of our dependent variable. Google Trends only reports the relative frequency of the search hits on Google in relation to the day in the time span that has the highest count of hits. Hence, we were only able to use the steepness of the decline in interest as the dependent variable. If we would have had the actual number of search hits per day we could have observed the actual interest in a mass shooting and not merely the steepness of the decline in interest. Future research about the public interest in mass shooting could try to operationalize the dependent variable in a more precise way and possibly include more covariates which could also influence the public interest in mass shootings. 
 
 # References
-
+<div id="refs"></div>
 
 # Appendix
+
+```{r, results='asis', echo = FALSE}
+# PDF Table of regressions
+stargazer::stargazer(regdead, reginjured, regeth, reggun, regarea, regfull, 
+                     title   = "OLS Regression of the Independent Variables on the Decrease in Interest of Mass Shootings", 
+                     covariate.labels = c("Dead", "Injured", "Ethnicity","Area", "Gunlaws"), 
+                     dep.var.labels   = "decrease of interest", 
+                     keep.stat = c("adj.rsq", "n"),
+                     notes.append = FALSE, notes.align = "l",
+                     notes = "\\parbox[t]{11cm}{* p < 0.10, ** p < 0.05, *** p < 0.01. Standard errors in paranthesis.}",
+                     flip = TRUE)
+```
 
 ```{r, include = FALSE}
 # Tabels with descriptive statistics of independent variables
