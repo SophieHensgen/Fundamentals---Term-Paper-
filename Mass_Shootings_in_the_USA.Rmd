@@ -468,11 +468,11 @@ After the scraping of the Wikipedia tables with basic information about the mass
 ```{r Scraping of Google Trends a tables, results="hide"}
 #listshooting <- list()
 #for (i in 1:nrow(wikishooting)){
-#    x <- as.vector(wikishooting$SearchTerm[i])
-#    y <- as.vector(wikishooting$TrendPeriod[i])
-#    shooting <- gtrends(keyword = x, geo = "US", time = y, low_search_volume = T)
-#    iteration <- (1 + length(listshooting))
-#    listshooting[[iteration]] <- shooting
+ #   x <- as.vector(wikishooting$SearchTerm[i])
+  #  y <- as.vector(wikishooting$TrendPeriod[i])
+   # shooting <- gtrends(keyword = x, geo = "US", time = y, low_search_volume = T)
+    #iteration <- (1 + length(listshooting))
+    #listshooting[[iteration]] <- shooting
 # }
 ```
 
