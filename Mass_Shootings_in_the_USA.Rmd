@@ -49,13 +49,6 @@ library(kableExtra)
 ```
 
 
-Citation examples for in-text citations:
-
-Smith cited [@Smith2004].
-Smith cited without author [-@Smith2004].
-@Smith2004 cited in line.
-test
-
 # Introduction
 
 On february 14th 2018 the Parkland High school shooting took place and with it one of the largest gun control movements emerged. 
@@ -196,7 +189,7 @@ Because we are using the data set based on the information from Wikipedia later 
 
 --> Sophie fragen wegen Erklärung
 
-We added three variables with information on the ethnicity of the shooter, the affluence of the community a shooting happened at and the strength of the gun laws for the state in which a shooting happened. These are the indpendendent variables for the regression models in the analysis section additionally to the number of dead and injured persons. In order to find the necessary information on these characteristics, an online search was executed. The information on the ethnicity of the perpetrator was found on the respective Wikipedia page for each mass shooting. The variable was coded 0 if the shooter was a white US Americans and 1 if the shooter was non-white or had a migration background. Furthermore, we looked up the median houshold income (in 2018) for all communities in which a mass shooting happened on the website of the US Census Bureau [@bureau] and determined if the community is affluent or not based on a chart that depicts how the US Census Bureau breaks down income levels [@income]. If the median household was below $44,999, the community was classified as low income and coded 0. Accordingly, if the median houshold income was above $44,999 the community was considered as high income and coded 1. Additionally, the strength of the gun laws in the states where shootings happened were evaluated based on a ranking of states by their gun law strength [@gunstrength] ^[In this paper states that are considered to have strong gun laws are: California, New Jersey, Conneticut, New York, Hawaii, Maryland, Massachusetts, Illinois, Rhode Island, Washington, Delaware, Pennsylvania, Minnesota, Colorado, Nevada, Oregon, New Mexico, Nebraska, Iowa, Michigan, Wisconsin, Florida, and Vermont. States with weak gun laws are: North Carolina, Ohio, Virginia, Utah, Indiana, Tennessee, New Hampshire, South Carolina, Georgia, Lousiana, Maine, Montana, Texas, West Virgina, Alabama, North Dakota, Arkansas, Oklahoma, Alaska, Kansas, South Dakota, Arizona, Kentucky, Missouri, Idaho, Wyoming, Mississippi]. States with strong gun laws are coded 0 and states with weak gun laws are coded 1. Observations for which no information on the ethnicity, the affluence of the community or the gun law strength could be found were dropped.
+We added three variables with information on the ethnicity of the shooter, the affluence of the community a shooting happened at and the strength of the gun laws for the state in which a shooting happened. These are the indpendendent variables for the regression models in the analysis section additionally to the number of dead and injured persons. In order to find the necessary information on these characteristics, an online search was executed. The information on the ethnicity of the perpetrator was found on the respective Wikipedia page for each mass shooting. The variable was coded 0 if the shooter was a white US Americans and 1 if the shooter was non-white or had a migration background. Furthermore, we looked up the median houshold income (in 2018) for all communities in which a mass shooting happened on the website of the US Census Bureau [@bureau] and determined if the community is affluent or not based on a chart that depicts how the US Census Bureau breaks down income levels [@income]. If the median household was below $44,999, the community was classified as low income and coded 0. Accordingly, if the median houshold income was above $44,999 the community was considered as high income and coded 1. Additionally, the strength of the gun laws in the states where shootings happened were evaluated based on a ranking of states by their gun law strength [@gun] ^[In this paper states that are considered to have strong gun laws are: California, New Jersey, Conneticut, New York, Hawaii, Maryland, Massachusetts, Illinois, Rhode Island, Washington, Delaware, Pennsylvania, Minnesota, Colorado, Nevada, Oregon, New Mexico, Nebraska, Iowa, Michigan, Wisconsin, Florida, and Vermont. States with weak gun laws are: North Carolina, Ohio, Virginia, Utah, Indiana, Tennessee, New Hampshire, South Carolina, Georgia, Lousiana, Maine, Montana, Texas, West Virgina, Alabama, North Dakota, Arkansas, Oklahoma, Alaska, Kansas, South Dakota, Arizona, Kentucky, Missouri, Idaho, Wyoming, Mississippi]. States with strong gun laws are coded 0 and states with weak gun laws are coded 1. Observations for which no information on the ethnicity, the affluence of the community or the gun law strength could be found were dropped.
 
 
 ```{r, include = FALSE}
@@ -771,17 +764,6 @@ annotate_figure(scatterplots2)
 ```
 
 
-```{r, results='asis', echo = FALSE}
-# PDF Table of regressions
-stargazer::stargazer(regdead, reginjured, regeth, reggun, regarea, regfull, 
-                     title   = "OLS Regression of the Independent Variables on the Decrease in Interest of Mass Shootings", 
-                     covariate.labels = c("Dead", "Injured", "Ethnicity","Area", "Gunlaws"), 
-                     dep.var.labels   = "decrease of interest", 
-                     keep.stat = c("adj.rsq", "n"),
-                     flip = TRUE)
-```
-
-
 Figure 8 shows the results for the OLS regression of all independent variables on the decrease in interest of mass shootings. The models 1 to 5 each report the results of the regression of one of the independent variables on the decrease in interest of mass shootings. As none of the coefficients is statistically significant at the 10% level we do not assume that the number of dead persons, the number of injured persons, the ethnicity of the shooter, the affluence of the community, and the strength of the states' gun laws are correlated with the steepness of the decline in interest on Google. Model 6 includes all of the independent variables. When controlling for all other independent variables the relationship between the ethnicity and steepness of the decline in interest is significant at the 10% level. This means that the decline in interest is significantly slower for mass shootings with shooters who are non-white or have a migration backgroung compared to mass shootings with shooters who are white US Americans. Furthermore, controlling for all other independent variables the interest in mass shootings in states with weak gun laws declines less steeply than for mass shootings in states with strong gun laws. Table A1 shows the results of the regression models in more detail. Overall, these predictors do not explain much of the variation in the steepness of the decline in interest in a mass shooting as the adjusted R squared is very poor for all models. Model 6 with all independent variables included only explains 2.4% percent of the variation of the steepness of the decrease in interest on Google.
 
 
@@ -810,6 +792,7 @@ Furthermore, the Google Trends data constrained the operationalization of our de
 \newpage
 
 # References
+
 <div id="refs"></div>
 
 \newpage
