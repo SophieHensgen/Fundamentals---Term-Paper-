@@ -50,7 +50,7 @@ library(kableExtra)
 
 
 # Introduction
-
+gg
 On february 14th 2018 the Parkland High school shooting took place and with it one of the largest gun control movements emerged. 
 At this incident a former student of the Marjory Stoneman Douglas High School killed 17 people and injured another 17 with a rifle [@Laughland2018]. The event was heavily covered by multiple news outlets and became the subject of a heated discussion about stricter gun laws in the US. One month later on march 24th there were nation wide protest called "March for Our Lives", led by the students in cooperation with the non-profit organization Never Again MSD, which demand stricter gun laws [@Marchforourlives18]. 
 It is not the first time, that a mass shooting started a discussion about gun regulations. Other shootings like the Sandy Hook Elementary School shooting in 2012 or the Orlando Nightclub shooting in 2016 brought the topic up as well. A study showed, that media coverage regarding gun regulation increase after a mass shooting occurs, the following Media Coverage and the general attention on this topic can have a positive influence [@Luca2020]. For example, after the Parkland shooting Florida raised the minimum age for buying a rifle from 18 to 21 years [@Sanchez2018].
