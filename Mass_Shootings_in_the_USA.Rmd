@@ -448,12 +448,26 @@ wikishooting <- na.omit(wikishooting)
 
 wikishooting$Ethnicity <- as.numeric(wikishooting$Ethnicity)
 
+# changing time period for one shooting in order to get results
+
 wikishooting$TrendPeriod <- gsub("2008-12-24 2009-01-07", "2008-12-24 2009-01-21", wikishooting$TrendPeriod, fixed = TRUE)
 
-# Drop Haynie family as it does not give any results/hits
+# Drop four shootings as it does not give any results/hits
 wikishooting <-
   wikishooting %>%
   filter(SearchTerm != "Shooting of Haynie family")
+
+wikishooting <-
+  wikishooting %>%
+  filter(SearchTerm != "Geneva shooting")
+
+wikishooting <-
+  wikishooting %>%
+  filter(SearchTerm != "Harris County shooting")
+
+wikishooting <-
+  wikishooting %>%
+  filter(SearchTerm != "Jemel Roberson shooting")
 
 wikishooting
 
@@ -466,33 +480,33 @@ After the scraping of the Wikipedia tables with basic information about the mass
 
 
 ```{r Scraping of Google Trends a tables, results="hide"}
-#listshooting <- list()
-#for (i in 1:nrow(wikishooting)){
- #   x <- as.vector(wikishooting$SearchTerm[i])
-  #  y <- as.vector(wikishooting$TrendPeriod[i])
-   # shooting <- gtrends(keyword = x, geo = "US", time = y, low_search_volume = T)
-    #iteration <- (1 + length(listshooting))
-    #listshooting[[iteration]] <- shooting
-# }
+listshooting <- list()
+for (i in 1:nrow(wikishooting)){
+   x <- as.vector(wikishooting$SearchTerm[i])
+   y <- as.vector(wikishooting$TrendPeriod[i])
+   shooting <- gtrends(keyword = x, geo = "US", time = y, low_search_volume = T)
+   iteration <- (1 + length(listshooting))
+   listshooting[[iteration]] <- shooting
+ }
 ```
 
 ```{r, include = FALSE}
 # Combining GoogleTrends data frames
 
-#massshooting <- listshooting[[1]]$interest_over_time
-#for (i in 2:length(listshooting)){
-#    shoot <- listshooting[[i]]$interest_over_time
-#    massshooting <- rbind(massshooting, shoot)
-#}
-#massshooting
+massshooting <- listshooting[[1]]$interest_over_time
+for (i in 2:length(listshooting)){
+    shoot <- listshooting[[i]]$interest_over_time
+    massshooting <- rbind(massshooting, shoot)
+}
+massshooting
 
-#saveRDS(massshooting, "massshooting.rds")
+saveRDS(massshooting, "massshootingfinal.rds")
 ```
 
 ```{r, include = FALSE}
 # Load Gtrends Data (save as rds file)
 
-gtrends <- readRDS("massshooting.rds")
+gtrends <- readRDS("massshootingfinal.rds")
 gtrends
 
 ```
@@ -578,7 +592,7 @@ Due to the Google Trends data and its structure, we are not able to investigate 
 ```{r, include = FALSE}
 # Give every shooting a countdown with 1 to 15, for each day we inspect
 
-gtrends$rownumber <-  rep(c(1:15), times=131)
+gtrends$rownumber <-  rep(c(1:15), times=127)
 gtrends
 
 # save the hits as numeric values
@@ -598,6 +612,8 @@ reg <-
 reg <- subset(reg, term=="rownumber")
 
 #write_xlsx(reg,"C:\\Users\\hre\\Documents\\Uni_Mannheim\\FSS_2020\\Research_Methods_Fundamentals_of_Computing_and_Data_Display\\Paper\\Term-Paper-Fundamentals\\Fundamentals---Term-Paper-\\reg.xlsx")
+#Sophie:
+write_xlsx(reg,"/Users/sophiehensgen/Term-Paper-Fundamentals/Fundamentals---Term-Paper-/reg.xlsx")
 
 wikishooting <-
   wikishooting %>%
