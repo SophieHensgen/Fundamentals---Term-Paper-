@@ -53,7 +53,6 @@ library(kableExtra)
 
 \newpage
 # Introduction
-gg
 
 On February 14th 2018 the Parkland High School shooting took place and with it one of the largest gun control movements emerged. 
 At this incident a former student of the Marjory Stoneman Douglas High School killed 17 people and injured another 17 with a rifle[@Laughland2018]. The event was heavily covered by multiple news outlets and became the subject of a heated discussion about stricter gun laws in the US. One month later on March 24th there were nation wide protests called "March for Our Lives", led by the students in cooperation with the non-profit organization Never Again MSD, which demanded stricter gun laws[@Marchforourlives18]. 
