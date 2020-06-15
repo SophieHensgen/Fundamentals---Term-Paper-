@@ -1,14 +1,13 @@
 ---
 title: "Are we craving sensations? An Investigation on the Decline of Interest in Mass Shootings in the USA."
 author: "Hannah Reitz (1681116) & Sophie Hensgen (1560750)"
-affiliation: 
-- institution: "University of Mannheim"
 header-includes:
     - \usepackage{setspace}\doublespacing
     - \usepackage{booktabs}
     - \usepackage{capt-of}
     - \usepackage{floatrow}
     - \floatsetup[figure]{capposition=top}
+    - \floatsetup[table]{capposition=top}
 date: "`r Sys.Date()`"
 output:
   pdf_document:
@@ -16,7 +15,7 @@ output:
     df_print: kable
     number_sections: true
 always_allow_html: true
-bibliography: Fundamentals_Paper.bib
+bibliography: Fundamentals_Paper_final.bib
 ---
 
 
@@ -55,7 +54,6 @@ library(kableExtra)
 
 \newpage
 # Introduction
-
 
 On February 14th 2018 the Parkland High School shooting took place and with it one of the largest gun control movements emerged. 
 At this incident a former student of the Marjory Stoneman Douglas High School killed 17 people and injured another 17 with a rifle[@Laughland2018]. The event was heavily covered by multiple news outlets and became the subject of a heated discussion about stricter gun laws in the US. One month later on March 24th there were nation wide protests called "March for Our Lives", led by the students in cooperation with the non-profit organization Never Again MSD, which demanded stricter gun laws[@Marchforourlives18]. 
@@ -185,7 +183,7 @@ As for the last hypotheses, there is sparse research on the influence of gun reg
 
 *H5: If the state a mass shooting happens in has weak gun laws, the decline in public interest is less steep..*
 
-In summary, most of the previous research on mass shootings focused on how certain characteristics of shootings affect its newsworthiness and its coverage by the media. Our contribution to this literature is to consider how certain characteristics of mass shootings could influence the public interest in form of the temporal decline in the relative count of search hits on this event on Google. Furthermore, we consider characteristics of mass shootings previous studies have not considered. The focus of past research was mainly on the impact the count of dead and injured persons as well as the race of the perpetrator have on the media reporting. We also take into account how the affluence of the community where a shooting happens and the strength of the gun laws in the state a shooting takes place affect the public interest in the event. Unfortunately, we are not able to observe the media coverage of mass shootings directly. Hence, in our analysis we focus on the above mentioned characteristics of mass shootings and the steepness of the decrease in relative frequencies of the search hits on Google.
+In summary, most of the previous research on mass shootings focused on how certain characteristics of shootings affect its newsworthiness and its coverage by the media. Our contribution to this literature is to consider how certain characteristics of mass shootings could influence the public interest in form of the temporal decline in the relative count of search hits on this event on Google. Furthermore, we consider characteristics of mass shootings previous studies have not considered. The focus of past research was mainly on the impact the count of dead and injured people as well as the race of the perpetrator have on the media reporting. We also take into account how the affluence of the community where a shooting happens and the strength of the gun laws in the state a shooting takes place affect the public interest in the event. Unfortunately, we are not able to observe the media coverage of mass shootings directly. Hence, in our analysis we focus on the above mentioned characteristics of mass shootings and the steepness of the decrease in relative frequencies of the search hits on Google.
 
 
 # Data and Variables
@@ -194,7 +192,7 @@ In order to analyze our hypotheses we combine data from Wikipedia that includes 
 
 ## Data from Wikipedia
 
-First, we scraped all tables from the Wikipedia page on mass shootings in the US which are available from 2000 to 2020 [@wiki] and cleaned the data from unnecessary information such as most of the description or if the shooter died during the mass shooting. Then the scraped tables were joined into one data set and all observations that include missings were dropped as we cannot include them in a regression. The resulting data table includes information about the date, the location, the number of dead persons, the number of injured persons, the total number of dead and injured persons and a description for each massshooting. 
+First, we scraped all tables from the Wikipedia page on mass shootings in the US which are available from 2000 to 2020 [@wiki] and cleaned the data from unnecessary information such as most of the description or if the shooter died during the mass shooting. Then the scraped tables were joined into one data set and all observations that include missings were dropped as we cannot include them in a regression. The resulting data table includes information about the date, the location, the number of dead people, the number of injured people, the total number of dead and injured people and a description for each massshooting. 
 
 
 ```{r Scraping of Wikipedia tables, results="hide"}
@@ -206,7 +204,7 @@ table <- t %>% html_nodes("#mw-content-text > div > table") %>% html_table(trim=
 
 Because we are using the data set based on the information from Wikipedia later on to scrape data from Google Trends we created additional variables. We generated a variable with a date fourteen days after the date of the mass shooting. This variable was subsequently used to create another variable which included both, the date of the mass shooting and the date fourteen days after the mass shooting in the required style of the Google Trends API. Furthermore, we generated a variable for the search term the Google Trends API is using to find information on the relative count of hits this keyword received in the 15 days time period. We conducted a manual search on Google Trends to find the search term for each event that received the highest relative number of hits in the 15 days time span. Moreover, we discarded the years 2000, 2001, 2002 and 2003 as it is not possible to scrape Google Trends data before the year 2004. 
 
-We added three variables with information on the ethnicity of the shooter, the affluence of the community a shooting happened at and the strength of the gun laws for the state in which a shooting happened. These are the indpendendent variables for the regression models in the analysis section additionally to the number of dead and injured persons. In order to find the necessary information on these characteristics, an online search was executed. The information on the ethnicity of the perpetrator was found on the respective Wikipedia page for each mass shooting. The variable was coded 0 if the shooter was a white US Americans and 1 if the shooter was non-white or had a migration background. Furthermore, we looked up the median houshold income (in 2018) for all communities in which a mass shooting happened on the website of the US Census Bureau [@bureau] and determined if the community is affluent or not based on a chart that depicts how the US Census Bureau breaks down income levels [@income]. If the median household was below $44,999, the community was classified as low income and coded 0. Accordingly, if the median houshold income was above $44,999 the community was considered as high income and coded 1. Additionally, the strength of the gun laws in the states where shootings happened were evaluated based on a ranking of states by their gun law strength [@gun] ^[In this paper states that are considered to have strong gun laws are: California, New Jersey, Conneticut, New York, Hawaii, Maryland, Massachusetts, Illinois, Rhode Island, Washington, Delaware, Pennsylvania, Minnesota, Colorado, Nevada, Oregon, New Mexico, Nebraska, Iowa, Michigan, Wisconsin, Florida, and Vermont. States with weak gun laws are: North Carolina, Ohio, Virginia, Utah, Indiana, Tennessee, New Hampshire, South Carolina, Georgia, Lousiana, Maine, Montana, Texas, West Virgina, Alabama, North Dakota, Arkansas, Oklahoma, Alaska, Kansas, South Dakota, Arizona, Kentucky, Missouri, Idaho, Wyoming, Mississippi]. States with strong gun laws are coded 0 and states with weak gun laws are coded 1. Observations for which no information on the ethnicity, the affluence of the community or the gun law strength could be found were dropped.
+We added three variables with information on the ethnicity of the shooter, the affluence of the community a shooting happened at and the strength of the gun laws for the state in which a shooting happened. These are the indpendendent variables for the regression models in the analysis section additionally to the number of dead and injured people. In order to find the necessary information on these characteristics, an online search was executed. The information on the ethnicity of the perpetrator was found on the respective Wikipedia page for each mass shooting. The variable was coded 0 if the shooter was a white US Americans and 1 if the shooter was non-white or had a migration background. Furthermore, we looked up the median houshold income (in 2018) for all communities in which a mass shooting happened on the website of the US Census Bureau [@bureau] and determined if the community is affluent or not based on a chart that depicts how the US Census Bureau breaks down income levels [@income]. If the median household was below $44,999, the community was classified as low income and coded 0. Accordingly, if the median houshold income was above $44,999 the community was considered as high income and coded 1. Additionally, the strength of the gun laws in the states where shootings happened were evaluated based on a ranking of states by their gun law strength [@gun] ^[In this paper states that are considered to have strong gun laws are: California, New Jersey, Conneticut, New York, Hawaii, Maryland, Massachusetts, Illinois, Rhode Island, Washington, Delaware, Pennsylvania, Minnesota, Colorado, Nevada, Oregon, New Mexico, Nebraska, Iowa, Michigan, Wisconsin, Florida, and Vermont. States with weak gun laws are: North Carolina, Ohio, Virginia, Utah, Indiana, Tennessee, New Hampshire, South Carolina, Georgia, Lousiana, Maine, Montana, Texas, West Virgina, Alabama, North Dakota, Arkansas, Oklahoma, Alaska, Kansas, South Dakota, Arizona, Kentucky, Missouri, Idaho, Wyoming, Mississippi]. States with strong gun laws are coded 0 and states with weak gun laws are coded 1. Observations for which no information on the ethnicity, the affluence of the community or the gun law strength could be found were dropped.
 
 
 ```{r, include = FALSE}
@@ -587,7 +585,7 @@ gtrends <- gtrends[-c(271:284), ]
 \vspace{-0.5cm}
 ## Method 
 
-Due to the Google Trends data and its structure, we are not able to investigate the true frequencies of Google searches. However, as we focus on the descent of interest for each shooting we will take a different approach. As Google Trends data provides only search hits in relation to prior searches we are able to explore the gradual decline of interest for each shooting. In order to do so we created OLS regressions for each individual shooting using the Google Trends data set we created prior. As with the webscraping, we continue to use the statistics program R for our analysis^[In this paper were used packages by the following authors: @openxlsx, @xml2, @rvest, @jsonlite, @robotstxt, @RSocrata, @dplyr, @rlist, @pipeR, @gtrendsR, @lubridate, @writexl, @readxl, @tidyverse, @magrittr, @broom, @knitr, @ggplot2, @ggpubr, @systemfonts, @ggiraph, @devtools, @ggiraphExtra, @jtools, @broom.mixed, @stargazer, @ggstance]. For each regression we use the relative number of search hits as dependent variable and as independent variable the days we inspect, from the day of the shooting untill two weeks after the event (15 days). The resulting coefficient for each shooting represents the decline in interest of the population and can be used further as a new variable in our data set. We then include the new variable into the Wikipedia data set. For our further investigation we will concentrate on the new expanded Wikipedia data set. The new variable is used as the new dependent variable in our final linear regression. The independent variables are the number of deaths, the number of injured persons, the ethnicity of the perpetrator, the affluence of the community the shooting happened in, and the strength of the gun laws in the state the shooting took place.
+Due to the Google Trends data and its structure, we are not able to investigate the true frequencies of Google searches. However, as we focus on the descent of interest for each shooting we will take a different approach. As Google Trends data provides only search hits in relation to prior searches we are able to explore the gradual decline of interest for each shooting. In order to do so we created OLS regressions for each individual shooting using the Google Trends data set we created prior. As with the webscraping, we continue to use the statistics program R for our analysis^[In this paper were used packages by the following authors: @openxlsx, @xml2, @rvest, @jsonlite, @robotstxt, @RSocrata, @dplyr, @rlist, @pipeR, @gtrendsR, @lubridate, @writexl, @readxl, @tidyverse, @magrittr, @broom, @knitr, @ggplot2, @ggpubr, @systemfonts, @ggiraph, @devtools, @ggiraphExtra, @jtools, @broom.mixed, @stargazer, @ggstance]. For each regression we use the relative number of search hits as dependent variable and as independent variable the days we inspect, from the day of the shooting untill two weeks after the event (15 days). The resulting coefficient for each shooting represents the decline in interest of the population and can be used further as a new variable in our data set. We then include the new variable into the Wikipedia data set. For our further investigation we will concentrate on the new expanded Wikipedia data set. The new variable is used as the new dependent variable in our final linear regression. The independent variables are the number of deaths, the number of injured people, the ethnicity of the perpetrator, the affluence of the community the shooting happened in, and the strength of the gun laws in the state the shooting took place.
 
 ```{r, include = FALSE}
 # Give every shooting a countdown with 1 to 15, for each day we inspect
@@ -646,7 +644,7 @@ Final$Gunlaws <- as.character(Final$Gunlaws)
 
 boxdead <- 
   ggplot(Final) +
-  labs(title = "Dead Persons", x = "", y = "Count") +
+  labs(title = "Deaths", x = "", y = "Count") +
   geom_boxplot(mapping = aes(x = "Dead", y = Dead)) +
   theme(plot.title = element_text(size = 10.5),
         axis.title.y = element_text(size = 10.5),
@@ -662,7 +660,7 @@ boxdead <-
 
 boxinjured <- 
   ggplot(Final) +
-  labs(title = "Injured Persons", x = "", y = "Count") +
+  labs(title = "Injured People", x = "", y = "Count") +
   geom_boxplot(mapping = aes(x = "Injured", y = Injured)) +
   theme(plot.title = element_text(size = 10.5),
         axis.title.y = element_text(size = 10.5),
@@ -683,14 +681,14 @@ boxinjured <-
 ## Ethnicity
 
 bareth <- ggplot(Final, aes(x = Ethnicity)) +
+  theme_bw() +
+  theme_light() +
   geom_bar(mapping = aes(y = ..prop.., group = 1), stat = "count") +
   labs(title = "Ethnicity", x = "", y = "Relative Frequencies") +
   theme(plot.title = element_text(size = 10.5),
-        axis.title.y = element_text(size = 10.5),
-        axis.text.x = element_text(size=5),
+        axis.title.y = element_text(size = 9.5),
+        axis.text.x = element_text(size=7),
         axis.text.y = element_text(size=8))+
-  theme_bw()+  
-  theme_light()+
   scale_x_discrete(labels=c("0" =  "White US American", "1" = "Black or Other Ethnicity")) +
   scale_y_continuous(labels = scales::percent_format(), limit = c(0, 1.0)) +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
@@ -700,36 +698,35 @@ bareth <- ggplot(Final, aes(x = Ethnicity)) +
 ## Area
 
 bararea <- ggplot(Final, aes(x = Area)) + 
+  theme_bw() +
+  theme_light() +
   geom_bar(mapping = aes(y = ..prop.., group = 1), stat = "count") +
   labs(title = "Affluence of Community", x = "", y = "Relative Frequencies") +
   theme(plot.title = element_text(size = 10.5),
-        axis.title.y = element_text(size = 10.5),
-        axis.text.x = element_text(size=5),
+        axis.title.y = element_text(size = 9.5),
+        axis.text.x = element_text(size=7),
         axis.text.y = element_text(size=8))+
-  theme_bw()+ 
-  theme_light()+
   scale_x_discrete(labels=c("0" =  "Low Income Community", "1" = "High Income Community")) +
   scale_y_continuous(labels = scales::percent_format(), limit = c(0, 1.0)) +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
-            y= ((..count..)/sum(..count..))), stat="count", size = 3, vjust = -.5) 
+            y= ((..count..)/sum(..count..))), stat="count", size = 3, vjust = -.5)
 
 
 ## Gunlaws
 
 bargun <- ggplot(Final, aes(x = Gunlaws)) + 
+  theme_bw() +
+  theme_light() +
   geom_bar(mapping = aes(y = ..prop.., group = 1), stat = "count") +
   labs(title = "Gun Law Strength", x = "", y = "Relative Frequencies") +
   theme(plot.title = element_text(size = 10.5),
-        axis.title.y = element_text(size = 10.5),
-        axis.text.x = element_text(size=5),
-        axis.text.y = element_text(size=8))+
-  theme_bw()+ 
-  theme_light()+
+        axis.title.y = element_text(size = 9.5),
+        axis.text.x = element_text(size=7),
+        axis.text.y = element_text(size=8)) +
   scale_x_discrete(labels=c("0" =  "Strong Gun Laws", "1" = "Weak Gun Laws")) +
   scale_y_continuous(labels = scales::percent_format(), limit = c(0, 1.0)) +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
             y= ((..count..)/sum(..count..))), stat="count", size = 3, vjust = -.5) 
-
 
 ```
 
@@ -759,7 +756,7 @@ annotate_figure(barplots,
 Figure 5 shows the three dichotomous variables. There are clear differences in the distribution of each variable. First, in regards to the ethnicity we can observe that in our sample 57% of mass shootings were commited by white US Americans. Second, most mass shootings in our sample took place in high income communities (73%) rather then in low income communities. And third, two thirds of the shootings in our sample occurred in states with strong gun regulations.
 
 
-In the following our hypotheses will be analyzed with an OLS regression of the independent variables - the number of dead persons, the number of injured persons, the ethnicity of the shooter, the affluence of the community, and the strength of the states' gun laws -  on the decline in interest of mass shootings. According to hypothesis 1 and 2, we expect that the interest in the shooting declines slower, the more people die or get injured in the shooting. We also assume in line with hypotheses 3, that the interest in a mass shooting decreases slower if the shooter is non-white or has a migration background. Furthermore, we hypothesize (H4) that if the community the shooting happens in is affluent, the decrease in interest is less steep. And finally we expect according to hypothesis 5, that if the gun laws of the state in which a shooting takes place are weak, the decline in interest is slower. 
+In the following our hypotheses will be analyzed with an OLS regression of the independent variables - the number of dead people, the number of injured people, the ethnicity of the shooter, the affluence of the community, and the strength of the states' gun laws -  on the decline in interest of mass shootings. According to hypothesis 1 and 2, we expect that the interest in the shooting declines slower, the more people die or get injured in the shooting. We also assume in line with hypotheses 3, that the interest in a mass shooting decreases slower if the shooter is non-white or has a migration background. Furthermore, we hypothesize (H4) that if the community the shooting happens in is affluent, the decrease in interest is less steep. And finally we expect according to hypothesis 5, that if the gun laws of the state in which a shooting takes place are weak, the decline in interest is slower. 
 
 
 ```{r, include = FALSE}
@@ -823,9 +820,9 @@ annotate_figure(scatterplots2)
 ```
 The predicted scatterplots of the regressions in Figure 6 and 7 show regression lines of the simple regression models between each of the independent variables and the dependent variable. The regression lines seem to be support our hypotheses except for hypothesis 1. The regression line for hypothesis 1 shows that the interest decreases faster the more people die in a mass shooting. 
 
-Figure 8 shows the results for the OLS regression of all independent variables on the decrease in interest of mass shootings. The models 1 to 5 each report the results of the regression of one of the independent variables on the decrease in interest of mass shootings. As none of the coefficients is statistically significant at the 10% level we do not assume that the number of dead persons, the number of injured persons, the ethnicity of the shooter, the affluence of the community, and the strength of the states' gun laws are correlated with the steepness of the decline in interest on Google. Model 6 includes all of the independent variables. When controlling for all other independent variables the relationship between the ethnicity and steepness of the decline in interest is significant at the 10% level. This means that the decline in interest is significantly slower for mass shootings with shooters who are non-white or have a migration backgroung compared to mass shootings with shooters who are white US Americans. Furthermore, controlling for all other independent variables the interest in mass shootings in states with weak gun laws declines less steeply than for mass shootings in states with strong gun laws. Table A1 shows the results of the regression models in more detail. Overall, these predictors do not explain much of the variation in the steepness of the decline in interest in a mass shooting as the adjusted R squared is very poor for all models. Model 6 with all independent variables included only explains 2.4% percent of the variation of the steepness of the decrease in interest on Google.
+Figure 8 shows the results for the OLS regression of all independent variables on the decrease in interest of mass shootings. The models 1 to 5 each report the results of the regression of one of the independent variables on the decrease in interest of mass shootings. As none of the coefficients is statistically significant at the 10% level we do not assume that the number of dead people, the number of injured people, the ethnicity of the shooter, the affluence of the community, and the strength of the states' gun laws are correlated with the steepness of the decline in interest on Google. Model 6 includes all of the independent variables. When controlling for all other independent variables the relationship between the ethnicity and steepness of the decline in interest is significant at the 10% level. This means that the decline in interest is significantly slower for mass shootings with shooters who are non-white or have a migration backgroung compared to mass shootings with shooters who are white US Americans. Furthermore, controlling for all other independent variables the interest in mass shootings in states with weak gun laws declines less steeply than for mass shootings in states with strong gun laws. Table A1 shows the results of the regression models in more detail. Overall, these predictors do not explain much of the variation in the steepness of the decline in interest in a mass shooting as the adjusted R squared is very poor for all models. Model 6 with all independent variables included only explains 2.4% percent of the variation of the steepness of the decrease in interest on Google.
 
-These findings show that we have to reject hypotheses 1 and 2. There seems to be no significant relationship between the number of dead or injured persons and the steepness of the decline in interest. Moreover, we cannot reject hypothesis 3 when controlling for other factors. If the shooter is black or has a migration background, the decrease in interest in the mass shooting is slower than for shootings with a white US American perpetrator. Hypothesis 4 also has to be rejected. The affluence of the community in which a shooting takes place is not significantly related to the steepness of the decline in interest. Finally, hypothesis 5 cannot be rejected when covariates are included in the model. If a mass shooting happens in a state with weak gun laws the decline in interest is slower than if a shooting happens in a state with strong gun laws.
+These findings show that we have to reject hypotheses 1 and 2. There seems to be no significant relationship between the number of dead or injured people and the steepness of the decline in interest. Moreover, we cannot reject hypothesis 3 when controlling for other factors. If the shooter is black or has a migration background, the decrease in interest in the mass shooting is slower than for shootings with a white US American perpetrator. Hypothesis 4 also has to be rejected. The affluence of the community in which a shooting takes place is not significantly related to the steepness of the decline in interest. Finally, hypothesis 5 cannot be rejected when covariates are included in the model. If a mass shooting happens in a state with weak gun laws the decline in interest is slower than if a shooting happens in a state with strong gun laws.
 
 
 ```{r, echo = FALSE, fig.cap="Parameter Estimates with 90% and 95% Confidence Intervals"}
@@ -842,7 +839,7 @@ plot_summs(regdead, reginjured, regeth, regarea, reggun, regfull, scale = TRUE, 
 \vspace{2cm}
 
 # Conclusion 
-First, we illustrated theoretical approaches which could explain how fast the interest in mass shootings declines. We highlighted the issue attention cycle, the moral panic theory, and the salience or newsworthyness of events. Based on these theories we argued that certain characteristics of mass shootings could influence how fast the interest declines. We derived five hypotheses which were analyzed by scraping data about mass shootings from Wikipedia and the relative search hit count for each shooting from Google Trends. Subsequently, we regressed the steepness of the decline in interest on Google on the independent variables which were the number of dead persons, the number of injured persons, the ethnicity of the shooter, the affluence of the community, and the strength of the states' gun laws. The results show that hypotheses 1, 2 and 4 for have to be rejected for our sample. There does not seem to be a relationship between the number of dead persons, the number of injured persons as well as the affluence of the community and the steepness of the decline in public interest. In contrast hypotheses 3 and 5 cannot be rejected at the 10% level. If the perpetrator is non-white or has a migration background, the interest in the shooting declines slower than if the shooter is a white US American. This could be explained with the selection bias of the media when it comes to race and the subsequent higher public interest in the shooting. Furthermore, if the gun laws in the state a mass shooting happens in are weak the interest decreases slower than for states with strong gun laws. Potentially, this could be because the issue of gun control becomes more salient and the media covers the event more heavily. Thus, the public interest might also decrease slower. 
+First, we illustrated theoretical approaches which could explain how fast the interest in mass shootings declines. We highlighted the issue attention cycle, the moral panic theory, and the salience or newsworthyness of events. Based on these theories we argued that certain characteristics of mass shootings could influence how fast the interest declines. We derived five hypotheses which were analyzed by scraping data about mass shootings from Wikipedia and the relative search hit count for each shooting from Google Trends. Subsequently, we regressed the steepness of the decline in interest on Google on the independent variables which were the number of dead people, the number of injured people, the ethnicity of the shooter, the affluence of the community, and the strength of the states' gun laws. The results show that hypotheses 1, 2 and 4 for have to be rejected for our sample. There does not seem to be a relationship between the number of dead people, the number of injured people as well as the affluence of the community and the steepness of the decline in public interest. In contrast hypotheses 3 and 5 cannot be rejected at the 10% level. If the perpetrator is non-white or has a migration background, the interest in the shooting declines slower than if the shooter is a white US American. This could be explained with the selection bias of the media when it comes to race and the subsequent higher public interest in the shooting. Furthermore, if the gun laws in the state a mass shooting happens in are weak the interest decreases slower than for states with strong gun laws. Potentially, this could be because the issue of gun control becomes more salient and the media covers the event more heavily. Thus, the public interest might also decrease slower. 
 
 There are several important limitations to this study. The independent variables only explain a small amount of variation in the steepness of the decline in interest as the adjusted R squared is very small. Moreover, the coefficients in model 6 for the ethnicity of the shooter and the strength of the gun laws of the state in which a shooting happens are only significant at the 10% level. This poor model fit could be due to characteristics of mass shootings that are not accounted for in this analysis as well as certain data constraints which are illustrated in the following.
 
@@ -882,7 +879,10 @@ stargazer::stargazer(regdead, reginjured, regeth, reggun, regarea, regfull,
 
 # Descriptive statistics of metric variables
 
-stargazer(Final[c("Dead","Injured")], title="Descriptive Statistics of Metric Variables", summary.stat = c("n", "median", "sd", "min", "max"), header=FALSE) #table.layout = "=n=")
+names(Final)[7] <- "Deaths"
+names(Final)[8] <- "Injured People"
+
+stargazer(Final[c("Deaths","Injured People")], title="Descriptive Statistics of Metric Variables", summary.stat = c("n", "median", "sd", "min", "max"), header=FALSE) #table.layout = "=n=")
 
 ```
 
@@ -892,6 +892,7 @@ stargazer(Final[c("Dead","Injured")], title="Descriptive Statistics of Metric Va
 # Descriptive statistics of categorical variables
 
 Final$Ethnicity <- as.factor(Final$Ethnicity)
+#Final <- rename.variable(Final, "Ethnicity", "Ethnicity")
 Final$Ethnicity <- factor(Final$Ethnicity,
 levels = c(0, 1),
 labels = c("Non-White", "White US American")) 
@@ -900,14 +901,17 @@ Final$Area <- as.factor(Final$Area)
 Final$Area <- factor(Final$Area,
 levels = c(0, 1),
 labels = c("Low Income Community", "High Income Community")) 
+names(Final)[11] <- "Affluence of Community"
 
 Final$Gunlaws <- as.factor(Final$Gunlaws)
 Final$Gunlaws <- factor(Final$Gunlaws,
 levels = c(0, 1),
 labels = c("Strong Gun Laws", "Weak Gun Laws")) 
+names(Final)[12] <- "Strength of Gun Laws"
 
 
-catsum <- summarize(Final, type = "factor", variables = c("Ethnicity", "Area", "Gunlaws"))
+catsum <- summarize(Final, type = "factor", variables = c("Ethnicity", "Affluence of Community", "Strength of Gun Laws"))
+#, variable.labels = TRUE, labels(c("Deaths", "Injured People", "Ethnicity", "Affluence of Community", "Strength of Gun Laws"))
 
 catsum <- catsum[ -c(3) ]
 
@@ -916,8 +920,9 @@ kable(head(catsum[, 1:4]), format = "latex", caption = "Descriptive Statistics o
 
 
 ```
-\pagebreak
-\vspace{4cm}
+
+\clearpage
+
 
 \textbf{Statutory Declaration}
 
@@ -927,7 +932,7 @@ Students shall include a bibliography in all their term papers and project-relat
 
 For term papers and project-related papers in English, the English declaration shall be included as well.
 
-Place, Date: Mannheim, 14.06.2020
+Place, Date: Mannheim, 15.06.2020
 
 Signature:
 (Hannah Reitz)
